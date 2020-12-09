@@ -1,3 +1,13 @@
+/* Author: Noureddine Ait Jaa
+* contributor: 
+	Benjamin Thomas Knol
+	Niek Hutten
+	Michael Rotteveel
+	Vireen Jagram
+	
+* Goal of appliction: Connects to the server
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
