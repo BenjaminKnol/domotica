@@ -1,13 +1,13 @@
-/* ----------------------------------------------------------------------------------*
-* Author          			Name				Lastname		Studentnumber 	     *
-*					        Noureddine			Ait Jaa			15018628             *
-*																					 *
-*																					 *
-* Goal application:			Server socket is trying to listen to incoming 			 *
-*							connection from clients.								 *
-*																					 *
-*																					 *
-* -----------------------------------------------------------------------------------*/
+/* Author: Noureddine Ait Jaa
+* contributor: 
+	Benjamin Thomas Knol
+	Niek Hutten
+	Michael Rotteveel
+	Vireen Jagram
+	
+* Goal of appliction: Listens for incoming traffic from clients
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
