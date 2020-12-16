@@ -24,22 +24,15 @@
                             <td>{{$log->created_at->format("j F, Y, G:i:s")}}</td>
                             <td>
                                 <div class="buttons mr-auto flex">
-                                    <div class="button bg-blue-500 inline-flex rounded-l p-1">
-                                        <a>
-                                            <i class="fas fa-eye fa-lg"></i>
-                                        </a>
-                                    </div>
-                                    <div class="button bg-green-400 inline-flex p-1">
-                                        <a>
-                                            <i class="fas fa-pencil fa-lg"></i>
-                                        </a>
-                                    </div>
-                                    <div class="button bg-red-600 inline-flex rounded-r p-1">
-                                        <a>
-                                            <i class="fas fa-trash fa-lg"></i>
-                                        </a>
-                                    </div>
-                                </div>
+                                    <a class="button bg-blue-500 inline-flex rounded-l p-1" href="{{route('show log', $log->id)}}">
+                                        <i class="fas fa-eye fa-lg">show</i>
+                                    </a>
+                                    <a class="button bg-red-600 inline-flex rounded-r p-1"
+                                       href="{{route('delete log', $log->id)}}">
+                                        <i class="fas fa-trash fa-lg">delete</i>
+                                    </a>
+                                </
+                                >
                             </td>
                         </tr>
                     @endforeach
