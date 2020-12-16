@@ -1,2 +1,2 @@
 # domotica
-Project domotica voor groep 5 haagse hogeschool Delft
+Project Domotica voor groep 5 haagse hogeschool Delft.
