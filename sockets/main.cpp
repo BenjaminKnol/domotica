@@ -11,7 +11,7 @@
  * Version: 1.0 ---> Set TCP/IP connection between WEMOS en RPi4
  * Version: 1.1 ---> Server socket code is re-written to Object Orientated.
  *
- * Used sources: https://www.bogotobogo.com/cplusplus/sockets_server_client.php  ---> Socket explanation.
+ * Used sources: https://bit.ly/3h4MdW3  ---> Socket explanation.
  */
 
 #include "Socket_server.h"
