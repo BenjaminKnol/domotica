@@ -33,4 +33,4 @@
 
 *.idea/
 
-laravelServer/server/storage/debugbar/
+*/storage/
