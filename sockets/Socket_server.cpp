@@ -64,7 +64,6 @@ int Socket_server::read_message(string &buf, int length) {
     bzero(buffer,length);
     int status = (int)recv(client_socket, buffer, length-1, 0);
     if (status < 0) {
-        //exit(1);
         printf("Read error\n");
     }
     buf = string(buffer);
