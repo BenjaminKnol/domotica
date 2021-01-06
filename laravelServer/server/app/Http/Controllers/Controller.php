@@ -33,7 +33,7 @@ class Controller extends BaseController
         return redirect('/');
     }
 
-    public function show(){
+    public function index(){
         $statuses = Status::all();
         return view('welcome', compact('statuses'));
     }
