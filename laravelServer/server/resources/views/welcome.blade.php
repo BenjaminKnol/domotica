@@ -41,8 +41,9 @@
                                 <form method="post" action="{{ route('options') }}">
                                     <div class="onoffswitch">
                                         {{ csrf_field() }}
-                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="placeholder1" tabindex="0" onchange="this.form.submit()">
+                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder1" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 1)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
                                         <label class="onoffswitch-label" for="placeholder1"></label>
+                                        <input type="hidden" name="type" value="1">
                                     </div>
                                 </form>
                                 <div class="ml-4 text-lg leading-7 font-semibold">Placeholder</div>
@@ -148,6 +149,15 @@
                                 </div>
                             </div>
                         </div>
+                        @if($errors->any())
+                            <div class="notification is-danger">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
