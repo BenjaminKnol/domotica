@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\Controller@show')->name('homepage');
+Route::get('/', 'App\Http\Controllers\Controller@index')->name('homepage');
 
 Route::post('/options', 'App\Http\Controllers\Controller@changeOption')->name('options');
 
