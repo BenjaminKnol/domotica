@@ -54,7 +54,7 @@ function receive_data() {
 			web_socket($send_data);
 			break;
 		default:
-			echo "ID does not match!";
+			break;
 	}
 }
 
