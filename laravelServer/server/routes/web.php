@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'App\Http\Controllers\Controller@index')->name('homepage');
 
 Route::post('/options', 'App\Http\Controllers\Controller@changeOption')->name('options');
+Route::post('/web_socket', 'App\Http\Controllers\web_socket@receive_data')->name('options'); // Parse and send data to C++
 
 Route::get('/dashboard', function () {
     return view('dashboard');
