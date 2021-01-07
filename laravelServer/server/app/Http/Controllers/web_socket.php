@@ -16,7 +16,7 @@
  *		Create a websocket:		https://www.codeproject.com/Tips/418814/Socket-Programming-in-PHP
  *		Basic PHP info:			https://www.w3schools.com/php/default.asp
  */
-define("HOST", '192.168.2.14', true);
+define("HOST", '172.16.0.1', true);
 define("PORT", '9002', true);
 
 function check_status() {	// Check if checkbox is selected or not. Selected = True (1) and Unselected = False (0).
