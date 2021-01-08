@@ -9,7 +9,7 @@
  *    Niek Hutten
  *    Noureddine Ait Jaa
  * Version: 1.0 ---> Set TCP/IP connection between WEMOS en RPi4
- * Version: 1.1 ---> Server socket code is re-written to Object Orientated.
+ * Version: 1.1 ---> Server socket code is re-written to be Object Orientated.
  *
  * Used sources: https://www.bogotobogo.com/cplusplus/sockets_server_client.php  ---> Socket explanation.
  */
@@ -28,8 +28,13 @@ int main() {
     while (true) {
         int amount_of_clients = socket.accept_connection();
         if (amount_of_clients > 0) {
-			socket.read_message(read_message, 256); // Read data from Wemos
+
+            socket.read_message(read_message, 256); // Read data from Wemos
 			cout << "Message from client: " << read_message << endl;    // --> DEBUG only
+
+			//split message into type and val
+
+			//switch case on type where u can call OBJECT.handle(val)
         } else {
             continue;
         }

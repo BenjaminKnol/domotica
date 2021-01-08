@@ -43,7 +43,7 @@
                                         {{ csrf_field() }}
                                         <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder1" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 1)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
                                         <label class="onoffswitch-label" for="placeholder1"></label>
-                                        <input type="hidden" name="type" value="bed">
+                                        <input type="hidden" name="type" value="1">
                                     </div>
                                 </form>
                                 <div class="ml-4 text-lg leading-7 font-semibold">Bed</div>
@@ -63,7 +63,7 @@
                                         {{ csrf_field() }}
                                         <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder2" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 2)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
                                         <label class="onoffswitch-label" for="placeholder2"></label>
-                                        <input type="hidden" name="type" value="stoel">
+                                        <input type="hidden" name="type" value="2">
                                     </div>
                                 </form>
                                 <div class="ml-4 text-lg leading-7 font-semibold">Stoel</div>
@@ -83,7 +83,7 @@
                                         {{ csrf_field() }}
                                         <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder3" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 3)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
                                         <label class="onoffswitch-label" for="placeholder3"></label>
-                                        <input type="hidden" name="type" value="koelkast">
+                                        <input type="hidden" name="type" value="3">
                                     </div>
                                 </form>
                                 <div class="ml-4 text-lg leading-7 font-semibold">Koelkast</div>
@@ -102,7 +102,7 @@
                                         {{ csrf_field() }}
                                         <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder4" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 4)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
                                         <label class="onoffswitch-label" for="placeholder4"></label>
-                                        <input type="hidden" name="type" value="muur">
+                                        <input type="hidden" name="type" value="4">
                                     </div>
                                 </form>
                                 <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Muur</div>
@@ -122,7 +122,7 @@
                                         {{ csrf_field() }}
                                         <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder5" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 5)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
                                         <label class="onoffswitch-label" for="placeholder5"></label>
-                                        <input type="hidden" name="type" value="schemerlamp">
+                                        <input type="hidden" name="type" value="5">
                                     </div>
                                 </form>
                                 <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Schemerlamp</div>
@@ -142,7 +142,7 @@
                                         {{ csrf_field() }}
                                         <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder6" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 6)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
                                         <label class="onoffswitch-label" for="placeholder6"></label>
-                                        <input type="hidden" name="type" value="deur">
+                                        <input type="hidden" name="type" value="6">
                                     </div>
                                 </form>
                                 <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Deur</div>
@@ -154,15 +154,15 @@
                                 </div>
                             </div>
                         </div>
-						
+
 						<div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
                             <div class="flex items-center">
                                 <form method="post" action="{{ route('options') }}">
                                     <div class="onoffswitch">
                                         {{ csrf_field() }}
-                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder7" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 6)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
+                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder7" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 7)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
                                         <label class="onoffswitch-label" for="placeholder7"></label>
-                                        <input type="hidden" name="type" value="zuil">
+                                        <input type="hidden" name="type" value="7">
                                     </div>
                                 </form>
                                 <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Zuil</div>
