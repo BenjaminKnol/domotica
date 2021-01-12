@@ -41,17 +41,17 @@
                                 <form method="post" action="{{ route('options') }}">
                                     <div class="onoffswitch">
                                         {{ csrf_field() }}
-                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder1" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 1)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
-                                        <label class="onoffswitch-label" for="placeholder1"></label>
+                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="BedLamp" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 1)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
+                                        <label class="onoffswitch-label" for="BedLamp"></label>
                                         <input type="hidden" name="type" value="1">
                                     </div>
                                 </form>
-                                <div class="ml-4 text-lg leading-7 font-semibold">Placeholder</div>
+                                <div class="ml-4 text-lg leading-7 font-semibold">Bed lamp</div>
                             </div>
 
                             <div class="ml-12">
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Beschrijving placeholder button
+                                    Een zacht nachtlampje
                                 </div>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                                         <input type="hidden" name="type" value="2">
                                     </div>
                                 </form>
-                                <div class="ml-4 text-lg leading-7 font-semibold">Placeholder 2</div>
+                                <div class="ml-4 text-lg leading-7 font-semibold">Stoel</div>
                             </div>
 
                             <div class="ml-12">
@@ -86,7 +86,7 @@
                                         <input type="hidden" name="type" value="3">
                                     </div>
                                 </form>
-                                <div class="ml-4 text-lg leading-7 font-semibold">Placeholder 3</div>
+                                <div class="ml-4 text-lg leading-7 font-semibold">Koelkast</div>
                             </div>
                             <div class="ml-12">
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
@@ -105,7 +105,7 @@
                                         <input type="hidden" name="type" value="4">
                                     </div>
                                 </form>
-                                <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Placeholder 4</div>
+                                <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Muur</div>
                             </div>
 
                             <div class="ml-12">
@@ -125,7 +125,7 @@
                                         <input type="hidden" name="type" value="5">
                                     </div>
                                 </form>
-                                <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Placeholder 5</div>
+                                <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Schemerlamp</div>
                             </div>
 
                             <div class="ml-12">
@@ -140,17 +140,37 @@
                                 <form method="post" action="{{ route('options') }}">
                                     <div class="onoffswitch">
                                         {{ csrf_field() }}
-                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder6" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 6)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
-                                        <label class="onoffswitch-label" for="placeholder6"></label>
+                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="deur" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 6)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
+                                        <label class="onoffswitch-label" for="deur"></label>
                                         <input type="hidden" name="type" value="6">
                                     </div>
                                 </form>
-                                <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Placeholder 6</div>
+                                <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Deur</div>
                             </div>
 
                             <div class="ml-12">
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Beschrijving placeholder button 6
+                                    Deur openen
+                                </div>
+                            </div>
+                        </div>
+
+						<div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
+                            <div class="flex items-center">
+                                <form method="post" action="{{ route('options') }}">
+                                    <div class="onoffswitch">
+                                        {{ csrf_field() }}
+                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder7" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 7)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
+                                        <label class="onoffswitch-label" for="placeholder7"></label>
+                                        <input type="hidden" name="type" value="7">
+                                    </div>
+                                </form>
+                                <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Zuil</div>
+                            </div>
+
+                            <div class="ml-12">
+                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                                    Beschrijving placeholder button 7
                                 </div>
                             </div>
                         </div>

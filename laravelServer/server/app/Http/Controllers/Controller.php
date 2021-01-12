@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use App\Http\Controllers\webSocketController as webSocket;
 
 class Controller extends BaseController
 {
@@ -24,12 +25,12 @@ class Controller extends BaseController
             $status->on =0;
         }
         $currentStatus = $statuses->where('type', $status->type);
-        //dd($currentStatus);
         if($currentStatus){
             foreach ($currentStatus as $stat)
             $stat->delete();
         }
         $status->save();
+        (new webSocketController)->receive_data();
         return redirect('/');
     }
 
