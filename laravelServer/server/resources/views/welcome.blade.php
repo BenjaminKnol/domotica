@@ -41,17 +41,17 @@
                                 <form method="post" action="{{ route('options') }}">
                                     <div class="onoffswitch">
                                         {{ csrf_field() }}
-                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder1" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 1)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
-                                        <label class="onoffswitch-label" for="placeholder1"></label>
+                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="BedLamp" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 1)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
+                                        <label class="onoffswitch-label" for="BedLamp"></label>
                                         <input type="hidden" name="type" value="1">
                                     </div>
                                 </form>
-                                <div class="ml-4 text-lg leading-7 font-semibold">Bed</div>
+                                <div class="ml-4 text-lg leading-7 font-semibold">Bed lamp</div>
                             </div>
 
                             <div class="ml-12">
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Beschrijving placeholder button
+                                    Een zacht nachtlampje
                                 </div>
                             </div>
                         </div>
@@ -140,8 +140,8 @@
                                 <form method="post" action="{{ route('options') }}">
                                     <div class="onoffswitch">
                                         {{ csrf_field() }}
-                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder6" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 6)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
-                                        <label class="onoffswitch-label" for="placeholder6"></label>
+                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="deur" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 6)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
+                                        <label class="onoffswitch-label" for="deur"></label>
                                         <input type="hidden" name="type" value="6">
                                     </div>
                                 </form>
@@ -150,7 +150,7 @@
 
                             <div class="ml-12">
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Beschrijving placeholder button 6
+                                    Deur openen
                                 </div>
                             </div>
                         </div>
