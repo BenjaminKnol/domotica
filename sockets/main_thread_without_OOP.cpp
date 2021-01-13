@@ -16,8 +16,21 @@
 
 #include "Socket_server.h"
 
-using namespace std;
+char client_message[256];
+char buffer[256];
 
+using namespace std;
+void *reading_message(void * arg) {
+
+    int new_socket = *((int *)arg);
+	recv(new_socket, client_message, 256, 0);
+	
+	
+	cout<<"Passed String = "<<client_message<< endl;
+	pthread_exit(NULL);
+	
+	return NULL;
+}
 int main() {
 	string read_message;
 	
@@ -29,7 +42,7 @@ int main() {
         int amount_of_clients = socket.accept_connection();
 		pthread_t threads;
 		if (amount_of_clients > 0) {
-			pthread_create(&threads, NULL, &Socket_server::read_message, &amount_of_clients);
+			pthread_create(&threads, NULL, reading_message, &amount_of_clients);
 			pthread_join(threads, NULL);
 			// thread threads(&Socket_server::read_message, &socket);
 			// threads.join();

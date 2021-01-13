@@ -12,8 +12,11 @@
 #include "Socket_server.h"
 
 #define NETWORK_QUEUE 5
+#define MESSAGE_LENGTH 256
 
 using namespace std;
+
+typedef void * (*THREADFUNCPTR)(void *);
 
 Socket_server::Socket_server() {
 
@@ -56,18 +59,18 @@ int Socket_server::accept_connection() {
     }
     return client_socket;
 }
-
 // 5. Send and receive data.
     // read data
-int Socket_server::read_message(string &buf, int length) {
-    char buffer[length];
-    bzero(buffer,length);
-    int status = (int)recv(client_socket, buffer, length-1, 0);
-    if (status < 0) {
-        printf("Read error\n");
-    }
-    buf = string(buffer);
-    return status;
+void *Socket_server::read_message(void* arg) {
+
+    int new_socket = *((int *)arg);
+	recv(new_socket, client_message, 256, 0);
+	
+	
+	cout<<"Received String = "<<client_message<< endl;
+	pthread_exit(NULL);
+	
+	return NULL;
 }
     // Send data
 void Socket_server::send_message(string msg) {
