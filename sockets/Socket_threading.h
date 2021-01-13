@@ -28,8 +28,8 @@ using namespace std;
 class Socket_threading {
 public:
   Socket_threading();
-  int read_message(string &buf, int length, int child_socket);
-  void operator()(string message, int message_length, int child_socket);
+  int read_message(string* buf, int length, int child_socket);
+  void operator()(string* message, int message_length, int child_socket);
   // First parantheses is callable class.
   // Second paranthese are parameters.
 };

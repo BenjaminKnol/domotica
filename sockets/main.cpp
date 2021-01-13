@@ -28,11 +28,12 @@ int main() {
 
     while (true) {
         string message;
+        string* message_ptr = &message;
         int child_socket = socket.accept_connection(); // 4. Accept Socket Connection
 		if (child_socket > 0) {
-      std::thread thread_socket(Socket_threading(), message, LENGTH, child_socket);
+      std::thread thread_socket(Socket_threading(), message_ptr, LENGTH, child_socket);
       thread_socket.join();
-      printf("%s\n", message);
+      cout << message << endl;
 		}else {
             continue;
         }
