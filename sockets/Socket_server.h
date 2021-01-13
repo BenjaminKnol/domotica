@@ -21,7 +21,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <pthread.h>
+#include <thread>
 
 using namespace std;
 /*
@@ -43,24 +43,15 @@ public:
     void create_socket();
     void listen_to_client();
     void send_message(string msg);
-	// void read_message();
-	
-	void *read_message(void* arg);
 
     // Ask-function
-	int accept_connection();
-    // int read_message(string &buf, int length);
-    
+	  int accept_connection();
 
-private:	
+private:
     int server_socket;
     int client_socket;
     socklen_t client_address_length;
     struct sockaddr_in server_address, client_address;
     int port = 9002;
-	
-	char client_message[256];
-	char buffer[256];
 };
-
 #endif //SOCKET_1_2_SOCKET_SERVER_H

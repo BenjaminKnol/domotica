@@ -52,6 +52,7 @@ void loop() {
 
   if (client.connected()) { // ---> Send data to server (RPi)
     client.println("This is the WEMOS!");
+    Serial.println("Verstuurd!");
   }
 
   String line = client.readStringUntil('\r'); // --> Read line from server

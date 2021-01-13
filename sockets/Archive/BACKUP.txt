@@ -1,13 +1,4 @@
-int Socket_server::read_message(string &buf, int length) {
-    char buffer[length];
-    bzero(buffer,length);
-    int status = (int)recv(client_socket, buffer, length-1, 0);
-    if (status < 0) {
-        printf("Read error\n");
-    }
-    buf = string(buffer);
-    return status;
-}
+
 
 // socket.read_message(read_message, 256); // Read data from Wemos
 ------------------------------------------------------------------------------------------
@@ -29,3 +20,25 @@ pthread_t client_thread[4];
 			for (int i = 0; i < amount_of_clients; i++) {
 				pthread_create(&threads[i], NULL, reading_message, (void *)threads[i]);
 			}
+
+
+pthread_create(&threads, NULL, &Socket_server::thread_helper, &Socket_server::read_message);
+			pthread_join(threads, NULL);
+
+pthread_t threads;
+
+
+static void * thread_helper(void * arg) {
+  return static_cast<Socket_server*>(arg)->read_message();
+}
+void *Socket_server::read_message(void* arg) {
+
+    int new_socket = *((int *)arg);
+	recv(new_socket, client_message, 256, 0);
+
+
+	cout<<"Received String = "<<client_message<< endl;
+	pthread_exit(NULL);
+
+	return NULL;
+}

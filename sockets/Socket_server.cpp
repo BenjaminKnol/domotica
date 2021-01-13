@@ -12,14 +12,10 @@
 #include "Socket_server.h"
 
 #define NETWORK_QUEUE 5
-#define MESSAGE_LENGTH 256
 
 using namespace std;
 
-typedef void * (*THREADFUNCPTR)(void *);
-
 Socket_server::Socket_server() {
-
 }
 // 1. Create a socket with the socket() system call.
 void Socket_server::create_socket() {
@@ -38,7 +34,7 @@ void Socket_server::create_socket() {
     /* 2. Bind the socket to an address using the bind() system call.
        For a server socket on the Internet, and address consists of a port number on the host machine. */
     bind(server_socket, (struct sockaddr*) &server_address, sizeof(server_address));
-
+    listen_to_client();
 }
 
 // 3. Listen for connections with the listen() system call.
@@ -58,19 +54,6 @@ int Socket_server::accept_connection() {
         printf("Connection has been established\n");
     }
     return client_socket;
-}
-// 5. Send and receive data.
-    // read data
-void *Socket_server::read_message(void* arg) {
-
-    int new_socket = *((int *)arg);
-	recv(new_socket, client_message, 256, 0);
-	
-	
-	cout<<"Received String = "<<client_message<< endl;
-	pthread_exit(NULL);
-	
-	return NULL;
 }
     // Send data
 void Socket_server::send_message(string msg) {

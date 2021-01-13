@@ -12,39 +12,34 @@
  * Version: 1.1 ---> Server socket code is re-written to be Object Orientated.
  *
  * Used sources: https://www.bogotobogo.com/cplusplus/sockets_server_client.php  ---> Socket explanation.
+ *               https://www.geeksforgeeks.org/multithreading-in-cpp/            ---> Callable class
  */
 
 #include "Socket_server.h"
-#include "findLocalIp.h"
+#include "Socket_threading.h"
+
+#define LENGTH 256
 
 using namespace std;
 
 int main() {
-    string read_message;
-	
+    Socket_server socket;
+    socket.create_socket();     // 1. Create Socket 2. Bind Socket. 3. Listen to Socket
 
-    Socket_server socket; // Creating an object
-
-    socket.create_socket();     // 1. Create a socket
-    socket.listen_to_client();  // 3. Listen to incoming connection from clients
-	
     while (true) {
-        int amount_of_clients = socket.accept_connection();
-		pthread_t threads;
-		if (amount_of_clients > 0) {
-			pthread_create(&threads, NULL, &Socket_server::read_message, &amount_of_clients);
-			pthread_join(threads, NULL);
-			// thread threads(&Socket_server::read_message, &socket);
-			// threads.join();
+        string message;
+        int child_socket = socket.accept_connection(); // 4. Accept Socket Connection
+		if (child_socket > 0) {
+      std::thread thread_socket(Socket_threading(), message, LENGTH, child_socket);
+      thread_socket.join();
+      printf("%s\n", message);
 		}else {
             continue;
-        }	
+        }
 			// split message into type and val
 
-			// switch case on type where u can call OBJECT.handle(val) 
-		
+			// switch case on type where u can call OBJECT.handle(val)
     }
-
     return 0;
 }
 
