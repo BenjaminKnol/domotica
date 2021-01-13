@@ -15,13 +15,16 @@
  */
 
 #include "Socket_server.h"
+#include "findLocalIp.h"
 
 using namespace std;
 
 int main() {
-	string read_message;
+    string read_message;
 	
-    Socket_server socket; 		// Creating an object
+
+    Socket_server socket; // Creating an object
+
     socket.create_socket();     // 1. Create a socket
     socket.listen_to_client();  // 3. Listen to incoming connection from clients
 	
