@@ -86,7 +86,7 @@ class webSocketController extends Controller
             //don't know is this works would like someone to test this maybe
 
             Log::create([
-                'type_melding' => $msg,
+                'type_melding' => 1,
                 'description' => $msg,
             ]);
 
