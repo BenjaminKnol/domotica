@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -81,6 +82,13 @@ class webSocketController extends Controller
         if (!(socket_connect($web_client, HOST, PORT))) {
             $errorcode = socket_last_error();
             $errormsg = socket_Strerror($errorcode);
+
+            //don't know is this works would like someone to test this maybe
+
+            Log::create([
+                'type_melding' => $msg,
+                'description' => $msg,
+            ]);
 
             die("503 Service Unavailable: [$errorcode] $errormsg] \n");
         }

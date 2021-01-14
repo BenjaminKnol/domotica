@@ -46,6 +46,9 @@
                         </form>
                     </x-slot>
                 </x-dropdown>
+                <x-nav-link :href="route('homepage')">
+                    {{ __('Back to homepage') }}
+                </x-nav-link>
             </div>
 
             <!-- Hamburger -->
