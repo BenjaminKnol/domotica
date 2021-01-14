@@ -69,7 +69,6 @@ class webSocketController extends Controller
     function web_socket($msg) {
 
 // 1. Create Socket
-        $web_client = socket_create(AF_INET, SOCK_STREAM, 0);
         if (!($web_client = socket_create(AF_INET, SOCK_STREAM, 0))) {
             $errorcode = socket_last_error();
             $errormsg = socket_Strerror($errorcode);
