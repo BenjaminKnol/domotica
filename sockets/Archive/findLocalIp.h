@@ -10,13 +10,15 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+#include <string>
 #include <cstring>
 #include <iostream>
 
+using namespace std;
 
 class findLocalIp {
 public:
-    char[] findLocalIp(){};
+    string findIp();
 };
 
 

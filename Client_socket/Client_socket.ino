@@ -52,13 +52,11 @@ void loop() {
 
   if (client.connected()) { // ---> Send data to server (RPi)
     client.println("This is the WEMOS!");
+    Serial.println("Verstuurd!");
   }
 
   String line = client.readStringUntil('\r'); // --> Read line from server
-  if (!(line.isEmpty())) {
-      Serial.println(line); 
-  }
- 
+  Serial.println(line); 
 
   Serial.println("TCP connection will be closed now!");
   client.stop();

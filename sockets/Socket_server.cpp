@@ -16,7 +16,6 @@
 using namespace std;
 
 Socket_server::Socket_server() {
-
 }
 // 1. Create a socket with the socket() system call.
 void Socket_server::create_socket() {
@@ -35,7 +34,7 @@ void Socket_server::create_socket() {
     /* 2. Bind the socket to an address using the bind() system call.
        For a server socket on the Internet, and address consists of a port number on the host machine. */
     bind(server_socket, (struct sockaddr*) &server_address, sizeof(server_address));
-
+    listen_to_client();
 }
 
 // 3. Listen for connections with the listen() system call.
@@ -55,19 +54,6 @@ int Socket_server::accept_connection() {
         printf("Connection has been established\n");
     }
     return client_socket;
-}
-
-// 5. Send and receive data.
-    // read data
-int Socket_server::read_message(string &buf, int length) {
-    char buffer[length];
-    bzero(buffer,length);
-    int status = (int)recv(client_socket, buffer, length-1, 0);
-    if (status < 0) {
-        printf("Read error\n");
-    }
-    buf = string(buffer);
-    return status;
 }
     // Send data
 void Socket_server::send_message(string msg) {

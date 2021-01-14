@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-define("HOST", '127.0.0.1');
-define("PORT", '9002');
+define("HOST", '192.168.2.13');
+define("PORT", '8080');
 
 /*
  * This file takes the data from the web page to the
