@@ -21,6 +21,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <thread>
 
 using namespace std;
 /*
@@ -33,6 +34,7 @@ using namespace std;
 		This call typically blocks until a client connects with the server.
 	5. Send and receive data.
 */
+
 class Socket_server {
 public:
     Socket_server(); // Default constructor
@@ -43,8 +45,7 @@ public:
     void send_message(string msg);
 
     // Ask-function
-    int read_message(string &buf, int length);
-    int accept_connection();
+	  int accept_connection();
 
 private:
     int server_socket;

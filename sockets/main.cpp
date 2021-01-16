@@ -9,36 +9,41 @@
  *    Niek Hutten
  *    Noureddine Ait Jaa
  * Version: 1.0 ---> Set TCP/IP connection between WEMOS en RPi4
- * Version: 1.1 ---> Server socket code is re-written to Object Orientated.
+ * Version: 1.1 ---> Server socket code is re-written to be Object Orientated.
  *
  * Used sources: https://www.bogotobogo.com/cplusplus/sockets_server_client.php  ---> Socket explanation.
+ *               https://www.geeksforgeeks.org/multithreading-in-cpp/            ---> Callable class
  */
 
 #include "Socket_server.h"
+#include "Socket_threading.h"
+
+#define LENGTH 256
 
 using namespace std;
 
 int main() {
-    char send_message[256] = "Hello from RPi4";
-    string read_message;
-    Socket_server socket; // Creating an object
-
-    socket.create_socket();     // 1. Create a socket
-    socket.listen_to_client();  // 3. Listen to incoming connection from clients.
+    Socket_server socket;
+    socket.create_socket();     // 1. Create Socket 2. Bind Socket. 3. Listen to Socket
 
     while (true) {
-        int amount_of_clients = socket.accept_connection();
-        if (amount_of_clients < 1) {
+        string message;
+        string* message_ptr = &message;
+        int child_socket = socket.accept_connection(); // 4. Accept Socket Connection
+		if (child_socket > 0) {
+      std::thread thread_socket(Socket_threading(), message_ptr, LENGTH, child_socket);
+      thread_socket.join();
+      cout << message << endl;
+		}else {
             continue;
-        } else {
-            break;
         }
+			// split message into type and val
+
+			// switch case on type where u can call OBJECT.handle(val)
     }
-
-    socket.send_message(send_message);  // Send data to Wemos
-    socket.read_message(read_message, 256); // Read data from Wemos
-
-//    cout << "Message from client: " << read_message << endl;    // --> DEBUG only
-
     return 0;
 }
+
+// ARCHIVED functions or variables:
+//    char send_message[256] = "Hello from RPi4";
+//    socket.send_message(send_message);  // Send data to Wemos
