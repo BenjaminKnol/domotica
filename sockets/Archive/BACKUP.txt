@@ -1,0 +1,44 @@
+
+
+// socket.read_message(read_message, 256); // Read data from Wemos
+------------------------------------------------------------------------------------------
+pthread_t client_thread[4];
+			for (long i = 0; i <= 4; i++) {
+				pthread_create(&client_thread[i], NULL, readerT, &read_message);
+				pthread_join(client_thread[i],NULL);
+				// int thread_created = pthread_create(&socket_threads[id], NULL, &worker_thread, &read_message);
+				if (client_thread[i] != 0) {
+					printf("Error: pthread_create() failed\n");
+					exit(EXIT_FAILURE);
+				}
+				pthread_join(client_thread, NULL);
+			}
+			pthread_exit(NULL);
+
+
+
+			for (int i = 0; i < amount_of_clients; i++) {
+				pthread_create(&threads[i], NULL, reading_message, (void *)threads[i]);
+			}
+
+
+pthread_create(&threads, NULL, &Socket_server::thread_helper, &Socket_server::read_message);
+			pthread_join(threads, NULL);
+
+pthread_t threads;
+
+
+static void * thread_helper(void * arg) {
+  return static_cast<Socket_server*>(arg)->read_message();
+}
+void *Socket_server::read_message(void* arg) {
+
+    int new_socket = *((int *)arg);
+	recv(new_socket, client_message, 256, 0);
+
+
+	cout<<"Received String = "<<client_message<< endl;
+	pthread_exit(NULL);
+
+	return NULL;
+}
