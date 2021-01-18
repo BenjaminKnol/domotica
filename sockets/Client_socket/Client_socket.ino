@@ -10,9 +10,11 @@
  *    Noureddine Ait Jaa
  * Versie: 1.0 ---> Set TCP/IP connection between WEMOS en RPi4
  *    
- * Used sources: https://stackoverflow.com/questions/62951017/i-want-to-add-variable-into-json-object-in-arduino --> JSON
+ * Used sources: https://diyprojects.io/get-started-with-arduinojson-v6-arduino-library-for-handling-json-objects/#.YARby-hKiMp --> JSON
+ *               https://www.youtube.com/watch?v=nfr6wddRRxo ---> JSON (video)
  */
 #include <ESP8266WiFi.h>
+#include <ArduinoJson.h>  // --> JSON library
 
 #define SSID_NAME "PJSDV_Grp5_IIHS"
 #define SSID_PSK  "Welkom#1"
@@ -22,8 +24,15 @@ const uint16_t port_number = 9002;
 
 WiFiClient client; // ---> Create a TCP-connection 
 
-String convert_to_json(String furniture, int stat) {
-   return "{\"" + furniture + "\":\"" + String(stat) + "\"}";
+String json_data(String furniture, int status) {
+  const char* data = "{\"type\":\"furniture\",\"status\":status_code}"; // Create JSON skeleton 
+  StaticJsonDocument<96> json_object;     // Create JSON object 
+  json_object["type"] = furniture;      // Modify value in JSON object based on key name
+  json_object["status"] = status;      // Modify value in JSOB object based on key name
+  char send_data[100];              
+  serializeJson(json_object, send_data); // Convert JSON Object to a character string. 
+
+  return send_data;
 }
 void setup() {
   Serial.begin(9600);
@@ -56,7 +65,7 @@ void loop() {
    } 
    
   if (client.connected()) { // ---> Send data to server (RPi)
-      client.println(convert_to_json("stoel", 1));
+      client.println(json_data("zuil", 0));
   }
 
   String line = client.readStringUntil('\r'); // --> Read line from server

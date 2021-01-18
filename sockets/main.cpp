@@ -17,13 +17,24 @@
 
 #include "Socket_server.h"
 #include "Socket_threading.h"
+#include "Json_conversion.h"
+
 
 #define LENGTH 256
 
 using namespace std;
-
+void get_json(string message) {
+  Json::Value json; // JSON document
+  Json::Reader reader; // Create read object
+  reader.parse(message, json, false);
+  Json::Value id = json.get("type", Json::nullValue).asString();      // Get 'id' as a string
+  Json::Value status = json.get("status", Json::nullValue).asInt();   // Get 'status' as an int
+  cout << "This should be the ID: " << id << endl;
+  cout << "This should be the status: " << status << endl;
+}
 int main() {
     Socket_server socket;
+    Json_conversion json_conv;
     socket.create_socket();     // 1. Create Socket 2. Bind Socket. 3. Listen to Socket
 
     while (true) {
@@ -33,7 +44,10 @@ int main() {
 		if (child_socket > 0) {
       std::thread thread_socket(Socket_threading(), message_ptr, LENGTH, child_socket);
       thread_socket.join();
-      cout << message << endl;
+      Json_conversion::deserializer(&json_conv, message);
+      cout << "WERKT DIT? " << json_conv.get_id() << endl;
+      // get_json(message);
+
 		}else {
             continue;
         }
