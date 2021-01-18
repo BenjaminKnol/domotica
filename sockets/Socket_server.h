@@ -8,7 +8,9 @@
  *    Vireen Jagram
  *    Niek Hutten
  *    Noureddine Ait Jaa
-*/
+ *
+ * Used sources: https://www.bogotobogo.com/cplusplus/sockets_server_client.php  ---> Socket explanation.
+ */
 
 #ifndef SOCKET_1_2_SOCKET_SERVER_H
 #define SOCKET_1_2_SOCKET_SERVER_H
@@ -24,16 +26,6 @@
 #include <thread>
 
 using namespace std;
-/*
-	> Steps for establishing a socket on the server side are as follows:
-	1. Create a socket with the socket() system call.
-	2. Bind the socket to an address using the bind() system call.
-		For a server socket on the Internet, and address consists of a port number on the host machine.
-	3. Listen for connections with the listen() system call.
-	4. Accept a connection with the accept() system call.
-		This call typically blocks until a client connects with the server.
-	5. Send and receive data.
-*/
 
 class Socket_server {
 public:

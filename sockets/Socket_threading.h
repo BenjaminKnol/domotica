@@ -1,6 +1,6 @@
 /*
- * This file  ensures that the Raspberry Pi listen to the
- * connection from the Wemos D1 mini devices.
+ * TThis file ensures that the Raspberry Pi can listen to multiple
+ * connections from clients and receive and / or send data.
  *
  * Authors:
  *    Michael Rotteveel
@@ -8,7 +8,9 @@
  *    Vireen Jagram
  *    Niek Hutten
  *    Noureddine Ait Jaa
-*/
+ *
+ * Used sources: https://www.geeksforgeeks.org/multithreading-in-cpp/     ---> Callable class
+ */
 
 #ifndef SOCKET_1_2_SOCKET_THREADING_H
 #define SOCKET_1_2_SOCKET_THREADING_H
