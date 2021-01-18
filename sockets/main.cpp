@@ -1,6 +1,4 @@
 /*
- * This file  ensures that the Raspberry Pi listen to the
- * connection from the Wemos D1 mini devices.
  *
  * Authors:
  *    Michael Rotteveel
@@ -8,56 +6,40 @@
  *    Vireen Jagram
  *    Niek Hutten
  *    Noureddine Ait Jaa
- * Version: 1.0 ---> Set TCP/IP connection between WEMOS en RPi4
- * Version: 1.1 ---> Server socket code is re-written to be Object Orientated.
- *
- * Used sources: https://www.bogotobogo.com/cplusplus/sockets_server_client.php  ---> Socket explanation.
- *               https://www.geeksforgeeks.org/multithreading-in-cpp/            ---> Callable class
  */
 
 #include "Socket_server.h"
 #include "Socket_threading.h"
 #include "Json_conversion.h"
 
+#define MESSAGE_LENGTH 256
 
-#define LENGTH 256
-
-using namespace std;
-void get_json(string message) {
-  Json::Value json; // JSON document
-  Json::Reader reader; // Create read object
-  reader.parse(message, json, false);
-  Json::Value id = json.get("type", Json::nullValue).asString();      // Get 'id' as a string
-  Json::Value status = json.get("status", Json::nullValue).asInt();   // Get 'status' as an int
-  cout << "This should be the ID: " << id << endl;
-  cout << "This should be the status: " << status << endl;
-}
 int main() {
     Socket_server socket;
-    Json_conversion json_conv;
+    Json_conversion import_export_json;
     socket.create_socket();     // 1. Create Socket 2. Bind Socket. 3. Listen to Socket
 
     while (true) {
-        string message;
-        string* message_ptr = &message;
-        int child_socket = socket.accept_connection(); // 4. Accept Socket Connection
+      string receive_message, send_message;
+      string* message_ptr = &receive_message;
+      int child_socket = socket.accept_connection(); // 4. Accept Socket Connection
 		if (child_socket > 0) {
-      std::thread thread_socket(Socket_threading(), message_ptr, LENGTH, child_socket);
+      std::thread thread_socket(Socket_threading(), message_ptr, MESSAGE_LENGTH, child_socket);
+      import_export_json.deserializer(receive_message); // Get data from JSON-object.
+      import_export_json.serializer(send_message);  // Parse data to JSON-object
+      socket.send_message(send_message);
       thread_socket.join();
-      Json_conversion::deserializer(&json_conv, message);
-      cout << "WERKT DIT? " << json_conv.get_id() << endl;
-      // get_json(message);
 
-		}else {
+		} else {
             continue;
-        }
-			// split message into type and val
-
-			// switch case on type where u can call OBJECT.handle(val)
+    }
+    // switch case on type where u can call OBJECT.handle(val)
     }
     return 0;
 }
 
-// ARCHIVED functions or variables:
-//    char send_message[256] = "Hello from RPi4";
-//    socket.send_message(send_message);  // Send data to Wemos
+// ARCHIVED (test) functions or variables:
+// import_export_json.set_id("Schemerlamp"); // Assigning
+// import_export_json.set_status(1);
+// cout << "MAIN 1: " << json_conv.get_id() << endl;
+// cout << "MAIN 2: " << json_conv.get_status() << endl;
