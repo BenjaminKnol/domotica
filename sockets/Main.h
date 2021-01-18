@@ -12,7 +12,7 @@ public:
     int wall(char type, int status, char time_of_day);
     int column();
     int table_lamp(char type, int status, char time_of_day);
-    int fridge(int status)
+    int fridge(int status); 
 
 private:
 

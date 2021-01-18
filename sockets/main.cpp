@@ -31,7 +31,7 @@ int main() {
       thread_socket.join();
 
 		} else {
-            continue;
+            continue; 
     }
     // switch case on type where u can call OBJECT.handle(val)
     }
