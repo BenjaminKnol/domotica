@@ -21,7 +21,7 @@ int main() {
 
     while (true) {
       string receive_message, send_message;
-      string message_ptr = &receive_message;
+      string* message_ptr = &receive_message;
       int child_socket = socket.accept_connection(); // 4. Accept Socket Connection
         if (child_socket > 0) {
       std::thread thread_socket(Socket_threading(), message_ptr, MESSAGE_LENGTH, child_socket);
@@ -31,7 +31,7 @@ int main() {
       thread_socket.join();
 
         } else {
-            continue; 
+            continue;
     }
     // switch case on type where u can call OBJECT.handle(val)
     }
