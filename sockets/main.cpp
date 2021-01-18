@@ -6,7 +6,7 @@
  *    Vireen Jagram
  *    Niek Hutten
  *    Noureddine Ait Jaa
- /
+ */
 
 #include "Socket_server.h"
 #include "Socket_threading.h"
