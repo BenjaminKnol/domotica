@@ -10,13 +10,14 @@
 
 const char* server_host = "172.16.0.1";
 const uint16_t port_number = 9002;
+Servo servo;
 
 void setup(void) {
   Serial.begin(9600);
   Serial.print("Connecting to: ");
   Serial.println(SSID_NAME);
 
-  Servo servo;
+  
   servo.attach(D5);
    
   WiFi.mode(WIFI_STA);
@@ -31,10 +32,8 @@ void setup(void) {
   
   pinMode(D5, OUTPUT); //to flash the mosfet
   Wire.begin();
-  servo.writeMicroseconds(2250);
-  delay(500);
-  servo.writeMicroseconds(750);
-  delay(500);
+ // servo.write(90);
+ // delay(10000);
 }
 
 unsigned int outputs=0;
@@ -42,12 +41,8 @@ unsigned int state=0;
 unsigned counter = 0;
 unsigned int last_input=0;
 void loop() {
-  //flash mosfet output
-  digitalWrite(D5,HIGH);
-  delay(100); 
-  digitalWrite(D5,LOW);
-  delay(100);
 
+  
   /*
   Serial.print("Connecting to: ");
   Serial.print(server_host);
@@ -105,9 +100,10 @@ void loop() {
  */
   if(state){
     outputs = 0x03;
+    servo.write(165);
   }else{
     outputs = 0x00;
-    
+    servo.write(84);
   }
   
   //Set PCA9554 outputs (IO44-IO7)
