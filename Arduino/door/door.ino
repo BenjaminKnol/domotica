@@ -31,6 +31,10 @@ void setup(void) {
   
   pinMode(D5, OUTPUT); //to flash the mosfet
   Wire.begin();
+  servo.writeMicroseconds(2250);
+  delay(500);
+  servo.writeMicroseconds(750);
+  delay(500);
 }
 
 unsigned int outputs=0;
@@ -101,10 +105,9 @@ void loop() {
  */
   if(state){
     outputs = 0x03;
-    servo.writeMicroseconds(1700);
   }else{
     outputs = 0x00;
-    servo.writeMicroseconds(1300);
+    
   }
   
   //Set PCA9554 outputs (IO44-IO7)
