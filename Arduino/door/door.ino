@@ -32,6 +32,7 @@ void setup(void) {
 unsigned int outputs=0;
 unsigned int state=0;
 unsigned counter = 0;
+unsigned int last_input=0;
 void loop() {
   //flash mosfet output
   digitalWrite(D5,HIGH);
@@ -52,7 +53,10 @@ void loop() {
     return;
   }
 
-   String line = client.readStringUntil('\r'); // --> Read line from server
+   String line;
+   client.setTimeout(200);
+   line = client.readStringUntil('\r'); // --> Read line from server
+   Serial.println(line);
   
   //Config PCA9554
   //Inside loop for debugging purpose (hot plugging wemos module into i/o board). 
@@ -70,14 +74,22 @@ void loop() {
   Wire.requestFrom(0x38, 1);   
   unsigned int inputs = Wire.read();  
   Serial.print("Digital in: ");
-  Serial.println(inputs&0x0F);
+  inputs = inputs & 0x03;
+  Serial.println(inputs);
 
-  if((inputs && state == 0) || (line.indexOf("1") > 0 && state == 0)){
-    state = 1;
+  if (last_input) {
+    if (inputs || line.indexOf("0") >= 0) {
+      last_input = 0;
+    } 
+  } else {
+    if (inputs || line.indexOf("1") >= 0) {
+      last_input = 1;
+    }
   }
-
-  if((state == 1 && inputs) || ( state == 1 && counter > 360) || (state == 1 && )){
-    state = 0;
+  if((last_input && !state)){
+    state = last_input;
+  } else if((state && !last_input) || ( state && counter > 360)){
+    state = last_input;
   }
 /*
  * The opening of the door still needs to be implemented go 
@@ -92,12 +104,12 @@ void loop() {
   //Set PCA9554 outputs (IO44-IO7)
   Wire.beginTransmission(0x38); 
   Wire.write(byte(0x01));            
-  Wire.write(byte(outputs));            
+  Wire.write(byte(outputs << 4));            
   Wire.endTransmission(); 
   Serial.print("Digital out: ");
   Serial.println(outputs&0x0F);
 
-  delay(500);
+//  delay(500);
 
   Serial.println("TCP connection will be closed now!");
   client.stop();
