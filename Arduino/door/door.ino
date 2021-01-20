@@ -1,5 +1,6 @@
 #include <Wire.h>
 #include <ESP8266WiFi.h>
+#include <Servo.h>
 
 #define I2C_SDL    D1
 #define I2C_SDA    D2
@@ -14,7 +15,10 @@ void setup(void) {
   Serial.begin(9600);
   Serial.print("Connecting to: ");
   Serial.println(SSID_NAME);
-  
+
+  Servo servo;
+  servo.attach(D5);
+   
   WiFi.mode(WIFI_STA);
   WiFi.begin(SSID_NAME, SSID_PSK);
 
@@ -97,10 +101,10 @@ void loop() {
  */
   if(state){
     outputs = 0x03;
-    digitalWrite(D5,HIGH);
+    servo.writeMicroseconds(1700);
   }else{
     outputs = 0x00;
-    digitalWrite(D5,LOW);
+    servo.writeMicroseconds(1300);
   }
   
   //Set PCA9554 outputs (IO44-IO7)
