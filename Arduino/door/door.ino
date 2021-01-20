@@ -97,8 +97,10 @@ void loop() {
  */
   if(state){
     outputs = 0x03;
+    digitalWrite(D5,HIGH);
   }else{
     outputs = 0x00;
+    digitalWrite(D5,LOW);
   }
   
   //Set PCA9554 outputs (IO44-IO7)
