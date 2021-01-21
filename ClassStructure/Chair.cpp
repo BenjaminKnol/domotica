@@ -3,3 +3,13 @@
 //
 
 #include "Chair.h"
+
+int Chair::getVibratorStatus() const {
+    return vibratorStatus;
+}
+
+void Chair::setVibratorStatus(int vibratorStatus) {
+    Chair::vibratorStatus = vibratorStatus;
+}
+
+

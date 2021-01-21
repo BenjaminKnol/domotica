@@ -8,6 +8,6 @@ int WithLed::getLedStatus() const {
     return ledStatus;
 }
 
-void WithLed::setLedStatus(int status) {
+void WithLed::toggleLedStatus() {
     WithLed::ledStatus == false ? WithLed::ledStatus = true : WithLed::ledStatus = false;
 }

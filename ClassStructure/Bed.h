@@ -8,13 +8,15 @@
 
 #include "Component.h"
 #include "WithLed.h"
+#include "WithForceSensor.h"
 
-class Bed : public Component, public WithLed{
+class Bed : public Component, public WithLed, public WithForceSensor{
 
 public:
 
     Bed(int id, const string& name, const string& description){
         new WithLed();
+        new WithForceSensor();
         Bed::setId(id);
         Bed::setName(name);
         Bed::setDescription(description);

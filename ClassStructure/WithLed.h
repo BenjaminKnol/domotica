@@ -12,7 +12,7 @@ private:
 public:
     int getLedStatus() const;
 
-    void setLedStatus(int ledStatus);
+    void toggleLedStatus();
 };
 
 
