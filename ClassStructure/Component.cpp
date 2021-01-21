@@ -35,3 +35,15 @@ int Component::getStatus() const {
 void Component::setStatus(int status) {
     Component::status = status;
 }
+
+time_t Component::getTimeOfDay() {
+    return time(0);
+}
+
+char *Component::getTimeOfDayUTC(time_t timeOfDay) {
+    char *dt;
+    tm *gmtm = gmtime(&timeOfDay);
+    dt = asctime(gmtm);
+    return dt;
+
+}

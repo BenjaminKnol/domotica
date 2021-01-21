@@ -6,6 +6,7 @@
 #define CLASSSTRUCTURE_COMPONENT_H
 
 #include <string>
+#include <ctime>
 
 using namespace std;
 
@@ -16,6 +17,7 @@ private:
     string name;
     string description;
     int status;
+    time_t timeOfDay = time(0);
 
 public:
 
@@ -32,9 +34,13 @@ public:
 
     int getStatus() const;
 
-    void setStatus(int status);
+    time_t getTimeOfDay();
+
+    char* getTimeOfDayUTC(time_t timeOfDay);
 
     void setDescription(const string &description);
+
+    void setStatus(int status);
 };
 
 
