@@ -6,8 +6,8 @@
 #define CLASSSTRUCTURE_CHAIR_H
 
 
-#include "WithForceSensor.h"
-#include "Component.h"
+#include "Base/Component.h"
+#include "Base/WithForceSensor.h"
 
 class Chair : public Component, public WithForceSensor {
 

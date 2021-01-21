@@ -6,9 +6,9 @@
 #define CLASSSTRUCTURE_BED_H
 
 
-#include "Component.h"
-#include "WithLed.h"
-#include "WithForceSensor.h"
+#include "Base/Component.h"
+#include "Base/WithLed.h"
+#include "Base/WithForceSensor.h"
 
 class Bed : public Component, public WithLed, public WithForceSensor{
 
