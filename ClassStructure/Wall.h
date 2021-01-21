@@ -7,6 +7,7 @@
 
 
 #include "Component.h"
+#include "WithLed.h"
 
 class Wall : public Component, public WithLed{
 

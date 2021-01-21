@@ -7,6 +7,7 @@
 
 
 #include "Component.h"
+#include "WithLed.h"
 
 class Door : public Component, public WithLed {
 
