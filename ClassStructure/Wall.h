@@ -8,9 +8,24 @@
 
 #include "Component.h"
 
-class Wall : public Component {
+class Wall : public Component, public WithLed{
 
+private:
+    Wall::setDimmer();          //dims the LEDstrip
+    Wall::DarkenWindow();    //sets amount of darkening for the window
 };
+
+public:
+    Wall(int id, const string& name, const string& description){
+        new WithLed();
+        Wall::setId(id);
+        Wall::setName(name);
+        Wall::setDescription(description);
+    }
+
+
+
+
 
 
 #endif //CLASSSTRUCTURE_WALL_H

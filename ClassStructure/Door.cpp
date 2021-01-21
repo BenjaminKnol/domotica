@@ -3,3 +3,5 @@
 //
 
 #include "Door.h"
+
+//TODO als de knop op de interface wordt ingedrukt, toggle de deur
