@@ -8,12 +8,12 @@
  *    Vireen Jagram
  *    Niek Hutten
  *    Noureddine Ait Jaa
+ *
+ * Used sources: https://www.bogotobogo.com/cplusplus/sockets_server_client.php  ---> Socket explanation.
  */
 #include "Socket_server.h"
 
 #define NETWORK_QUEUE 5
-
-using namespace std;
 
 Socket_server::Socket_server() {
 }
