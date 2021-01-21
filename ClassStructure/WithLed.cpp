@@ -9,5 +9,5 @@ int WithLed::getLedStatus() const {
 }
 
 void WithLed::setLedStatus(int status) {
-    WithLed::ledStatus = status;
+    WithLed::ledStatus == false ? WithLed::ledStatus = true : WithLed::ledStatus = false;
 }

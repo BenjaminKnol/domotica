@@ -6,57 +6,61 @@
 
 #IncludeRegexTransform: 
 
-D:/NSE/PJSDV/TestingCode/ClassStructure/Bed.h
+D:/NSE/PJSDV/domotica/ClassStructure/Bed.cpp
+Bed.h
+D:/NSE/PJSDV/domotica/ClassStructure/Bed.h
+
+D:/NSE/PJSDV/domotica/ClassStructure/Bed.h
 Component.h
-D:/NSE/PJSDV/TestingCode/ClassStructure/Component.h
+D:/NSE/PJSDV/domotica/ClassStructure/Component.h
 WithLed.h
-D:/NSE/PJSDV/TestingCode/ClassStructure/WithLed.h
+D:/NSE/PJSDV/domotica/ClassStructure/WithLed.h
 
-D:/NSE/PJSDV/TestingCode/ClassStructure/Chair.h
+D:/NSE/PJSDV/domotica/ClassStructure/Chair.h
 WithForceSensor.h
-D:/NSE/PJSDV/TestingCode/ClassStructure/WithForceSensor.h
+D:/NSE/PJSDV/domotica/ClassStructure/WithForceSensor.h
 Component.h
-D:/NSE/PJSDV/TestingCode/ClassStructure/Component.h
+D:/NSE/PJSDV/domotica/ClassStructure/Component.h
 
-D:/NSE/PJSDV/TestingCode/ClassStructure/Column.h
+D:/NSE/PJSDV/domotica/ClassStructure/Column.h
 Component.h
-D:/NSE/PJSDV/TestingCode/ClassStructure/Component.h
+D:/NSE/PJSDV/domotica/ClassStructure/Component.h
 
-D:/NSE/PJSDV/TestingCode/ClassStructure/Component.h
+D:/NSE/PJSDV/domotica/ClassStructure/Component.h
 string
 -
 
-D:/NSE/PJSDV/TestingCode/ClassStructure/Door.h
+D:/NSE/PJSDV/domotica/ClassStructure/Door.h
 Component.h
-D:/NSE/PJSDV/TestingCode/ClassStructure/Component.h
+D:/NSE/PJSDV/domotica/ClassStructure/Component.h
 
-D:/NSE/PJSDV/TestingCode/ClassStructure/Fridge.h
+D:/NSE/PJSDV/domotica/ClassStructure/Fridge.h
 
-D:/NSE/PJSDV/TestingCode/ClassStructure/TableLamp.h
+D:/NSE/PJSDV/domotica/ClassStructure/TableLamp.h
 Component.h
-D:/NSE/PJSDV/TestingCode/ClassStructure/Component.h
+D:/NSE/PJSDV/domotica/ClassStructure/Component.h
 
-D:/NSE/PJSDV/TestingCode/ClassStructure/Wall.h
+D:/NSE/PJSDV/domotica/ClassStructure/Wall.h
 
-D:/NSE/PJSDV/TestingCode/ClassStructure/WithForceSensor.h
+D:/NSE/PJSDV/domotica/ClassStructure/WithForceSensor.h
 
-D:/NSE/PJSDV/TestingCode/ClassStructure/WithLed.h
+D:/NSE/PJSDV/domotica/ClassStructure/WithLed.h
 
-D:/NSE/PJSDV/TestingCode/ClassStructure/main.cpp
+D:/NSE/PJSDV/domotica/ClassStructure/main.cpp
 iostream
 -
 Bed.h
-D:/NSE/PJSDV/TestingCode/ClassStructure/Bed.h
+D:/NSE/PJSDV/domotica/ClassStructure/Bed.h
 Chair.h
-D:/NSE/PJSDV/TestingCode/ClassStructure/Chair.h
+D:/NSE/PJSDV/domotica/ClassStructure/Chair.h
 Column.h
-D:/NSE/PJSDV/TestingCode/ClassStructure/Column.h
+D:/NSE/PJSDV/domotica/ClassStructure/Column.h
 Door.h
-D:/NSE/PJSDV/TestingCode/ClassStructure/Door.h
+D:/NSE/PJSDV/domotica/ClassStructure/Door.h
 TableLamp.h
-D:/NSE/PJSDV/TestingCode/ClassStructure/TableLamp.h
+D:/NSE/PJSDV/domotica/ClassStructure/TableLamp.h
 Wall.h
-D:/NSE/PJSDV/TestingCode/ClassStructure/Wall.h
+D:/NSE/PJSDV/domotica/ClassStructure/Wall.h
 Fridge.h
-D:/NSE/PJSDV/TestingCode/ClassStructure/Fridge.h
+D:/NSE/PJSDV/domotica/ClassStructure/Fridge.h
 

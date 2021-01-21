@@ -13,6 +13,13 @@ class Bed : public Component, public WithLed{
 
 public:
 
+    Bed(int id, const string& name, const string& description){
+        new WithLed();
+        Bed::setId(id);
+        Bed::setName(name);
+        Bed::setDescription(description);
+    }
+
 };
 
 

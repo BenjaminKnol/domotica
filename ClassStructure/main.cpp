@@ -8,7 +8,7 @@
 #include "Fridge.h"
 
 int main() {
-    auto* bed = new Bed();
+    auto* bed = new Bed(1, "Hanks Bed", "Super nice bed");
     auto* chair = new Chair();
     auto* column = new Column();
     auto* door = new Door();
@@ -16,19 +16,8 @@ int main() {
     auto* wall = new Wall();
     auto* fridge = new Fridge();
 
-//    bed->setId(1);
-//    bed->setName("prachtig mooi tweepersoonsbed van Hank");
-//    bed->setDescription("super zacht bed slaap lekker!");
-//    bed->setStatus(1);
-//    bed->setLedStatus(0);
-//    bed->setDescription("super zacht bed slaap lekker!");
-//    bed->setDescription("super zacht bed slaap lekker!");
-//    bed->setDescription("super zacht bed slaap lekker!");
-//    bed->setDescription("super zacht bed slaap lekker!");
-//
-//    cout << bed->getId() << endl;
-//    cout << bed->getName() << endl;
-//    cout << bed->getDescription() << endl;
-//    cout << bed->getLedStatus() << endl;
-//    cout << bed->getStatus() << endl;
+    bed->getLedStatus();
+    cout << bed->getLedStatus() << endl;
+    bed->setLedStatus(bed->getLedStatus());
+    cout << bed->getLedStatus() << endl;
 }

@@ -6,7 +6,9 @@
 #define CLASSSTRUCTURE_WALL_H
 
 
-class Wall {
+#include "Component.h"
+
+class Wall : public Component {
 
 };
 

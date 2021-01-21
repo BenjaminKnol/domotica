@@ -8,7 +8,7 @@
 
 class WithLed {
 private:
-    int ledStatus;
+    int ledStatus = false;
 public:
     int getLedStatus() const;
 
