@@ -25,4 +25,5 @@ public:
 };
 
 
+
 #endif //CLASSSTRUCTURE_BED_H

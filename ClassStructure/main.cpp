@@ -16,9 +16,4 @@ int main() {
     auto* wall = new Wall();
     auto* fridge = new Fridge();
 
-
-    bed->getLedStatus();
-    cout << bed->getLedStatus() << endl;
-    bed->toggleLedStatus();
-    cout << bed->getLedStatus() << endl;
 }

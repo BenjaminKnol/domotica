@@ -6,7 +6,35 @@
 #define CLASSSTRUCTURE_FRIDGE_H
 
 
-class Fridge {
+#include "Component.h"
+
+class Fridge : Component {
+    class CoolElement{
+    public:
+        int status;
+
+        int getStatus() const;
+
+        void setStatus(int status);
+
+    };
+
+private:
+    float temperature{};
+public:
+    Fridge(int id, const string& name, const string& description){
+        new Fridge::CoolElement();
+        Fridge::setId(id);
+        Fridge::setName(name);
+        Fridge::setDescription(description)
+    };
+
+public:
+    float getTemperature() const;
+
+    void setTemperature(float temperature);
+
+public:
 
 };
 
