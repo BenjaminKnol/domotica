@@ -14,8 +14,6 @@ const float R_DIV = 3230.0;                 // Measured resistance of 3.3k resis
 
 
 void setup(void) {
-  pinMode(D5, OUTPUT);                     //LED
-  pinMode(A0, INPUT);                      //ForceSensor
   Wire.begin();
   Serial.begin(115200);
   flash_Mosfet();
@@ -77,7 +75,7 @@ void config_Max11647() {
 }
 
 void readAnalogForceSensor() {            //Read analog 10bit inputs 0 from MAX11647
-  Wire.requestFrom(0x36, 4);              //why 4? maybe change to 2   
+  Wire.requestFrom(0x36, 2);              //2 because only 1 analog input needs to be read
   unsigned int ai0 = Wire.read()&0x03;    //analog input 0, wire.read reads only 8 bits
   ai0=ai0<<8;                             //bitshift with 8 because the analog input is 10 bits
   ai0 = ai0|Wire.read();  

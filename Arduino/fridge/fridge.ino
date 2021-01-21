@@ -1,6 +1,5 @@
 #include <Wire.h>
 #include <ESP8266WiFi.h>
-#include <Servo.h>
 
 #define I2C_SDL    D1
 #define I2C_SDA    D2
@@ -15,12 +14,12 @@ float R1 = 10000;
 float logR2, R2, T, Tc;
 float c1 = 1.009249522e-03, c2 = 2.378405444e-04, c3 = 2.019202697e-07;
 
-
+unsigned int outputs=0;
+unsigned int state=0;
+unsigned counter = 0;
+unsigned int last_input=0;
 
 void setup(void) {
-  pinMode(D5, OUTPUT);                     //LED
-  pinMode(A0, INPUT);                      //NTC (thermal resistor)
-  pinMode(A1, INPUT);                      //NTC (thermal resistor)
   Serial.begin(9600);
   //commented out for testing purpose without needing pi
   /*Serial.print("Connecting to: ");
@@ -42,15 +41,8 @@ void setup(void) {
 }
 
 void loop() {
-  Vo = (analogRead(A0) + analogRead(A1)) / 2;            //reads voltage of the analog pin (test if there's actually 2)
-  R2 = R1 * (1023.0 / (float)Vo - 1.0);                 //resistance = known resistor value * (1023.0 / voltage -1)
-  logR2 = log(R2);
-  T = (1.0 / (c1 + c2*logR2 + c3*logR2*logR2*logR2));   //calculates temperature in Kelvin
-  Tc = T - 273.15;                                      //converts temp to celcius
 
-  Serial.print("Temperature: "); 
-  Serial.print(Tc);
-  Serial.println(" C");   
+  readAnalogSensors();
   /*
   Serial.print("Connecting to: ");
   Serial.print(server_host);
@@ -91,6 +83,7 @@ void loop() {
  * 
  * through the MAX11647 for that make it open during the state == 1. 
  */
+ /*commented out for testing without pi
   if(state){
     outputs = 0x03;
     
@@ -98,6 +91,7 @@ void loop() {
     outputs = 0x00;
     
   }
+  */
   
   //Set PCA9554 outputs (IO44-IO7)
   Wire.beginTransmission(0x38); 
@@ -108,7 +102,35 @@ void loop() {
   Serial.println(outputs&0x0F);
 
 //  delay(500);
-
+/* commented out for testing purposes
   Serial.println("TCP connection will be closed now!");
   client.stop();
+*/
+}
+
+void readAnalogSensors() {            //Read analog 10bit inputs 0 from MAX11647
+  Wire.requestFrom(0x36, 4);              //why 4? maybe change to 2   
+  unsigned int ai0 = Wire.read()&0x03;    //analog input 0, wire.read reads only 8 bits
+  ai0=ai0<<8;                             //bitshift with 8 because the analog input is 10 bits
+  ai0 = ai0|Wire.read();  
+  unsigned int ai1 = Wire.read()&0x03;
+  Serial.print("analog0 is: ");
+  Serial.println(ai0); 
+  Serial.println("");
+  Serial.print("analog1 is: ");
+  Serial.println(ai1); 
+  Serial.println("");
+  if (ai0 != 0) // If analog input is not zero
+  {
+    Vo = (analogRead(ai0) + analogRead(ai1)) / 2;            //reads voltage of the analog pin (test if there's actually 2)
+    R2 = R1 * (1023.0 / (float)Vo - 1.0);                 //resistance = known resistor value * (1023.0 / voltage -1)
+    logR2 = log(R2);
+    T = (1.0 / (c1 + c2*logR2 + c3*logR2*logR2*logR2));   //calculates temperature in Kelvin
+    Tc = T - 273.15;                                      //converts temp to celcius
+    Serial.print("Temperature: "); 
+    Serial.print(Tc);
+    Serial.println(" C");
+  }else{
+    Serial.print("No temperature detected? Sumthing is borked");
+  }
 }
