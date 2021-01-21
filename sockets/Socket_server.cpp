@@ -13,7 +13,7 @@
  */
 #include "Socket_server.h"
 
-#define NETWORK_QUEUE 5
+#define NETWORK_QUEUE 8
 
 Socket_server::Socket_server() {
 }
@@ -56,10 +56,10 @@ int Socket_server::accept_connection() {
     return client_socket;
 }
     // Send data
-void Socket_server::send_message(string msg) {
+void Socket_server::send_message(string msg, int sock) {
     const char * send_buffer = msg.c_str();
     int len = (int)strlen(send_buffer);
-    int status = send(client_socket, send_buffer, len, 0);
+    int status = send(sock, send_buffer, len, 0);
 
     if (status < 0) {
         printf("Send error\n");

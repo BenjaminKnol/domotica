@@ -30,6 +30,6 @@ int Socket_threading::read_message(string* buf, int length, int child_socket) {
     }
     *buf = string(buffer);
 
-    shutdown(child_socket, 2);
+    // shutdown(child_socket, 2);
     return status;
 }

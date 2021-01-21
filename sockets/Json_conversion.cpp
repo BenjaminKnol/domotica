@@ -18,38 +18,25 @@
 Json_conversion::Json_conversion() {
 }
 
-void Json_conversion::serializer(string& send_message) {
-  Json::Value serializer_json;                      // Create JSON document class and store everything in this object.
-  serializer_json["type"] = id;                    // Add value to variable 'id'
-  serializer_json["status"] = status;             // Add value status to variable 'status'
-  Json::StyledWriter writer;                     // Create writer object from JSON-class
-  send_message = writer.write(serializer_json); // Parsing into JSON-Object
-}
 void Json_conversion::deserializer(string& message) {
-  Json::Value deserializer_json;
+  Json::Value deserializer_json;                                                // Create JSON document class and store everything in this object.
   Json::Reader reader;
-  reader.parse(message, deserializer_json, false);
-
-  id = deserializer_json.get("type", Json::nullValue).asString();      // Get 'id' as a string
-  status = deserializer_json.get("status", Json::nullValue).asInt();   // Get 'status' as an int
+  reader.parse(message, deserializer_json);
+  unique_id = deserializer_json.get("guid", Json::nullValue).asInt();
+  id = deserializer_json.get("id", Json::nullValue).asString();              // Add value to variable 'id'
+  status = deserializer_json.get("status", Json::nullValue).asBool();       // Add value status to variable 'status'
+  convert_id = stoi(id); // Necessary since id is received as string and switch-statements can only check with integers or char
 }
 
 /*
 * Getter functions
 */
-string Json_conversion::get_id() {
-  return id;
+int Json_conversion::get_unique_id() {
+  return unique_id;
+}
+int Json_conversion::get_id() {
+  return convert_id;
 }
 int Json_conversion::get_status() {
   return status;
-}
-
-/*
-* Setter functions
-*/
-void Json_conversion::set_id(string setId) {
-  id = setId;
-}
-void Json_conversion::set_status(int setStatus) {
-  status = setStatus;
 }
