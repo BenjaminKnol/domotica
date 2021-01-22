@@ -18,8 +18,10 @@ unsigned int outputs=0;
 unsigned int state=0;
 unsigned counter = 0;
 unsigned int last_input=0;
+unsigned int door;
 
 void activateCooling();
+void doorAlarm();
 
 void setup(void) {
   Serial.begin(9600);
@@ -81,6 +83,12 @@ void loop() {
   Serial.print("Digital in: ");
   inputs = inputs & 0x03;
   Serial.println(inputs);
+
+  if (inputs == 2 ){
+    doorAlarm();
+  }else {
+    door = 0;
+  }
 /*
  * 
  * through the MAX11647 for that make it open during the state == 1. 
@@ -130,13 +138,13 @@ void readAnalogSensors() {            //Read analog 10bit inputs 0 from MAX11647
     activateCooling();
   }else {
     Serial.print("cooling inactive");
-    digitalWrite(D5,LOW);      //peltier?
+    digitalWrite(D5,LOW);      //peltier off
   }
 }
 
 void activateCooling(){
   outputs = 0x01;             //0x1 is de fan
-  digitalWrite(D5,HIGH);      //peltier?
+  digitalWrite(D5,HIGH);      //peltier on
   Serial.println("cooling active");
   Serial.print("");
     //Set PCA9554 outputs (IO44-IO7)
@@ -147,4 +155,11 @@ void activateCooling(){
   Serial.print("Digital out: ");
   Serial.println(outputs&0x0F);
   
+}
+
+void doorAlarm(){
+  if (door == 0) {
+    Serial.println("YOU FORGOT CLOSE THE FRIDGE DOOR!");  
+  }
+  door = 1;
 }
