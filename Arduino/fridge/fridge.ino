@@ -127,7 +127,7 @@ void loop() {
 }
 
 void readAnalogSensors() {            //Read analog 10bit inputs 0 from MAX11647
-  Wire.requestFrom(0x36, 4);              //why 4? maybe change to 2   
+  Wire.requestFrom(0x36, 4);              // 4 needed since two 10 bit ints need to be read in byte size.  
   unsigned int ai0 = Wire.read()&0x03;    //analog input 0, wire.read reads only 8 bits
   ai0=ai0<<8;                             //bitshift with 8 because the analog input is 10 bits
   ai0 = ai0|Wire.read();  
