@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-define("HOST", '192.168.2.13');
+define("HOST", '127.0.0.1');
 define("PORT", '8080');
+define ("WEB_ID", 100);
 
 /*
  * This file takes the data from the web page to the
@@ -37,7 +38,7 @@ class webSocketController extends Controller
     }
 
     function receive_data() {
-        $data = collect([$this->check_id()=>$this->check_status()]);	// Merge two variables into one array
+		$data = collect(["id"=>$this->check_id(), "status"=>$this->check_status(), 'guid'=>WEB_ID]);   // Merge two variables into one array
         $send_data = $data->toJson();
         switch($this->check_id()) {
             case '1':				// Placeholder 1 - BED_LED

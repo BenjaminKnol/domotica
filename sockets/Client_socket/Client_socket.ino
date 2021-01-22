@@ -25,9 +25,9 @@ const uint16_t port_number = 9002;
 WiFiClient client; // ---> Create a TCP-connection
 
 String json_data(String furniture, int status) {
-  const char* data = "{\"type\":\"furniture\",\"status\":status_code}"; // Create JSON skeleton 
-  StaticJsonDocument<96> json_object;     // Create JSON object 
-  json_object["type"] = furniture;      // Modify value in JSON object based on key name
+  const char* data = "{\"id\":\"furniture\",\"status\":status_code}"; // Create JSON skeleton   
+  StaticJsonDocument<96> json_object;     // Create JSON object
+  json_object["id"] = furniture;        // Modify value in JSON object based on key name
   json_object["status"] = status;      // Modify value in JSOB object based on key name
   char send_data[100];              
   serializeJson(json_object, send_data); // Convert JSON Object to a character string. 
@@ -58,12 +58,12 @@ void setup() {
 
 void loop() {
     if (!client.connect(server_host, port_number)) {
-    	Serial.println("Connection has failed");
-    	delay(5000);  // ---> Waiting 5 seconds to re-connecting too server.
-    	return;
+      Serial.println("Connection has failed");
+      delay(5000);  // ---> Waiting 5 seconds to re-connecting too server.
+      return;
    }
   if (client.connected()) { // ---> Send data to server (RPi)
-      client.println(json_data("zuil", 0));
+      client.println(json_data("2", 0));
   }
 
   String line = client.readStringUntil('\r'); // --> Read line from server
@@ -71,5 +71,5 @@ void loop() {
       Serial.println(line);
   }
   Serial.println("TCP connection will be closed now!");
-  client.stop();
+//  client.stop();
 }
