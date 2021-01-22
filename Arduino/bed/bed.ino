@@ -36,6 +36,7 @@ unsigned int inputs=0;
 unsigned int lastInput
 unsigned int firstRun=2;
 unsigned int inBed = 0;
+String line;
 
 WiFiClient client; // ---> Create a TCP-connection 
 
@@ -63,7 +64,7 @@ void loop(void) {
     return;
   }
   
-  String line;
+  
   client.setTimeout(200);
   line = client.readStringUntil('\r'); // --> Read line from server
   Serial.println(line);
