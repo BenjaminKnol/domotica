@@ -33,7 +33,7 @@ unsigned int state=0;
 uint16_t OutOfBedcounter = 0;
 uint16_t lightCounter = 0;
 unsigned int inputs=0;
-unsigned int lastInput
+unsigned int lastInput;
 unsigned int firstRun=2;
 unsigned int inBed = 0;
 String line;
