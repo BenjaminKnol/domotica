@@ -105,7 +105,7 @@ void loop() {
     }
     outputs = 0x03;
     servo.write(165);
-    counter++
+    counter++;
   }else{
     if(nextState == 0){
       nextState = 1;
