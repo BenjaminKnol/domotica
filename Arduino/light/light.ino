@@ -133,7 +133,7 @@ void config_Max11647() {
   Wire.endTransmission(); 
 }
 
-void turnOnLight(){ //[PLACEHOLDER] Until able to figure out just what led is used I will leave the implementation of turning on the light empty.
+void turnOnLight(){ //[PLACEHOLDER] Until able to figure out just what led is used I will leave the implementation of turning on the light empty. Also firstrun never gets set to 1 again. figure something out fro this
   state = 1;
   if(firstRun){
     firstRun = 0;
@@ -141,7 +141,7 @@ void turnOnLight(){ //[PLACEHOLDER] Until able to figure out just what led is us
   }
 }
 
-void turnOffLight(){ //[PLACEHOLDER] Until able to figure out just what led is used I will leave the implementation of turning off the light empty.
+void turnOffLight(){ //[PLACEHOLDER] Until able to figure out just what led is used I will leave the implementation of turning off the light empty. Also firstrun never gets set to 1 again. figure something out fro this
   state = 0;
   if(firstRun){
     firstRun = 0;
