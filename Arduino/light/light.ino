@@ -32,7 +32,7 @@ unsigned int state=0;
 unsigned int inputs=0;
 unsigned int activityCounter=0;
 unsigned int firstRun = 1;
-
+unsigned int outputs = 0;
 
 void setup() {
   Wire.begin();
