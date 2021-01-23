@@ -31,6 +31,8 @@ void inBedControl();
 const float VCC = 4.98;                     // Measured voltage of Ardunio 5V line
 const float R_DIV = 3230.0;                 // Measured resistance of 3.3k resistor
 
+const char* server_host = "172.16.0.1";
+const uint16_t port_number = 9002;
 unsigned int outputs=0;
 unsigned int state=0;
 uint16_t OutOfBedcounter = 0;
