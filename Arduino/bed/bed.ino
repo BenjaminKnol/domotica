@@ -12,6 +12,9 @@
 #define I2C_SDL    D1
 #define I2C_SDA    D2
 
+#define SSID_NAME "PJSDV_Grp5_IIHS"
+#define SSID_PSK  "Welkom#1"
+
 void flash_Mosfet();
 String json_data(String, int);
 void config_PCA9554();
