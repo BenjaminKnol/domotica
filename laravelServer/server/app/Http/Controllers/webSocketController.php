@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 
 define("HOST", '127.0.0.1');
-define("PORT", '8080');
+define("PORT", '9002');
 define ("WEB_ID", 100);
 
 /*
