@@ -24,13 +24,13 @@
 Json_conversion import_export_json;
 
 // Start Component objects
-auto* bed_led_obj = new Bed();
-auto* chair_obj = new Chair;
-auto* fridge_obj = new Fridge();
-auto* wall_obj = new Wall();
-auto* table_lamp_obj = new TableLamp();
-auto* door_obj = new Door();
-auto* column_obj = new Column();
+auto* bed_led_obj = new Bed(1, "Bed", "pretty soft bed");
+auto* chair_obj = new Chair(2, "Chair", "nice vibratin chair");
+auto* fridge_obj = new Fridge(3, "Fridge", "cool fridge");
+auto* wall_obj = new Wall(4, "Wall", "rocksollid");
+auto* table_lamp_obj = new TableLamp(5, "Table Lamp", "Nice and bright");
+auto* door_obj = new Door(6, "Door", "KaSLAMo");
+auto* column_obj = new Column(7, "Column", "it's getting dark in here");
 // End Component objects
 
 void menu() {
