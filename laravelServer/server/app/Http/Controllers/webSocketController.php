@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -42,24 +43,52 @@ class webSocketController extends Controller
         switch($this->check_id()) {
             case '1':				// Placeholder 1 - BED_LED
                 $this->web_socket($send_data);
+                Log::create([
+                    'type' => $send_data->type,
+                    'description' => $send_data->description,
+                ]);
                 break;
             case '2':			// Placeholder 2 - DEUR
                 $this->web_socket($send_data);
+                Log::create([
+                    'type' => $send_data->type,
+                    'description' => $send_data->description,
+                ]);
                 break;
             case '3':		// Placeholder 3 - KOELKAST
                 $this->web_socket($send_data);
+                Log::create([
+                    'type' => $send_data->type,
+                    'description' => $send_data->description,
+                ]);
                 break;
             case '4': 			// Placeholder 4 - MUUR
                 $this->web_socket($send_data);
+                Log::create([
+                    'type' => $send_data->type,
+                    'description' => $send_data->description,
+                ]);
                 break;
             case '5': 	// Placeholder 5 - SCHEMERLAMP
                 $this->web_socket($send_data);
+                Log::create([
+                    'type' => $send_data->type,
+                    'description' => $send_data->description,
+                ]);
                 break;
             case '6':			// Placeholder 6 - STOEL
                 $this->web_socket($send_data);
+                Log::create([
+                    'type' => $send_data->type,
+                    'description' => $send_data->description,
+                ]);
                 break;
             case '7':			// Placeholder 7 - ZUIL
                 $this->web_socket($send_data);
+                Log::create([
+                    'type' => $send_data->type,
+                    'description' => $send_data->description,
+                ]);
                 break;
             default:
                 break;
@@ -80,6 +109,8 @@ class webSocketController extends Controller
         if (!(socket_connect($web_client, HOST, PORT))) {
             $errorcode = socket_last_error();
             $errormsg = socket_Strerror($errorcode);
+
+            //don't know is this works would like someone to test this maybe
 
             die("503 Service Unavailable: [$errorcode] $errormsg] \n");
         }

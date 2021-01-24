@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoggingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,8 +19,6 @@ Route::get('/', 'App\Http\Controllers\Controller@index')->name('homepage');
 Route::post('/options', 'App\Http\Controllers\Controller@changeOption')->name('options');
 Route::post('/web_socket', 'App\Http\Controllers\webSocketController@receive_data')->name('web_socket'); // Parse and send data to C++
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard','LoggingController@index')->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';

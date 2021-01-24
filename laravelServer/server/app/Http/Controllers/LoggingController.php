@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Log;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
 class LoggingController extends Controller
@@ -15,7 +16,8 @@ class LoggingController extends Controller
     public function index()
     {
         $logs = Log::all();
-        return view('logging.index',['logs' => $logs]);
+        $statuses = Status::all();
+        return view('logging.index', compact(['logs', 'statuses']));
     }
 
     /**
