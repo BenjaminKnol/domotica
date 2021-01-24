@@ -34,6 +34,9 @@ public:
   int get_unique_id();
   int get_id();
   int get_status();
+  
+  // Setter functions
+  void set_convert_id(int new_int);
 
 private:
   int unique_id;
