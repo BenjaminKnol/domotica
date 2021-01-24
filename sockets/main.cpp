@@ -24,13 +24,13 @@
 Json_conversion import_export_json;
 
 // Start Component objects
-Bed bed_led_obj;
-Chair chair_obj;
-Fridge fridge_obj;
-Wall wall_obj;
-TableLamp table_lamp_obj;
-Door door_obj;
-Column column_obj;
+auto* bed_led_obj = new Bed();
+auto* chair_obj = new Chair;
+auto* fridge_obj = new Fridge();
+auto* wall_obj = new Wall();
+auto* table_lamp_obj = new TableLamp();
+auto* door_obj = new Door();
+auto* column_obj = new Column();
 // End Component objects
 
 void menu() {
