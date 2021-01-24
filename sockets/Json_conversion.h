@@ -40,7 +40,7 @@ public:
 
 private:
   int unique_id;
-  string id;
+  string id = "";
   int convert_id; // = a convertion from string ID to int ID with function stoi()
   bool status;
 };
