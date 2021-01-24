@@ -1,3 +1,0 @@
-C:\Users\Asus\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\202.6948.80\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\ClassStructure.dir/objects.a
-C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\ar.exe cr CMakeFiles\ClassStructure.dir/objects.a @CMakeFiles\ClassStructure.dir\objects1.rsp
-C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\G__~1.EXE -g   -Wl,--whole-archive CMakeFiles\ClassStructure.dir/objects.a -Wl,--no-whole-archive  -o ClassStructure.exe -Wl,--out-implib,libClassStructure.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\ClassStructure.dir\linklibs.rsp

@@ -1,3 +1,0 @@
-D:/NSE/PJSDV/domotica/ClassStructure/cmake-build-debug/CMakeFiles/ClassStructure.dir
-D:/NSE/PJSDV/domotica/ClassStructure/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/NSE/PJSDV/domotica/ClassStructure/cmake-build-debug/CMakeFiles/rebuild_cache.dir
