@@ -13,7 +13,7 @@
  *               http://www.danielsoltyka.com/programming/2011/04/15/simple-class-serialization-with-jsoncpp/
  *               https://linux.tips/programming/how-to-install-and-use-json-cpp-library-on-ubuntu-linux-os      ---> How to install JsonCpp
  */
-#include <jsoncpp/json/json.h>
+//#include <jsoncpp/json/json.h>
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,15 +26,18 @@ class Json_conversion {
 public:
   Json_conversion(); // Default constructor
 
+  // Do functions
   void serializer(string& send_message);
   void deserializer(string& message);
 
-  void set_id(string setId); // Set ID
-  void set_status(int setStatus); // Set status
-  string get_id();    // Get id
-  int get_status(); // Get status
+  // Getter functions
+  int get_unique_id();
+  int get_id();
+  int get_status();
 
 private:
+  int unique_id;
   string id;
-  int status;
+  int convert_id; // = a convertion from string ID to int ID with function stoi()
+  bool status;
 };

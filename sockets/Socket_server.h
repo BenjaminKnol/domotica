@@ -34,7 +34,7 @@ public:
     // Do-function
     void create_socket();
     void listen_to_client();
-    void send_message(string msg);
+    void send_message(string msg, int sock);
 
     // Ask-function
 	  int accept_connection();
