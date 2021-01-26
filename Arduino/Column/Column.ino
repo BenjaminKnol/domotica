@@ -13,6 +13,8 @@ const uint16_t port_number = 9002;
 
 unsigned int led = 1;
 unsigned int buzzer = 0x01;
+unsigned int input = 0;
+unsigned int lastInput = 0;
 
 WiFiClient client; // ---> Create a TCP-connection 
 
@@ -81,7 +83,7 @@ void loop() {
   Wire.write(byte(0x00));      
   Wire.endTransmission();
   Wire.requestFrom(0x38, 1);   
-  unsigned int inputs = Wire.read();  
+  inputs = Wire.read() & 0x01;            //TEST THIS, check if it actually is the switch
   Serial.print("Digital in: ");
   inputs = inputs & 0x03;
   Serial.println(inputs);
@@ -110,24 +112,29 @@ void readGasSensors() {                   //Read analog 10bit inputs 0 from MAX1
   Serial.println(ai0); 
   Serial.println("");
 
-  if(ai0 > 0){
+  if(ai0 > 0 || (inputs && (lastInput == 0)){
     activateBuzzer();
-  }else{
+    lastInput = 1;
+  }else if (ai <=0 && (input && (lastInput == 1))){
     Serial.print("buzzer inactive");
+    noTone(buzzer);                       // Stop sound
+    lastIput = 0;
+    client.println(json_data("6", 0));     //
   }
 }
 
 void activateBuzzer(){   
-  tone(buzzer, 500); // Send 0.5KHz sound signal            TEST THIS, no idea if it works
-  delay(1000);        // for 1 sec
-  tone(buzzer, 1000); // Send 1KHz sound signal
-  delay(1000);        // for 1 sec
-  noTone(buzzer);     // Stop sound
+  client.println(json_data("6", 1));
+  tone(buzzer, 500);                      // Send 0.5KHz sound signal            TEST THIS, no idea if it works
+  delay(1000);            
+  tone(buzzer, 1000);                     // Send 1KHz sound signal             TEST THIS, for pitch difference
+  delay(1000);        
   Serial.println("Should pause buzzing!");
-  delay(1000);        // for 1sec
- 
+  delay(1000);
+  
   Serial.println("Should be buzzing!");
   Serial.print("");
+  
     //Set PCA9554 outputs (IO4-IO7)
   Wire.beginTransmission(0x38); 
   Wire.write(byte(0x01));            
