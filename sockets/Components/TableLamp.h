@@ -6,8 +6,8 @@
 #define CLASSSTRUCTURE_TABLELAMP_H
 
 
-#include "Component.h"
-#include "WithLed.h"
+#include "Base/Component.h"
+#include "Base/WithLed.h"
 
 class TableLamp : public Component, public WithLed {
 private:

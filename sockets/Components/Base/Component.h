@@ -43,7 +43,7 @@ public:
 
     void setStatus(int status);
 
-    void cacheStatus(int serverId, int status);
+    int cacheStatus(int serverId, int status);
 };
 
 

@@ -12,8 +12,8 @@
 class Wall : public Component, public WithLed {
 
 private:
-    setDimmer();          //dims the LEDstrip
-    DarkenWindow();    //sets amount of darkening for the window
+    int setDimmer();          //dims the LEDstrip
+    int DarkenWindow();    //sets amount of darkening for the window
 
 public:
     Wall(int id, const string &name, const string &description) {
