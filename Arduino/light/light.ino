@@ -1,14 +1,18 @@
 #include <Wire.h>
 #include <ESP8266WiFi.h>
 #include <ArduinoJson.h>  // --> JSON library
+#include <Adafruit_NeoPixel.h>
 
-/* Possible LED libraries:
- *  https://www.arduino.cc/reference/en/libraries/rgb_led/
- *  
-*/
+/* Adafruit neopixel library github:
+ *  https://github.com/adafruit/Adafruit_NeoPixel
+ */
 
 #define I2C_SDL    D1
 #define I2C_SDA    D2
+
+#define PIN       D5
+#define NUMPIXELS 1
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 #define SSID_NAME "PJSDV_Grp5_IIHS"
 #define SSID_PSK  "Welkom#1"
@@ -21,8 +25,6 @@ void readPCA9554Outputs();
 void config_Max11647();
 void turnOnLight();
 void turnOffLight();
-
-
 
 const char* server_host = "172.16.0.1";
 const uint16_t port_number = 9002;
@@ -45,6 +47,8 @@ void setup() {
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(SSID_NAME, SSID_PSK);
+
+  pixels.begin();
 }
 
 void loop() {
@@ -135,6 +139,7 @@ void config_Max11647() {
 
 void turnOnLight(){ //[PLACEHOLDER] Until able to figure out just what led is used I will leave the implementation of turning on the light empty. Also firstrun never gets set to 1 again. figure something out fro this
   state = 1;
+  pixels.setPixelColor(1, pixels.Color(255, 188, 0));
   if(firstRun){
     firstRun = 0;
     client.println(json_data("5", 1));
@@ -143,6 +148,7 @@ void turnOnLight(){ //[PLACEHOLDER] Until able to figure out just what led is us
 
 void turnOffLight(){ //[PLACEHOLDER] Until able to figure out just what led is used I will leave the implementation of turning off the light empty. Also firstrun never gets set to 1 again. figure something out fro this
   state = 0;
+  pixels.setPixelColor(1, pixels.Color(0, 0, 0));
   if(firstRun){
     firstRun = 0;
     client.println(json_data("5", 0));
