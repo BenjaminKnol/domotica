@@ -16,7 +16,7 @@ private:
 
 public:
     Door(int id, const string &name, const string &description) {
-        WithLed led = new Withled();
+        new WithLed();
         Door::setId(id);
         Door::setName(name);
         Door::setDescription(description);
