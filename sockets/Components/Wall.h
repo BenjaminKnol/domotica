@@ -9,7 +9,7 @@
 #include "Component.h"
 #include "WithLed.h"
 
-class Wall : public Component, public WithLed{
+class Wall : public Component, public WithLed {
 
 private:
     Wall::setDimmer();          //dims the LEDstrip
@@ -17,16 +17,13 @@ private:
 };
 
 public:
-    Wall(int id, const string& name, const string& description){
-        new WithLed();
-        Wall::setId(id);
-        Wall::setName(name);
-        Wall::setDescription(description);
-    }
 
-
-
-
+Wall(int id, const string &name, const string &description) {
+    new WithLed();
+    Wall::setId(id);
+    Wall::setName(name);
+    Wall::setDescription(description);
+}
 
 
 #endif //CLASSSTRUCTURE_WALL_H

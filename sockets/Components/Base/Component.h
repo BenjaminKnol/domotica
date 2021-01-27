@@ -36,7 +36,7 @@ public:
 
     time_t getTimeOfDay();
 
-    char* getTimeOfDayUTC(time_t timeOfDay);
+    char *getTimeOfDayUTC(time_t timeOfDay);
 
     void setDescription(const string &description);
 

@@ -15,11 +15,11 @@ private:
     int vibratorStatus;
 
 public:
-    Chair(int id, const string& name, const string& description){
-    new WithForceSensor();
-    Chair::setId(id);
-    Chair::setName(name);
-    Chair::setDescription(description);
+    Chair(int id, const string &name, const string &description) {
+        new WithForceSensor();
+        Chair::setId(id);
+        Chair::setName(name);
+        Chair::setDescription(description);
 
     }
 

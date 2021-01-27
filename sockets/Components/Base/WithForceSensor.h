@@ -17,5 +17,4 @@ public:
 };
 
 
-
 #endif //CLASSSTRUCTURE_WITHFORCESENSOR_H

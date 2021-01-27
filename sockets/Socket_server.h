@@ -33,11 +33,13 @@ public:
 
     // Do-function
     void create_socket();
+
     void listen_to_client();
+
     void send_message(string msg, int sock);
 
     // Ask-function
-	  int accept_connection();
+    int accept_connection();
 
 private:
     int server_socket;
@@ -46,4 +48,5 @@ private:
     struct sockaddr_in server_address, client_address;
     int port = 9002;
 };
+
 #endif //SOCKET_1_2_SOCKET_SERVER_H

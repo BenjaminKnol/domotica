@@ -17,14 +17,15 @@ Socket_threading::Socket_threading() {
 
 }
 
-void Socket_threading::operator()(string* message_ptr, int message_length, int child_socket) {
+void Socket_threading::operator()(string *message_ptr, int message_length, int child_socket) {
     read_message(message_ptr, message_length, child_socket);
 }
+
 // 5. Receive data.
-int Socket_threading::read_message(string* buf, int length, int child_socket) {
+int Socket_threading::read_message(string *buf, int length, int child_socket) {
     char buffer[length];
     memset((buffer), 0, (length));
-    int status = (int)recv(child_socket, buffer, length-1, 0);
+    int status = (int) recv(child_socket, buffer, length - 1, 0);
     if (status < 0) {
         printf("Read error\n");
     }

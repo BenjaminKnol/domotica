@@ -6,9 +6,9 @@
 
 
 void TableLamp::detectMotion() {
-    if (TableLamp::motionSensorStatus){
+    if (TableLamp::motionSensorStatus) {
         TableLamp::toggleLedStatus();
-    } else{
+    } else {
         return;
     }
 }

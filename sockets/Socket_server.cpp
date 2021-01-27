@@ -17,6 +17,7 @@
 
 Socket_server::Socket_server() {
 }
+
 // 1. Create a socket with the socket() system call.
 void Socket_server::create_socket() {
     server_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -28,12 +29,12 @@ void Socket_server::create_socket() {
 
     // Define the server address structure
     server_address.sin_family = AF_INET;
-    server_address.sin_addr.s_addr = INADDR_ANY;	// Any address
+    server_address.sin_addr.s_addr = INADDR_ANY;    // Any address
     server_address.sin_port = htons(port);
 
     /* 2. Bind the socket to an address using the bind() system call.
        For a server socket on the Internet, and address consists of a port number on the host machine. */
-    bind(server_socket, (struct sockaddr*) &server_address, sizeof(server_address));
+    bind(server_socket, (struct sockaddr *) &server_address, sizeof(server_address));
     listen_to_client();
 }
 
@@ -47,7 +48,7 @@ void Socket_server::listen_to_client() {
 int Socket_server::accept_connection() {
     printf("Waiting for incoming connection...\n");
     client_address_length = sizeof(client_address);
-    client_socket = accept(server_socket, (struct sockaddr*) &client_address, &client_address_length);
+    client_socket = accept(server_socket, (struct sockaddr *) &client_address, &client_address_length);
     if (client_socket == -1) {
         printf("Error\n");
     } else {
@@ -55,10 +56,11 @@ int Socket_server::accept_connection() {
     }
     return client_socket;
 }
-    // Send data
+
+// Send data
 void Socket_server::send_message(string msg, int sock) {
-    const char * send_buffer = msg.c_str();
-    int len = (int)strlen(send_buffer);
+    const char *send_buffer = msg.c_str();
+    int len = (int) strlen(send_buffer);
     int status = send(sock, send_buffer, len, 0);
 
     if (status < 0) {

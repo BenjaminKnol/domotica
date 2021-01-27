@@ -9,7 +9,7 @@
 #include "Component.h"
 
 class Fridge : Component {
-    class CoolElement{
+    class CoolElement {
     public:
         int status;
 
@@ -22,7 +22,7 @@ class Fridge : Component {
 private:
     float temperature{};
 public:
-    Fridge(int id, const string& name, const string& description){
+    Fridge(int id, const string &name, const string &description) {
         new Fridge::CoolElement();
         Fridge::setId(id);
         Fridge::setName(name);

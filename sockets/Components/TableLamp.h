@@ -13,12 +13,13 @@ class TableLamp : public Component, public WithLed {
 private:
     int motionSensorStatus = false;
 public:
-    TableLamp(int id, const string& name, const string& description){
+    TableLamp(int id, const string &name, const string &description) {
         new WithLed();
         TableLamp::setId(id);
         TableLamp::setName(name);
         TableLamp::setName(description);
     }
+
     void detectMotion();
 };
 

@@ -10,11 +10,11 @@
 #include "Base/WithLed.h"
 #include "Base/WithForceSensor.h"
 
-class Bed : public Component, public WithLed, public WithForceSensor{
+class Bed : public Component, public WithLed, public WithForceSensor {
 
 public:
 
-    Bed(int id, const string& name, const string& description){
+    Bed(int id, const string &name, const string &description) {
         new WithLed();
         new WithForceSensor();
         Bed::setId(id);
@@ -23,7 +23,6 @@ public:
     }
 
 };
-
 
 
 #endif //CLASSSTRUCTURE_BED_H

@@ -24,23 +24,26 @@ using namespace std;
 
 class Json_conversion {
 public:
-  Json_conversion(); // Default constructor
+    Json_conversion(); // Default constructor
 
-  // Do functions
-  void serializer(string& send_message);
-  void deserializer(string& message);
+    // Do functions
+    void serializer(string &send_message);
 
-  // Getter functions
-  int get_unique_id();
-  int get_id();
-  int get_status();
-  
-  // Setter functions
-  void set_convert_id(int new_int);
+    void deserializer(string &message);
+
+    // Getter functions
+    int get_unique_id();
+
+    int get_id();
+
+    int get_status();
+
+    // Setter functions
+    void set_convert_id(int new_int);
 
 private:
-  int unique_id;
-  string id = "";
-  int convert_id; // = a convertion from string ID to int ID with function stoi()
-  bool status;
+    int unique_id;
+    string id = "";
+    int convert_id; // = a convertion from string ID to int ID with function stoi()
+    bool status;
 };
