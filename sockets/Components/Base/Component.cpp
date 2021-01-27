@@ -2,6 +2,8 @@
 // Created by Asus on 20-1-2021.
 //
 
+#define WEBSERVER_ID
+
 #include "Component.h"
 
 int Component::getId() const {
@@ -46,4 +48,14 @@ char *Component::getTimeOfDayUTC(time_t timeOfDay) {
     dt = asctime(gmtm);
     return dt;
 
+}
+
+int Component::cacheStatus(int serverId, int status) {
+    if (serverId == WEBSERVER_ID){
+        cachedStatus = status;
+        return 2 //returns '2' if state is cached (bc 0 and 1 could be confused with states)
+    }
+    else if (cachedStatus){
+        return cachedStatus; // returns status if there is one cached
+    }
 }

@@ -18,6 +18,7 @@ private:
     string description;
     int status;
     time_t timeOfDay = time(0);
+    int cachedStatus;
 
 public:
 
@@ -41,6 +42,8 @@ public:
     void setDescription(const string &description);
 
     void setStatus(int status);
+
+    void cacheStatus(int serverId, int status);
 };
 
 
