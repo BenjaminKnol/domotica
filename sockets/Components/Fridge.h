@@ -26,7 +26,7 @@ public:
         new Fridge::CoolElement();
         Fridge::setId(id);
         Fridge::setName(name);
-        Fridge::setDescription(description)
+        Fridge::setDescription(description);
     };
 
 public:

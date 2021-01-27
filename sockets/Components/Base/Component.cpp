@@ -53,7 +53,7 @@ char *Component::getTimeOfDayUTC(time_t timeOfDay) {
 int Component::cacheStatus(int serverId, int status) {
     if (serverId == WEBSERVER_ID){
         cachedStatus = status;
-        return 2 //returns '2' if state is cached (bc 0 and 1 could be confused with states)
+        return 2; //returns '2' if state is cached (bc 0 and 1 could be confused with states)
     }
     else if (cachedStatus){
         return cachedStatus; // returns status if there is one cached

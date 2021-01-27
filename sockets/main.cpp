@@ -30,7 +30,7 @@ auto *fridge_obj = new Fridge(3, "Fridge", "cool fridge");
 auto *wall_obj = new Wall(4, "Wall", "rocksollid");
 auto *table_lamp_obj = new TableLamp(5, "Table Lamp", "Nice and bright");
 auto *door_obj = new Door(6, "Door", "KaSLAMo");
-auto *column_obj = new Column(7, "Column", "it's getting dark in here");
+//auto *column_obj = new Column(7, "Column", "it's getting dark in here");
 // End Component objects
 
 void menu() {
@@ -54,7 +54,7 @@ void menu() {
             door_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status());
             break;
         case 7: // column
-            column_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status());
+            //column_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status());
             break;
         default:
             cout << "Could not match the appropriate ID.\n";
