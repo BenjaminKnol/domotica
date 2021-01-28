@@ -37,11 +37,8 @@ void Json_conversion::deserializer(string &message) {
     unique_id = deserializer_json.get("guid", Json::nullValue).asInt();
     id = deserializer_json.get("id", Json::nullValue).asString();              // Add value to variable 'id'
     status = deserializer_json.get("status", Json::nullValue).asBool();       // Add value status to variable 'status'
-    cout << "String: " << id << endl;
     if (check_number(id)) {
-        cout << "int: " << id << endl;
-        convert_id = stoi(
-                id);// Necessary since id is received as string and switch-statements can only check with integers or char
+        convert_id = stoi(id);      // Necessary since id is received as string and switch-statements can only check with integers or char
     }
 }
 

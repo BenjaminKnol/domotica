@@ -8,6 +8,7 @@
 
 #include "Base/Component.h"
 #include "Base/WithLed.h"
+#include "../Socket_server.h"
 
 class TableLamp : public Component, public WithLed {
 private:
@@ -19,6 +20,7 @@ public:
         TableLamp::setName(name);
         TableLamp::setName(description);
     }
+    virtual int cacheStatus(int serverId, int status, int socket) override;
 
     void detectMotion();
 };

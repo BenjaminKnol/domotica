@@ -58,10 +58,10 @@ int Socket_server::accept_connection() {
 }
 
 // Send data
-void Socket_server::send_message(string msg, int sock) {
+void Socket_server::send_message(string msg, int child_socket) {
     const char *send_buffer = msg.c_str();
     int len = (int) strlen(send_buffer);
-    int status = send(sock, send_buffer, len, 0);
+    int status = send(child_socket, send_buffer, len, 0);
 
     if (status < 0) {
         printf("Send error\n");

@@ -33,28 +33,28 @@ auto *door_obj = new Door(6, "Door", "KaSLAMo");
 //auto *column_obj = new Column(7, "Column", "it's getting dark in here");
 // End Component objects
 
-void menu() {
+void menu(int child_socket) {
     switch (import_export_json.get_id()) {
         case 1: // bed led
-            bed_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status());
+            bed_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status(), child_socket);
             break;
         case 2: // chair
-            chair_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status());
+            chair_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status(), child_socket);
             break;
         case 3: // fridge
-            fridge_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status());
+            fridge_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status(), child_socket);
             break;
         case 4: // wall
-            wall_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status());
+            wall_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status(), child_socket);
             break;
         case 5: // table lamp
-            table_lamp_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status());
+            table_lamp_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status(), child_socket);
             break;
         case 6: // door
-            door_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status());
+            door_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status(), child_socket);
             break;
         case 7: // column
-            //column_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status());
+            // column_obj->cacheStatus(import_export_json.get_unique_id(), import_export_json.get_status(), child_socket);
             break;
         default:
             cout << "Could not match the appropriate ID.\n";
@@ -76,7 +76,7 @@ int main() {
             thread_socket.join();
             if (!(receive_message.empty())) {
                 import_export_json.deserializer(receive_message); // Get data from JSON-object.
-                menu();
+                menu(child_socket);
             }
         } else {
             continue;
@@ -86,6 +86,7 @@ int main() {
 }
 
 // ARCHIVED (test) functions or variables:
+// socket.send_message(send_message);  // Send data to Wemos
 // import_export_json.set_id("Schemerlamp"); // Assigning
 // import_export_json.set_status(1);
 // cout << "MAIN 1: " << json_conv.get_id() << endl;

@@ -50,12 +50,16 @@ char *Component::getTimeOfDayUTC(time_t timeOfDay) {
 
 }
 
-int Component::cacheStatus(int serverId, int status) {
-    if (serverId == WEBSERVER_ID && cachedStatus == NULL){
+int Component::cacheStatus(int serverId, int status, int child_socket) {
+  Socket_server socket;
+    if (serverId == WEBSERVER_ID){
         cachedStatus = status;
+        cout << status << endl;
         return 2; //returns '2' if state is cached (bc 0 and 1 could be confused with states)
     }
     else{
+        cout << status << endl;
+        socket.send_message(to_string(cachedStatus), child_socket);
         return cachedStatus; // returns status if there is one cached
     }
 }

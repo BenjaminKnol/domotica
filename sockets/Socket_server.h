@@ -36,7 +36,7 @@ public:
 
     void listen_to_client();
 
-    void send_message(string msg, int sock);
+    void send_message(string msg, int child_socket);
 
     // Ask-function
     int accept_connection();
