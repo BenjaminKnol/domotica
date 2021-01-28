@@ -7,17 +7,20 @@
 
 #include <string>
 #include <ctime>
+#include <iostream>
+#include "../../Socket_server.h"
 
 using namespace std;
 
 class Component {
 
-private:
+protected:
     int id;
     string name;
     string description;
     int status;
     time_t timeOfDay = time(0);
+    int cachedStatus;
 
 public:
 
@@ -41,6 +44,8 @@ public:
     void setDescription(const string &description);
 
     void setStatus(int status);
+
+    virtual int cacheStatus(int serverId, int status, int child_socket);
 };
 
 

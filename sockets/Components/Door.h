@@ -6,8 +6,8 @@
 #define CLASSSTRUCTURE_DOOR_H
 
 
-#include "Component.h"
-#include "WithLed.h"
+#include "Base/Component.h"
+#include "Base/WithLed.h"
 
 class Door : public Component, public WithLed {
 
@@ -16,7 +16,7 @@ private:
 
 public:
     Door(int id, const string &name, const string &description) {
-        new Withled();
+        new WithLed();
         Door::setId(id);
         Door::setName(name);
         Door::setDescription(description);

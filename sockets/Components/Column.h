@@ -6,7 +6,7 @@
 #define CLASSSTRUCTURE_COLUMN_H
 
 
-#include "Component.h"
+#include "Base/Component.h"
 
 class Column : public Component {
 

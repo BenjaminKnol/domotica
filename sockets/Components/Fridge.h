@@ -6,9 +6,9 @@
 #define CLASSSTRUCTURE_FRIDGE_H
 
 
-#include "Component.h"
+#include "Base/Component.h"
 
-class Fridge : Component {
+class Fridge : public Component {
     class CoolElement {
     public:
         int status;
@@ -26,7 +26,7 @@ public:
         new Fridge::CoolElement();
         Fridge::setId(id);
         Fridge::setName(name);
-        Fridge::setDescription(description)
+        Fridge::setDescription(description);
     };
 
 public:
