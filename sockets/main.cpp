@@ -33,6 +33,16 @@ auto *door_obj = new Door(6, "Door", "KaSLAMo");
 //auto *column_obj = new Column(7, "Column", "it's getting dark in here");
 // End Component objects
 
+std::vector<Component> componentVector;
+componentVector.pushback(bed_obj);
+componentVector.pushback(chair_obj);
+componentVector.pushback(fridge_obj);
+componentVector.pushback(wall_obj);
+componentVector.pushback(table_lamp_obj);
+componentVector.pushback(door_obj);
+for(std::vector<Component>::iterator itr = componentVector.begin();itr!=componentVector.end(); itr++){
+std::cout<< *itr <<endl;
+}
 void menu(int child_socket) {
     switch (import_export_json.get_id()) {
         case 1: // bed led
