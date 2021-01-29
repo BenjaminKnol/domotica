@@ -120,7 +120,6 @@ void readAnalogValues(unsigned int ldr, unsigned int potentiometer) {
     Serial.println(potentiometer);
     Serial.print("LDR status: ");
     Serial.println(ldr);
-//    sendingData(potentiometer, ldr);
   }
   lastInputPotmeter = potentiometer;
   lastInputLDR = ldr;
