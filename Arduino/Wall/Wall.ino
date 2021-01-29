@@ -15,9 +15,10 @@
 #include <Wire.h>
 #include <ArduinoJson.h>
 
-/* WiFi SSID definition */
 #define SSID_NAME "PJSDV_Grp5_IIHS"
 #define SSID_PSK  "Welkom#1"
+#define I2C_SDL    D1
+#define I2C_SDA    D2
 
 WiFiClient client; // Create TCP connection object
 
@@ -28,11 +29,16 @@ const char unique_id = 'w';  /* Unique identification for Wemos*/
 const String check_unique_id = "unique_id";       /* Check whether received message matches with variable */
 const String check_verification = "Acknowledge";  /* Check whether received message matches with variable */
 String line;
+unsigned int ldr = 0;
+unsigned int potentiometer = 0;
+int lastInputPotmeter = 0;
+int lastInputLDR = 0;
 
 /* Prototypes */
 void initialize();
 void connectToHotspot();
 String read_message(WiFiClient received_message);
+void readAnalogValues(unsigned int, unsigned int);
 
 void setup(void) {
   initialize();
@@ -64,6 +70,22 @@ void loop(void) {
 }
 void initialize(){
   Serial.begin(9600);
+  Wire.begin();
+  pinMode(D4, OUTPUT);
+  pinMode(D5, OUTPUT);
+  // ------------------------------  Basic configuration
+
+  digitalWrite(D5,HIGH);
+  delay(100);
+  digitalWrite(D5,LOW);
+  delay(100);
+  // ------------------------------  Flash Mosfet
+
+  Wire.beginTransmission(0x38);
+  Wire.write(byte(0x03));
+  Wire.write(byte(0x0F));
+  Wire.endTransmission();
+  // ------------------------------  address I2C for PCA9554
 }
 void connectToHotspot() {
   // Start code - connecting to Raspberry Pi hotspot
@@ -78,5 +100,28 @@ void connectToHotspot() {
   Serial.println(WiFi.localIP());
 }
 String read_message(WiFiClient received_message) { // Read message from server (Pi)
-  return received_message.readStringUntil('\r');
+  return received_message.readStringUntil('\r'); // --> Read line from server
+}
+void readAnalogValues(unsigned int ldr, unsigned int potentiometer) {
+  Wire.requestFrom(0x36, 4);
+  ldr = Wire.read()&0x03;
+  ldr=ldr<<8;
+  ldr = ldr|Wire.read();
+//  Serial.print("analog in 0: ");
+//  Serial.println(LDR);
+  potentiometer = Wire.read()&0x03;
+  potentiometer=potentiometer<<8;
+  potentiometer = potentiometer|Wire.read();
+//  Serial.print("analog in 1: ");
+//  Serial.println(potentiometer);
+
+  if (potentiometer != lastInputPotmeter && ldr != lastInputLDR) {
+    Serial.print("Potentiometer status: ");
+    Serial.println(potentiometer);
+    Serial.print("LDR status: ");
+    Serial.println(ldr);
+//    sendingData(potentiometer, ldr);
+  }
+  lastInputPotmeter = potentiometer;
+  lastInputLDR = ldr;
 }
