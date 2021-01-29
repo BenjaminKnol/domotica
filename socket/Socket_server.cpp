@@ -14,6 +14,7 @@
 #include "Socket_server.h"
 
 #define NETWORK_QUEUE 8
+Component device; // Object from component class
 
 Socket_server::Socket_server() {
 }
@@ -52,27 +53,52 @@ int Socket_server::accept_connection() {
         printf("Error\n");
     } else {
         printf("Connection has been established\n");
+        identify_device(client_socket);
     }
     return client_socket;
 }
+/*
+* The purpose of this function has the same principle as
+* the 3-way handshaking whitin a TCP connection
+*
+* Example: 1. Syn, 2. Syn + Ack, 3. Achknowledge
+*/
+void Socket_server::identify_device(int client_socket) {
+    handshake_buffer[MESSAGE_LENGTH];
+    strcpy(handshake_buffer, "unique_id\r");
+    send_message(handshake_buffer); // Ask ffor unique_id
+
+    if (read_message(handshake_buffer, MESSAGE_LENGTH) < 0) { // receive unique_id from client
+        cout << "Error reading handshake from: " << client_socket << endl;
+    }
+    // cout << "ID: " << handshake_buffer << endl; // Only for DEBUG-purposes
+    if (handshake_buffer[0] == 'w') { // Check if wemos exists on RPi
+    // if (device.check_device(client_socket, handshake_buffer[0])) { // <WORDT NOG UITGEZOCHT>
+      strcpy(handshake_buffer, "Acknowledge\r");
+      send_message(handshake_buffer); // Send Acknowledgement
+    } else {
+      cout << "Wrong ID on socket: " << client_socket << endl;
+      close(client_socket);
+    }
+}
 // 5. Send and receive data.
     // read data
-int Socket_server::read_message(string &buf, int length) {
-    char buffer[length];
-    bzero(buffer,length);
-    int status = (int)recv(client_socket, buffer, length-1, 0);
+int Socket_server::read_message(char* buf, int length) {
+    // char buffer[length];
+    // memset((buf), 0, (length));
+    bzero(buf,length);
+    int status = (int)recv(client_socket, buf, length-1, 0);
     if (status < 0) {
-        //exit(1);
         printf("Read error\n");
     }
-    buf = string(buffer);
+    // buf = string(buffer);
     return status;
 }
     // Send data
-void Socket_server::send_message(string msg, int sock) {
-    const char * send_buffer = msg.c_str();
-    int len = (int)strlen(send_buffer);
-    int status = send(sock, send_buffer, len, 0);
+void Socket_server::send_message(char* msg) {
+    // const char * send_buffer = msg.c_str();
+    int len = (int)strlen(msg);
+    int status = send(client_socket, msg, len, 0);
 
     if (status < 0) {
         printf("Send error\n");

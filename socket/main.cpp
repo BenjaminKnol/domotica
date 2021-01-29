@@ -11,8 +11,6 @@
 #include "Socket_server.h"
 #include "Json_conversion.h"
 
-#define MESSAGE_LENGTH 256
-
 int main() {
     Socket_server socket;
     socket.create_socket();     // 1. Create Socket 2. Bind Socket. 3. Listen to Socket
@@ -21,10 +19,8 @@ int main() {
     while (true) {
         string receive_message, send_message;
         int child_socket = socket.accept_connection(); // 4. Accept Socket Connection
-        if (child_socket > 0) {
-          socket.read_message(receive_message, MESSAGE_LENGTH);
+        if (child_socket > 0)
           if (!(receive_message.empty())) {
-            cout << "Bericht: " << receive_message << endl;
             import_export_json.deserializer(receive_message); // Get data from JSON-object.
           }
         } else {
@@ -39,3 +35,4 @@ int main() {
 // import_export_json.set_status(1);
 // cout << "MAIN 1: " << json_conv.get_id() << endl;
 // cout << "MAIN 2: " << json_conv.get_status() << endl;
+// socket.send_message("Hello from RPi");

@@ -28,22 +28,15 @@ public:
 
     // Do functions
     void serializer(string &send_message);
-
     void deserializer(string &message);
 
     // Getter functions
     int get_unique_id();
-
-    int get_id();
-
-    int get_status();
-
-    // Setter functions
-    void set_convert_id(int new_int);
+    int get_button();
+    int get_sensor();
 
 private:
     int unique_id;
-    string id = "";
-    int convert_id; // = a convertion from string ID to int ID with function stoi()
-    bool status;
+    int button;
+    int sensor;
 };
