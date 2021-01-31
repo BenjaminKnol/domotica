@@ -21,11 +21,11 @@
 #include <stdlib.h>
 #include <string>
 #include <cstring>
+#include <fstream>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-
-#include "Components/Base/Component.h"
+#include <fstream> // Read from file
 
 using namespace std;
 #define MESSAGE_LENGTH 256
@@ -43,6 +43,7 @@ public:
     // Ask-function
     int read_message(char*, int);
 	  int accept_connection();
+    bool read_file(char);
 
 private:
     int server_socket;
@@ -51,5 +52,10 @@ private:
     struct sockaddr_in server_address, client_address;
     int port = 9002;
     char handshake_buffer[MESSAGE_LENGTH];
+
+    fstream file; // 1. Create ifstream object
+    string get_line_file;
+    char unique_ids[10];
+
 };
 #endif //SOCKET_1_2_SOCKET_SERVER_H

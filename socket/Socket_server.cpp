@@ -14,7 +14,6 @@
 #include "Socket_server.h"
 
 #define NETWORK_QUEUE 8
-Component device; // Object from component class
 
 Socket_server::Socket_server() {
 }
@@ -64,21 +63,20 @@ int Socket_server::accept_connection() {
 * Example: 1. Syn, 2. Syn + Ack, 3. Achknowledge
 */
 void Socket_server::identify_device(int client_socket) {
-    handshake_buffer[MESSAGE_LENGTH];
-    strcpy(handshake_buffer, "unique_id\r");
-    send_message(handshake_buffer); // Ask ffor unique_id
+    strcpy(handshake_buffer, "unique_id");
+    send_message(handshake_buffer); // Ask for unique_id
 
     if (read_message(handshake_buffer, MESSAGE_LENGTH) < 0) { // receive unique_id from client
         cout << "Error reading handshake from: " << client_socket << endl;
     }
     // cout << "ID: " << handshake_buffer << endl; // Only for DEBUG-purposes
-    if (handshake_buffer[0] == 'w') { // Check if wemos exists on RPi
-    // if (device.check_device(client_socket, handshake_buffer[0])) { // <WORDT NOG UITGEZOCHT>
-      strcpy(handshake_buffer, "Acknowledge\r");
-      send_message(handshake_buffer); // Send Acknowledgement
+    // if (handshake_buffer[0] == 'w') { // Check if wemos exists on RPi
+    if (read_file(handshake_buffer[0])) {
+        strcpy(handshake_buffer, "Acknowledge\r");
+        send_message(handshake_buffer); // Send Acknowledgement
     } else {
-      cout << "Wrong ID on socket: " << client_socket << endl;
-      close(client_socket);
+        cout << "Wrong ID on socket: " << client_socket << endl;
+        close(client_socket);
     }
 }
 // 5. Send and receive data.
@@ -103,4 +101,24 @@ void Socket_server::send_message(char* msg) {
     if (status < 0) {
         printf("Send error\n");
     }
+}
+// Read characters from id.txt file
+bool Socket_server::read_file(char buffer) {
+    file.open("id.txt");  // 2. Read file
+    if(!file.is_open()) { // 3. Check if file exists (some error handeling)
+        cout << "File does not exists.\n";
+    }
+    while (getline(file, get_line_file)) { // 4. Read all characters from file untill the end of the file.
+        for (int i = 0; i < sizeof(unique_ids)/sizeof(unique_ids[0]); i++) {
+            if (get_line_file[i] != '#') { // 4.1 Skip every line that starts with '#'
+                continue;
+            }
+            file >> unique_ids[i]; // 5. Store each line from file into array
+            if (unique_ids[i] == buffer) {
+                return true;
+            }
+            // cout << unique_ids[i] << "\n"; // Only for DEBUG-purposes
+        }
+    }
+    return false;
 }

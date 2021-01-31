@@ -1,7 +1,7 @@
 make: main.cpp
 	g++ -std=c++11 -o server main.cpp Socket_server.cpp Socket_server.h \
-	Components/Base/Component.h Components/Base/Component.cpp \
 	Json_conversion.h Json_conversion.cpp -ljsoncpp
+	# Components/Base/Component.h Components/Base/Component.cpp \
 	# Components/Base/WithLed.h \
 	# Components/Base/WithLed.cpp Components/Base/WithForceSensor.h \
 	# Components/Base/WithForceSensor.cpp Components/Bed.h \

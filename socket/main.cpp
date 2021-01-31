@@ -19,7 +19,7 @@ int main() {
     while (true) {
         string receive_message, send_message;
         int child_socket = socket.accept_connection(); // 4. Accept Socket Connection
-        if (child_socket > 0)
+        if (child_socket > 0) {
           if (!(receive_message.empty())) {
             import_export_json.deserializer(receive_message); // Get data from JSON-object.
           }
