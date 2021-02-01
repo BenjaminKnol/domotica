@@ -1,0 +1,31 @@
+//
+// Created by Asus on 20-1-2021.
+//
+
+#ifndef CLASSSTRUCTURE_CHAIR_H
+#define CLASSSTRUCTURE_CHAIR_H
+
+
+#include "Base/Component.h"
+#include "Base/WithForceSensor.h"
+
+class Chair : public Component, public WithForceSensor {
+
+private:
+    int vibratorStatus;
+
+public:
+    Chair(const string &name, const string &description) {
+        new WithForceSensor();
+        Chair::setName(name);
+        Chair::setDescription(description);
+
+    }
+
+    int getVibratorStatus() const;
+
+    void setVibratorStatus(int vibratorStatus);
+};
+
+
+#endif //CLASSSTRUCTURE_CHAIR_H

@@ -8,20 +8,62 @@
  *    Noureddine Ait Jaa
  */
 
-#include "Socket_server.h"
+#include "Socket.h"
 #include "Json_conversion.h"
 
-int main() {
-    Socket_server socket;
-    socket.create_socket();     // 1. Create Socket 2. Bind Socket. 3. Listen to Socket
-    Json_conversion import_export_json;
+// #include "Components/Base/Component.h"
+// #include "Components/Chair.h"
+// #include "Components/Bed.h"
+// #include "Components/Column.h"
+// #include "Components/Door.h"
+// #include "Components/Fridge.h"
+// #include "Components/TableLamp.h"
+#include "Components/Wall.h"
 
+int main() {
+    Socket socket;
+    socket.createSocket();     // 1. Create Socket 2. Bind Socket. 3. Listen to Socket
+    Json_conversion importExportJson;
+
+    // Start Component objects
+    // auto *bed = new Bed("Bed", "pretty soft bed");
+    // auto *chair = new Chair("Chair", "nice vibratin chair");
+    // auto *fridge = new Fridge("Fridge", "cool fridge");
+    auto *wall = new Wall("Wall", "rocksollid");
+    // auto *tableLamp = new TableLamp("Table Lamp", "Nice and bright");
+    // auto *door = new Door("Door", "KaSLAMo");
+    // auto *column = new Column("Column", "it's getting dark in here");
+    // End Component objects
+    vector<Component*> components {wall};
+    // vector<Component*> components {bed, chair, column, fridge, wall, tableLamp, door};
+
+    int counter, allDevicesSet = 0;
+    while (!allDevicesSet) {
+        int childSocket = socket.acceptConnection(); // 4. Accept Socket Connection
+        string uniqueId = socket.identifyDevice(childSocket);
+        for (int i = 0; i< components.size(); i++) {
+            if (components[i]->getName().find(uniqueId)) {
+                components[i]->setId(uniqueId);
+                components[i]->setSocketId(childSocket);
+                counter++;
+                if (counter >= components.size()) {
+                    allDevicesSet = 1;
+                }
+            }
+        }
+    }
     while (true) {
-        string receive_message, send_message;
-        int child_socket = socket.accept_connection(); // 4. Accept Socket Connection
-        if (child_socket > 0) {
-          if (!(receive_message.empty())) {
-            import_export_json.deserializer(receive_message); // Get data from JSON-object.
+        string receiveMessage, sendMessage;
+        int childSocket = socket.acceptConnection(); // 4. Accept Socket Connection
+        if (childSocket > 0) {
+          string tempId = socket.identifyDevice(childSocket);
+          for (int i = 0; i < components.size(); i++) {
+              if (tempId.compare(components[i]->getId())) {
+                  components[i]->cacheStatus();
+              }
+          }
+          if (!(receiveMessage.empty())) {
+            importExportJson.deserializer(receiveMessage); // Get data from JSON-object.
           }
         } else {
             continue;
@@ -36,3 +78,22 @@ int main() {
 // cout << "MAIN 1: " << json_conv.get_id() << endl;
 // cout << "MAIN 2: " << json_conv.get_status() << endl;
 // socket.send_message("Hello from RPi");
+// cout << "MAIN: " << socket.get_id() << endl;
+
+// string id = socket.identify_device(client_socket);
+
+
+
+// void menu(char id) {
+//   switch(id) {
+//       case 'b': break; // Bed
+//       case 'c': break; // Chair;
+//       case 'f': break; // Fridge
+//       case 'w': cout << "MAIN: Wall" << endl; break; // Wall
+//       case 't': break;// Table TableLamp
+//       case 'd': break;// Door
+//       case 'z': break;// Column
+//       case 'p': break; // Webpage
+//       default: cout << "Could not match appropriate ID]n"; break; // Switch error handeling
+//   }
+// }

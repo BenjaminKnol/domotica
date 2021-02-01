@@ -1,27 +1,36 @@
+/*
+ *
+ * Authors:
+ *    Michael Rotteveel
+ *    Benjamin Thomas Knol
+ *    Vireen Jagram
+ *    Niek Hutten
+ *    Noureddine Ait Jaa
+ *
+ */
 #ifndef CLASSSTRUCTURE_COMPONENT_H
 #define CLASSSTRUCTURE_COMPONENT_H
 
 #include <string>
 #include <ctime>
 #include <iostream>
-
-#include "../../Socket_server.h"
+#include "../../Socket.h"
 
 using namespace std;
 
 class Component {
 
-protected:
-    int id;
+private:
+    string unique_id;
     string name;
     string description;
+    int socketId;
     int status;
     time_t timeOfDay = time(0);
-    int cachedStatus;
 
 public:
-    int getId() const;
-    void setId(int id);
+    string getId() const;
+    void setId(string);
     const string &getName() const;
     void setName(const string &name);
     const string &getDescription() const;
@@ -30,10 +39,11 @@ public:
     char *getTimeOfDayUTC(time_t timeOfDay);
     void setDescription(const string &description);
     void setStatus(int status);
-    bool check_device(int client_socket, char client_id);
+    void setSocketId(int);
+    int getSocketId();
+    void cacheStatus();
+    virtual void handle(string); // Handles incoming messages
 
-    // void deserializer(string &message);
-    // virtual int cacheStatus(int serverId, int status, int child_socket);
 };
 
 
