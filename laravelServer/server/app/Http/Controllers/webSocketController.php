@@ -47,6 +47,7 @@ class webSocketController extends Controller
                 Log::create([
                     'type' => $send_data->type,
                     'description' => $send_data->description,
+                    'value' => $send_data->value,
                 ]);
                 break;
             case '2':			// Placeholder 2 - DEUR
@@ -54,6 +55,7 @@ class webSocketController extends Controller
                 Log::create([
                     'type' => $send_data->type,
                     'description' => $send_data->description,
+                    'value' => $send_data->value,
                 ]);
                 break;
             case '3':		// Placeholder 3 - KOELKAST
@@ -61,6 +63,7 @@ class webSocketController extends Controller
                 Log::create([
                     'type' => $send_data->type,
                     'description' => $send_data->description,
+                    'value' => $send_data->value,
                 ]);
                 break;
             case '4': 			// Placeholder 4 - MUUR
@@ -68,6 +71,7 @@ class webSocketController extends Controller
                 Log::create([
                     'type' => $send_data->type,
                     'description' => $send_data->description,
+                    'value' => $send_data->value,
                 ]);
                 break;
             case '5': 	// Placeholder 5 - SCHEMERLAMP
@@ -75,6 +79,7 @@ class webSocketController extends Controller
                 Log::create([
                     'type' => $send_data->type,
                     'description' => $send_data->description,
+                    'value' => $send_data->value,
                 ]);
                 break;
             case '6':			// Placeholder 6 - STOEL
@@ -82,6 +87,7 @@ class webSocketController extends Controller
                 Log::create([
                     'type' => $send_data->type,
                     'description' => $send_data->description,
+                    'value' => $send_data->value,
                 ]);
                 break;
             case '7':			// Placeholder 7 - ZUIL
@@ -89,6 +95,7 @@ class webSocketController extends Controller
                 Log::create([
                     'type' => $send_data->type,
                     'description' => $send_data->description,
+                    'value' => $send_data->value,
                 ]);
                 break;
             default:

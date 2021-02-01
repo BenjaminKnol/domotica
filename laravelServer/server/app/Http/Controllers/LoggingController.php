@@ -49,7 +49,17 @@ class LoggingController extends Controller
      */
     public function show($id)
     {
-        //
+        $log = Log::find($id);
+        $allLogsWithType = Log::where('type_id', '=', $log->type_id)->get();
+        $dates = [];
+        $values = [];
+        for ($i = 0; $i < count($allLogsWithType); $i++){
+            $dates[$i] = $allLogsWithType[$i]->created_at->format("j F Y G:i");
+            $values[$i] = $allLogsWithType[$i]->value;
+        }
+        $dates = json_encode($dates);
+        $values = json_encode($values);
+        return view("logging.show", compact(['log', 'allLogsWithType', 'dates', 'values']));
     }
 
     /**

@@ -69,6 +69,6 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 
 Route::group(['middleware' => 'auth'], function (){
     //Route::get('/logs', [LoggingController::class, 'index'])->name('logging index');
-    //Route::get('/logs/{id}', [LoggingController::class, 'show'])->name('show log');
-    Route::delete('/logs/delete/{id}', 'LoggingController@destroy')->name('delete log');
+    Route::get('/logs/{id}', 'App\Http\Controllers\LoggingController@show')->name('show log');
+    Route::delete('/logs/delete/{id}', 'App\Http\Controllers\LoggingController@destroy')->name('delete log');
 });
