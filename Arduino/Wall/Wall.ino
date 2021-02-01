@@ -47,11 +47,28 @@ void setup(void) {
   connectToHotspot();
 }
 void loop(void) {
-  sendMessage("WEMOS TEST");
-  //  while (client.connected()) {
-  //    line = readMessage(client);
-  //    Serial.println(line);
-  //  }
+  line = ""; // Make sure 'line' is empty.
+  if (client.connect(server_host, port_number)) {
+    line = readMessage(client);
+    if (line == check_unique_id) { // Tell the RPi which ID you have
+      client.print(String(unique_id));
+    }
+    line = readMessage(client);
+    if (line == check_verification) {
+      Serial.println(line); // DEBUG-only
+      Serial.println("Connection has been established and verified.");
+      /* When connection with RPi is established read and send actual data. */
+      while (client.connected()) {
+        line = readMessage(client);
+        Serial.println(line);
+      }
+    } else {
+      Serial.println("Could not verify Wemos with RPi.");
+    }
+  } else {
+    Serial.println("No connection could be established.");
+    client.stop();
+  }
 }
 void initialize() {
   Serial.begin(9600);
@@ -83,23 +100,6 @@ void connectToHotspot() {
   } /* When Wemos is not connected, try reconnecting after 500 milliseconds.*/
   Serial.print("Connected with IP address: ");
   Serial.println(WiFi.localIP());
-
-  line = ""; // Make sure 'line' is empty.
-  if (!client.connect(server_host, port_number)) {
-    Serial.println("No connection could be established.");
-    client.stop();
-  } else {
-    client.print(String(unique_id));
-    line = readMessage(client);
-
-    if (line == check_verification) {
-      //      Serial.println(line); // DEBUG-only
-      Serial.println("Connection has been established and verified.");
-    } else {
-      Serial.println("Could not verify Wemos with RPi.");
-    }
-  }
-  // ------------------------------  Identify wemos to RPi
 }
 void connectingToSocketServer() {
   if (!client.connect(server_host, port_number)) {
@@ -111,19 +111,19 @@ void connectingToSocketServer() {
 String readMessage(WiFiClient received_message) { // Read message from server (Pi)
   return received_message.readStringUntil('\r'); // --> Read line from server
 }
-void sendMessage(String receiveMessage) {
-  connectingToSocketServer();
-//  // 1. send ID
-  client.print(unique_id);
-//  // 2. Receive RTR from RPi
-  line = readMessage(client);
-  Serial.println(line);
-//  while (line != "RTR");
-//  // 3. Send actual message
-//  client.print(receiveMessage);
-//  line = ""; // Make sure 'line' is empty.
-
-}
+//void sendMessage(String receiveMessage) {
+//  connectingToSocketServer();
+//  //  // 1. send ID
+//  client.print(unique_id);
+//  //  // 2. Receive RTR from RPi
+//  line = readMessage(client);
+//  Serial.println(line);
+//  //  while (line != "RTR");
+//  //  // 3. Send actual message
+//  //  client.print(receiveMessage);
+//  //  line = ""; // Make sure 'line' is empty.
+//
+//}
 void readAnalogValues(unsigned int ldr, unsigned int potentiometer) {
   Wire.requestFrom(0x36, 4);
   ldr = Wire.read() & 0x03;
