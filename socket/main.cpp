@@ -42,19 +42,23 @@ int main() {
     int counter, allDevicesSet = 0;
     while (!allDevicesSet) {
         int childSocket = socket.acceptConnection(); // 4. Accept Socket Connection
-        string uniqueId = socket.identifyDevice(childSocket);
-        for (int i = 0; i< components.size(); i++) {
-            string componentId = components[i]->getName();
-            transform(componentId.begin(), componentId.end(), componentId.begin(),
-                           [](unsigned char c){ return tolower(c); });
-            if (uniqueId.find(componentId)){
-                components[i]->setId(uniqueId);
-                components[i]->setSocketId(childSocket);
-                counter++;
-                if (counter >= components.size()) {
-                    allDevicesSet = 1;
+        if(childSocket > 0){
+            string uniqueId = socket.identifyDevice(childSocket);
+            for (int i = 0; i< components.size(); i++) {
+                string componentId = components[i]->getName();
+                transform(componentId.begin(), componentId.end(), componentId.begin(),
+                          [](unsigned char c){ return tolower(c); });
+                if (uniqueId.find(componentId)){
+                    components[i]->setId(uniqueId);
+                    components[i]->setSocketId(childSocket);
+                    counter++;
+                    if (counter >= components.size()) {
+                        allDevicesSet = 1;
+                    }
                 }
             }
+        }else {
+            continue;
         }
     }
     while (true) {
