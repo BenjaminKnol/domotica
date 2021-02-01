@@ -10,6 +10,8 @@
 
 #include "Socket.h"
 #include "Json_conversion.h"
+#include <algorithm>
+#include <cctype>
 
 // #include "Components/Base/Component.h"
 // #include "Components/Chair.h"
@@ -42,7 +44,10 @@ int main() {
         int childSocket = socket.acceptConnection(); // 4. Accept Socket Connection
         string uniqueId = socket.identifyDevice(childSocket);
         for (int i = 0; i< components.size(); i++) {
-            if (components[i]->getName().find(uniqueId)) {
+            string componentId = components[i]->getName();
+            transform(componentId.begin(), componentId.end(), componentId.begin(),
+                           [](unsigned char c){ return tolower(c); });
+            if (uniqueId.find(componentId)){
                 components[i]->setId(uniqueId);
                 components[i]->setSocketId(childSocket);
                 counter++;
