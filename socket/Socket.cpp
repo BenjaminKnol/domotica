@@ -69,13 +69,14 @@ string Socket::identifyDevice(int clientSocket) {
     }
     // cout << "ID: " << handshake_buffer << endl; // Only for DEBUG-purposes
     if (readFile(handshake_buffer)) {
+        string id = (string) handshake_buffer;
         strcpy(handshake_buffer, "Acknowledge\r");
         sendMessage(handshake_buffer, clientSocket); // Send Acknowledgement
     } else {
         cout << "Wrong ID on socket: " << clientSocket << endl;
         close(clientSocket);
     }
-    return string(handshake_buffer);
+    return id;
 }
 // 5. Send and receive data.
     // read data
