@@ -44,20 +44,19 @@ int main() {
         int childSocket = socket.acceptConnection(); // 4. Accept Socket Connection
         if(childSocket > 0){
             string uniqueId = socket.identifyDevice(childSocket);
-            for (int i = 0; i< components.size(); i++) {
+            for (int i = 0; i < components.size(); i++) {
                 string componentId = components[i]->getName();
                 transform(componentId.begin(), componentId.end(), componentId.begin(),
                           [](unsigned char c){ return tolower(c); });
-                if (uniqueId.find(componentId)){
+                if (uniqueId.find(componentId) >= 0){
                     components[i]->setId(uniqueId);
-                    components[i]->setSocketId(childSocket);
                     counter++;
                     if (counter >= components.size()) {
                         allDevicesSet = 1;
                     }
                 }
             }
-        }else {
+        } else {
             continue;
         }
     }
@@ -67,7 +66,8 @@ int main() {
         if (childSocket > 0) {
           string tempId = socket.identifyDevice(childSocket);
           for (int i = 0; i < components.size(); i++) {
-              if (tempId.compare(components[i]->getId())) {
+              if (tempId.compare(components[i]->getId()) >= 0) {
+                  components[i]->setSocketId(childSocket);
                   components[i]->cacheStatus();
               }
           }
@@ -90,19 +90,3 @@ int main() {
 // cout << "MAIN: " << socket.get_id() << endl;
 
 // string id = socket.identify_device(client_socket);
-
-
-
-// void menu(char id) {
-//   switch(id) {
-//       case 'b': break; // Bed
-//       case 'c': break; // Chair;
-//       case 'f': break; // Fridge
-//       case 'w': cout << "MAIN: Wall" << endl; break; // Wall
-//       case 't': break;// Table TableLamp
-//       case 'd': break;// Door
-//       case 'z': break;// Column
-//       case 'p': break; // Webpage
-//       default: cout << "Could not match appropriate ID]n"; break; // Switch error handeling
-//   }
-// }

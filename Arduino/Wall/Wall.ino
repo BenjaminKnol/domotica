@@ -29,6 +29,7 @@ const String unique_id = "wall0";  /* Unique identification for Wemos*/
 const String check_unique_id = "unique_id";       /* Check whether received message matches with variable */
 const String check_verification = "Acknowledge";  /* Check whether received message matches with variable */
 String line;
+
 unsigned int ldr = 0;
 unsigned int potentiometer = 0;
 int lastInputPotmeter = 0;
@@ -38,9 +39,8 @@ int lastInputLDR = 0;
 void initialize();
 void connectToHotspot();
 String readMessage(WiFiClient received_message);
+void sendMessage();
 void readAnalogValues(unsigned int, unsigned int);
-void sendMessage(String);
-void connectingToSocketServer();
 
 void setup(void) {
   initialize();
@@ -48,26 +48,10 @@ void setup(void) {
 }
 void loop(void) {
   line = ""; // Make sure 'line' is empty.
-  if (client.connect(server_host, port_number)) {
-    line = readMessage(client);
-    if (line == check_unique_id) { // Tell the RPi which ID you have
-      client.print(String(unique_id));
+  if (!line.isEmpty()) {
+    while (client.connected()) {
+      sendMessage("Wall0");
     }
-    line = readMessage(client);
-    if (line == check_verification) {
-      Serial.println(line); // DEBUG-only
-      Serial.println("Connection has been established and verified.");
-      /* When connection with RPi is established read and send actual data. */
-      while (client.connected()) {
-        line = readMessage(client);
-        Serial.println(line);
-      }
-    } else {
-      Serial.println("Could not verify Wemos with RPi.");
-    }
-  } else {
-    Serial.println("No connection could be established.");
-    client.stop();
   }
 }
 void initialize() {
@@ -100,30 +84,43 @@ void connectToHotspot() {
   } /* When Wemos is not connected, try reconnecting after 500 milliseconds.*/
   Serial.print("Connected with IP address: ");
   Serial.println(WiFi.localIP());
-}
-void connectingToSocketServer() {
+
+  // ---------------------------------- One time socket identification with RPi
   if (!client.connect(server_host, port_number)) {
-    Serial.println("Connection has failed");
-    delay(5000);  // ---> Waiting 5 seconds to re-connecting too server.
-    return;
+    Serial.println("No connection could be established.");
+    client.stop();
+  } else {
+    client.print(String(unique_id));
+    line = readMessage(client);
+    if (line == check_verification) {
+      //      Serial.println(line); // DEBUG-only
+      Serial.print(unique_id);
+      Serial.print(": Is verified with: ");
+      Serial.println(client.remoteIP()); // Printing server IP-address
+    } else {
+      Serial.println("Could not verify Wemos with RPi.");
+    }
   }
 }
 String readMessage(WiFiClient received_message) { // Read message from server (Pi)
   return received_message.readStringUntil('\r'); // --> Read line from server
 }
-//void sendMessage(String receiveMessage) {
-//  connectingToSocketServer();
-//  //  // 1. send ID
-//  client.print(unique_id);
-//  //  // 2. Receive RTR from RPi
-//  line = readMessage(client);
-//  Serial.println(line);
-//  //  while (line != "RTR");
-//  //  // 3. Send actual message
-//  //  client.print(receiveMessage);
-//  //  line = ""; // Make sure 'line' is empty.
-//
-//}
+void sendMessage(String message) {
+  if (client.connect(server_host, port_number)) {
+    client.print(unique_id);
+    line = readMessage(client); // Receive Ack
+//    Serial.println(line); // DEBUG-Only
+
+    while (client.connected()) {
+      line = readMessage(client);
+//      Serial.println(line); // DEBUG-Only
+      if (line == "RTR") { // Check if received line is equal to RTR
+        client.print(message); // Send status update
+        break; // Break out the while loop
+      }
+    }
+  }
+}
 void readAnalogValues(unsigned int ldr, unsigned int potentiometer) {
   Wire.requestFrom(0x36, 4);
   ldr = Wire.read() & 0x03;

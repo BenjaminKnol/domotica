@@ -45,13 +45,17 @@ char *Component::getTimeOfDayUTC(time_t timeOfDay) {
 
 }
 void Component::cacheStatus() {
-    char buffer[256];
-    send(socketId, "RTR", 256, 0); // Send request for unique id to WEMOS
+    char buffer[256] = "RTR";
+
+    send(socketId, buffer, 256, 0); // Send request to Wemos that RPi is Ready-To-Receive
+    bzero(buffer,256); // Empty buffer
     recv(socketId, buffer, 256, 0);
     handle(string(buffer));
 
 }
-void Component::handle(string buffer) {}
+void Component::handle(string buffer) {
+    cout << buffer << endl;
+}
 
 void Component::setSocketId(int socket) {
     socketId = socket;

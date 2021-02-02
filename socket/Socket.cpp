@@ -60,6 +60,7 @@ int Socket::acceptConnection() {
 * Example: 1. Syn, 2. Syn + Ack, 3. Achknowledge
 */
 string Socket::identifyDevice(int clientSocket) {
+    string id;
     char handshake_buffer[MESSAGE_LENGTH];
     // strcpy(handshake_buffer, "unique_id");
     // sendMessage(handshake_buffer, clientSocket); // Ask for unique_id
@@ -69,7 +70,7 @@ string Socket::identifyDevice(int clientSocket) {
     }
     // cout << "ID: " << handshake_buffer << endl; // Only for DEBUG-purposes
     if (readFile(handshake_buffer)) {
-        string id = (string) handshake_buffer;
+        id = (string) handshake_buffer;
         strcpy(handshake_buffer, "Acknowledge\r");
         sendMessage(handshake_buffer, clientSocket); // Send Acknowledgement
     } else {
