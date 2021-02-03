@@ -39,7 +39,7 @@ int main() {
     vector < Component * > components{wall, door};
     // vector<Component*> components {bed, chair, column, fridge, wall, tableLamp, door};
 
-    int counter =0, allDevicesSet = 0;
+    int counter = 0, allDevicesSet = 0;
     while (!allDevicesSet) {
         int childSocket = socket.acceptConnection(); // 4. Accept Socket Connection
         if (childSocket > 0) {

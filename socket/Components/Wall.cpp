@@ -5,7 +5,7 @@
 #include "Wall.h"
 
 void Wall::handle(string buffer) {
-    cout << buffer << endl; 
+    cout << buffer << endl;
 }
 
 //TODO moet de waarde van de ldr wemos ontvangen en op basis daarvan verduisteren of niet

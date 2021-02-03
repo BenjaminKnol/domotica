@@ -15,6 +15,7 @@
 
 Socket::Socket() {
 }
+
 // 1. Create a socket with the socket() system call.
 void Socket::createSocket() {
     server_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -26,12 +27,12 @@ void Socket::createSocket() {
 
     // Define the server address structure
     server_address.sin_family = AF_INET;
-    server_address.sin_addr.s_addr = INADDR_ANY;	// Any address
+    server_address.sin_addr.s_addr = INADDR_ANY;    // Any address
     server_address.sin_port = htons(PORT);
 
     /* 2. Bind the socket to an address using the bind() system call.
        For a server socket on the Internet, and address consists of a port number on the host machine. */
-    bind(server_socket, (struct sockaddr*) &server_address, sizeof(server_address));
+    bind(server_socket, (struct sockaddr *) &server_address, sizeof(server_address));
     listenToClient();
 }
 
@@ -45,7 +46,7 @@ void Socket::listenToClient() {
 int Socket::acceptConnection() {
     printf("Waiting for incoming connection...\n");
     client_address_length = sizeof(client_address);
-    int clientSocket = accept(server_socket, (struct sockaddr*) &client_address, &client_address_length);
+    int clientSocket = accept(server_socket, (struct sockaddr *) &client_address, &client_address_length);
     if (clientSocket == -1) {
         printf("Error\n");
     } else {
@@ -53,6 +54,7 @@ int Socket::acceptConnection() {
     }
     return clientSocket;
 }
+
 /*
 * The purpose of this function has the same principle as
 * the 3-way handshaking whitin a TCP connection
@@ -79,41 +81,44 @@ string Socket::identifyDevice(int clientSocket) {
     }
     return id;
 }
+
 // 5. Send and receive data.
-    // read data
-int Socket::readMessage(char* buf, int length, int child_socket) {
-    bzero(buf,length);
-    int status = (int)recv(child_socket, buf, length-1, 0);
+// read data
+int Socket::readMessage(char *buf, int length, int child_socket) {
+    bzero(buf, length);
+    int status = (int) recv(child_socket, buf, length - 1, 0);
     if (status < 0) {
         printf("Read error\n");
     }
     return status;
 }
-    // Send data
-void Socket::sendMessage(char* msg, int clientSocket) {
-    int len = (int)strlen(msg);
+
+// Send data
+void Socket::sendMessage(char *msg, int clientSocket) {
+    int len = (int) strlen(msg);
     int status = send(clientSocket, msg, len, 0);
 
     if (status < 0) {
         printf("Send error\n");
     }
 }
+
 // Read characters from id.txt file
 bool Socket::readFile(string buffer) {
     fstream file; // 1. Create ifstream object
     string line;
 
     file.open("id");  // 2. Read file
-    if(!file.is_open()) { // 3. Check if file exists (some error handeling)
+    if (!file.is_open()) { // 3. Check if file exists (some error handeling)
         cout << "File does not exists.\n";
     }
     while (getline(file, line)) { // 4. Read all characters from file untill the end of the file.
-      if (line[0] == '#') { // 4.1 Skip every line that starts with '#'
-          continue;
-      }
-      if (line.find(buffer[0]) == 0) {
-          return true;
-      }
+        if (line[0] == '#') { // 4.1 Skip every line that starts with '#'
+            continue;
+        }
+        if (line.find(buffer[0]) == 0) {
+            return true;
+        }
     }
     return false;
 }

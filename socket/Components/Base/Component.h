@@ -21,7 +21,7 @@ using namespace std;
 class Component {
 
 private:
-    string unique_id ="";
+    string unique_id = "";
     string name;
     string description;
     int socketId;
@@ -30,20 +30,35 @@ private:
 
 public:
     Component();
+
     ~Component();
+
     string getId() const;
+
     void setId(string);
+
     const string &getName() const;
+
     void setName(const string &name);
+
     const string &getDescription() const;
+
     int getStatus() const;
+
     time_t getTimeOfDay();
+
     char *getTimeOfDayUTC(time_t timeOfDay);
+
     void setDescription(const string &description);
+
     void setStatus(int status);
+
     void setSocketId(int);
+
     int getSocketId();
+
     void cacheStatus();
+
     virtual void handle(string); // Handles incoming messages
 
 };

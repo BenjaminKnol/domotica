@@ -20,7 +20,9 @@ public:
         Door::setName(name);
         Door::setDescription(description);
     }
-    virtual ~Door();
+
+    virtual ~Door(){};
+
     void handle(string);
 };
 

@@ -45,13 +45,18 @@ public:
 
     // Do-function
     void createSocket();
+
     void listenToClient();
-    void sendMessage(char*, int);
+
+    void sendMessage(char *, int);
+
     string identifyDevice(int);
 
     // Ask-function
-    int readMessage(char*, int, int);
-	  int acceptConnection();
+    int readMessage(char *, int, int);
+
+    int acceptConnection();
+
     bool readFile(string);
 
 private:
@@ -59,4 +64,5 @@ private:
     socklen_t client_address_length;
     struct sockaddr_in server_address, client_address;
 };
+
 #endif //SOCKET_1_2_SOCKET_SERVER_H
