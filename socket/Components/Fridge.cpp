@@ -4,6 +4,10 @@
 
 #include "Fridge.h"
 
+void Door::handle(string buffer) {
+    
+}
+
 int Fridge::CoolElement::getStatus() const {
     return status;
 }
@@ -19,4 +23,3 @@ float Fridge::getTemperature() const {
 void Fridge::setTemperature(float temperature) {
     Fridge::temperature = temperature;
 }
-

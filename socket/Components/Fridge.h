@@ -27,10 +27,11 @@ public:
         Fridge::setName(name);
         Fridge::setDescription(description);
     };
+    virtual ~Fridge(){};
+    void handle(string);
 
 public:
     float getTemperature() const;
-
     void setTemperature(float temperature);
 
 public:
