@@ -55,6 +55,8 @@ int main() {
                     components[i]->setId(uniqueId);
                     counter++;
                     cout << "counter: " << counter << endl;
+                    close(childSocket);
+                    childSocket = 0;
                     if (counter >= components.size()) {
                         allDevicesSet = 1;
                     }
