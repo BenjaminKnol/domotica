@@ -4,7 +4,7 @@
 
 #include "Wall.h"
 
-void wall::handle(string buffer) {
+void Wall::handle(string buffer) {
     cout << buffer << endl; 
 }
 
