@@ -26,8 +26,10 @@ WiFiClient client; // ---> Create a TCP-connection
 void activateCooling();
 void doorAlarm();
 void connectToHotspot();
-void sendMessage();
-String readMessage(double);
+void sendMessage(String message);
+String readMessage(WiFiClient received_message);
+void writePCAOutput();
+int readPCAInput();
 
 //String json_data(String furniture, int status) {
 //  const char* data = "{\"id\":\"furniture\",\"status\":status_code}"; // Create JSON skeleton   
@@ -43,13 +45,12 @@ String readMessage(double);
 void setup(void) {
   Serial.begin(9600);
   connectToHotspot();
-   
-
+  initialize();
+  pinMode(D5, OUTPUT); //to flash the mosfet
+  Wire.begin();
 }
 
 void loop() {
-
-  Wire.begin();
   readAnalogSensors();
   
 
@@ -57,24 +58,8 @@ void loop() {
    client.setTimeout(200);
    line = client.readStringUntil('\r'); // --> Read line from server
    Serial.println(line);
- 
-  //Config PCA9554
-  //Inside loop for debugging purpose (hot plugging wemos module into i/o board). 
-  //IO0-IO3 as input, IO4-IO7 as output.
-  Wire.beginTransmission(0x38);
-  Wire.write(byte(0x03));          
-  Wire.write(byte(0x0F));         
-  Wire.endTransmission();
 
-  //Read PCA9554 outputs (IO40-IO3)
-  Wire.beginTransmission(0x38); 
-  Wire.write(byte(0x00));      
-  Wire.endTransmission();
-  Wire.requestFrom(0x38, 1);   
-  unsigned int inputs = Wire.read();  
-  //Serial.print("Digital in: ");
-  inputs = inputs & 0x03;
-  //Serial.println(inputs);
+
 
   if (inputs == 2 ){
     doorAlarm();
@@ -106,6 +91,40 @@ void loop() {
   Serial.println("TCP connection will be closed now!");
   client.stop();
 */
+}
+
+void initialize(){
+  //Config PCA9554
+  //Inside loop for debugging purpose (hot plugging wemos module into i/o board). 
+  //IO0-IO3 as input, IO4-IO7 as output.
+  Wire.beginTransmission(0x38);
+  Wire.write(byte(0x03));          
+  Wire.write(byte(0x0F));         
+  Wire.endTransmission();
+}
+
+void writePCAOutput(){
+  //Set PCA9554 outputs (IO44-IO7)
+  Wire.beginTransmission(0x38); 
+  Wire.write(byte(0x01));            
+  Wire.write(byte(outputs << 4));            
+  Wire.endTransmission(); 
+  //Serial.print("Digital out: ");
+  //Serial.println(outputs&0x0F);
+}
+
+int readPCAInput(){
+    //Read PCA9554 outputs (IO40-IO3)
+  Wire.beginTransmission(0x38); 
+  Wire.write(byte(0x00));      
+  Wire.endTransmission();
+  Wire.requestFrom(0x38, 1);   
+  unsigned int inputs = Wire.read();  
+  //Serial.print("Digital in: ");
+  inputs = inputs & 0x03;
+  //Serial.println(inputs);
+
+  return inputs
 }
 
 void readAnalogSensors() {            //Read analog 10bit inputs 0 from MAX11647
@@ -145,22 +164,13 @@ void activateCooling(){
   outputs = 0x01;             //0x1 is de fan
   digitalWrite(D5,HIGH);      //peltier on
   //Serial.println("cooling active");
-  //Serial.print("");
-    //Set PCA9554 outputs (IO44-IO7)
-  Wire.beginTransmission(0x38); 
-  Wire.write(byte(0x01));            
-  Wire.write(byte(outputs << 4));            
-  Wire.endTransmission(); 
-  //Serial.print("Digital out: ");
-  //Serial.println(outputs&0x0F);
-  
+  //Serial.print(""); 
 }
 
 void doorAlarm(){
   if (counter > 30) {
     if (door == 0) {
       //Serial.println("YOU FORGOT CLOSE THE FRIDGE DOOR!"); 
-      client.println(json_data("2", 1));
     }
     door = 1;
   }
@@ -184,6 +194,7 @@ void connectToHotspot() {
   if (!client.connect(server_host, port_number)) {
     Serial.println("No connection could be established.");
     client.stop();
+    connectToHotspot()
   } else {
     client.print(String(unique_id));
     line = readMessage(client);

@@ -45,6 +45,7 @@ class webSocketController extends Controller
     Log::create([
         'type' => $send_data->type,
         'description' => $send_data->description,
+        'value' => $send_data->value,
     ]);
         return;
     }
