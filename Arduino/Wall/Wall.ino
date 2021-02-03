@@ -34,13 +34,15 @@ unsigned int ldr = 0;
 unsigned int potentiometer = 0;
 int lastInputPotmeter = 0;
 int lastInputLDR = 0;
+int currentInputPotmeter = 0;
+int currentInputLDR = 0;
 
 /* Prototypes */
 void initialize();
 void connectToHotspot();
 String readMessage(WiFiClient received_message);
 void sendMessage();
-void readAnalogValues(unsigned int, unsigned int);
+void readAnalogValues();
 
 void setup(void) {
   initialize();
@@ -50,7 +52,8 @@ void loop(void) {
   line = ""; // Make sure 'line' is empty.
   if (!line.isEmpty()) {
     while (client.connected()) {
-      sendMessage("Wall0");
+      readAnalogValues()
+      sendMessage("ldr: " + currentInputLDR + "\n" "potmeter: " + currentInputPotmeter + "\n");
     }
   }
 }
@@ -121,25 +124,26 @@ void sendMessage(String message) {
     }
   }
 }
-void readAnalogValues(unsigned int ldr, unsigned int potentiometer) {
+void readAnalogValues() {
   Wire.requestFrom(0x36, 4);
-  ldr = Wire.read() & 0x03;
-  ldr = ldr << 8;
-  ldr = ldr | Wire.read();
+  currrentInputLDR = Wire.read() & 0x03;
+  currrentInputLDR = currrentInputLDR << 8;
+  currrentInputLDR = currrentInputLDR | Wire.read();
   //  Serial.print("analog in 0: ");
   //  Serial.println(LDR);
-  potentiometer = Wire.read() & 0x03;
-  potentiometer = potentiometer << 8;
-  potentiometer = potentiometer | Wire.read();
+  currentInputPotmeter = Wire.read() & 0x03;
+  currentInputPotmeter = currentInputPotmeter << 8;
+  currentInputPotmeter = currentInputPotmeter | Wire.read();
   //  Serial.print("analog in 1: ");
   //  Serial.println(potentiometer);
 
   if (potentiometer != lastInputPotmeter && ldr != lastInputLDR) {
     Serial.print("Potentiometer status: ");
-    Serial.println(potentiometer);
+    Serial.println(currentInputPotmeter);
     Serial.print("LDR status: ");
-    Serial.println(ldr);
+    Serial.println(currrentInputLDR);
+
+  lastInputPotmeter = currentInputPotmeter;
+  lastInputLDR = currrentInputLDR;
   }
-  lastInputPotmeter = potentiometer;
-  lastInputLDR = ldr;
 }
