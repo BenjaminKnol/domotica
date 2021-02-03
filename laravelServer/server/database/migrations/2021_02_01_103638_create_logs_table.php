@@ -15,9 +15,12 @@ class CreateLogsTable extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->smallInteger('type');
+            $table->foreignId('type_id');
             $table->text('description');
+            $table->integer('value');
             $table->timestamps();
+
+            $table->foreign('type_id')->references('id')->on('sensor_type');
         });
     }
 

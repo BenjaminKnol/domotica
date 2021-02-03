@@ -12,5 +12,10 @@ class Log extends Model
     protected $fillable = [
         'type',
         'description',
+        'value',
     ];
+
+    public function type() {
+        return $this->belongsTo(SensorType::class, 'type_id');
+    }
 }
