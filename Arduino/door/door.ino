@@ -12,7 +12,7 @@
 Servo servo;
 unsigned int outputs = 0;
 uint16_t counter = 0;
-unsigned int control = 1, toPi;
+unsigned int control = 1;
 int tempInputs = 0;
 
 
@@ -54,6 +54,7 @@ void setup(void) {
 }
 
 void loop() {
+  int toPi=0;
   int inputs = readPCAInput();
   if (tempInputs != inputs) {
     Serial.print("Temp Inputs:");
