@@ -7,5 +7,6 @@
 //TODO als de knop op de interface wordt ingedrukt, toggle de deur
 
 void Door::handle(string buffer) {
-    cout << buffer << endl;
+    int len = (int)strlen(buffer);
+    send(socketId, buffer, len, 0));
 }
