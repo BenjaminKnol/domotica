@@ -48,12 +48,13 @@ int main() {
                 string componentId = components[i]->getName();
                 transform(componentId.begin(), componentId.end(), componentId.begin(),
                           [](unsigned char c) { return tolower(c); });
-                cout << "currentId:" << (int) (components[i]->getId() == "") << endl;
-                cout << "uniqueId.find(componentId):" << uniqueId.find(componentId) << endl;
+//                cout << "currentId:" << (int) (components[i]->getId() == "") << endl;
+//                cout << "uniqueId.find(componentId):" << uniqueId.find(componentId) << endl;
                 if (uniqueId.find(componentId) < 255 && components[i]->getId() == "") {
-                    cout << uniqueId << endl;
+                    cout << "uniqueId: " << uniqueId << endl;
                     components[i]->setId(uniqueId);
                     counter++;
+                    cout << "counter: " << counter << endl;
                     if (counter >= components.size()) {
                         allDevicesSet = 1;
                     }
