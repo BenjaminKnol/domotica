@@ -21,7 +21,7 @@ using namespace std;
 class Component {
 
 private:
-    string unique_id;
+    string unique_id ="";
     string name;
     string description;
     int socketId;
