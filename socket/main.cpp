@@ -17,7 +17,7 @@
 // #include "Components/Chair.h"
 // #include "Components/Bed.h"
 // #include "Components/Column.h"
-// #include "Components/Door.h"
+#include "Components/Door.h"
 // #include "Components/Fridge.h"
 // #include "Components/TableLamp.h"
 #include "Components/Wall.h"
@@ -33,10 +33,10 @@ int main() {
     // auto *fridge = new Fridge("Fridge", "cool fridge");
     auto *wall = new Wall("Wall", "rocksollid");
     // auto *tableLamp = new TableLamp("Table Lamp", "Nice and bright");
-    // auto *door = new Door("Door", "KaSLAMo");
+    auto *door = new Door("Door", "KaSLAMo");
     // auto *column = new Column("Column", "it's getting dark in here");
     // End Component objects
-    vector<Component*> components {wall};
+    vector<Component*> components {wall, door};
     // vector<Component*> components {bed, chair, column, fridge, wall, tableLamp, door};
 
     int counter, allDevicesSet = 0;
@@ -48,7 +48,8 @@ int main() {
                 string componentId = components[i]->getName();
                 transform(componentId.begin(), componentId.end(), componentId.begin(),
                           [](unsigned char c){ return tolower(c); });
-                if (uniqueId.find(componentId) >= 0 && components[i].getId() != ""){
+		cout << "currentId:" << componentId  << endl;
+                if (uniqueId.find(componentId) >= 0 && components[i]->getId() != ""){
                     cout << uniqueId << endl;
                     components[i]->setId(uniqueId);
                     counter++;

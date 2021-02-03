@@ -5,6 +5,7 @@ make: main.cpp
 	Components/Base/WithLed.cpp Components/Base/WithForceSensor.h \
 	Components/Base/WithForceSensor.cpp Components/Bed.h \
 	Components/Bed.cpp \
+	Components/Door.cpp Components/Door.h \
 	Components/Chair.h Components/Chair.cpp \
 	Components/TableLamp.cpp Components/TableLamp.h \
 	Json_conversion.h Json_conversion.cpp -ljsoncpp
