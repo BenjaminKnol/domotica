@@ -8,7 +8,7 @@ use App\Models\User;
 
 define("HOST", '127.0.0.1');
 define("PORT", '9002');
-define ("WEB_ID", 100);
+define ("WEB_ID", "p0");
 
 /*
  * This file takes the data from the web page to the
@@ -39,72 +39,18 @@ class webSocketController extends Controller
     }
 
     function receive_data() {
-		$data = collect(["id"=>$this->check_id(), "status"=>$this->check_status(), 'guid'=>WEB_ID]);   // Merge two variables into one array
-        $send_data = $data->toJson();
-        switch($this->check_id()) {
-            case '1':				// Placeholder 1 - BED_LED
-                $this->web_socket($send_data);
-                Log::create([
-                    'type' => $send_data->type,
-                    'description' => $send_data->description,
-                    'value' => $send_data->value,
-                ]);
-                break;
-            case '2':			// Placeholder 2 - DEUR
-                $this->web_socket($send_data);
-                Log::create([
-                    'type' => $send_data->type,
-                    'description' => $send_data->description,
-                    'value' => $send_data->value,
-                ]);
-                break;
-            case '3':		// Placeholder 3 - KOELKAST
-                $this->web_socket($send_data);
-                Log::create([
-                    'type' => $send_data->type,
-                    'description' => $send_data->description,
-                    'value' => $send_data->value,
-                ]);
-                break;
-            case '4': 			// Placeholder 4 - MUUR
-                $this->web_socket($send_data);
-                Log::create([
-                    'type' => $send_data->type,
-                    'description' => $send_data->description,
-                    'value' => $send_data->value,
-                ]);
-                break;
-            case '5': 	// Placeholder 5 - SCHEMERLAMP
-                $this->web_socket($send_data);
-                Log::create([
-                    'type' => $send_data->type,
-                    'description' => $send_data->description,
-                    'value' => $send_data->value,
-                ]);
-                break;
-            case '6':			// Placeholder 6 - STOEL
-                $this->web_socket($send_data);
-                Log::create([
-                    'type' => $send_data->type,
-                    'description' => $send_data->description,
-                    'value' => $send_data->value,
-                ]);
-                break;
-            case '7':			// Placeholder 7 - ZUIL
-                $this->web_socket($send_data);
-                Log::create([
-                    'type' => $send_data->type,
-                    'description' => $send_data->description,
-                    'value' => $send_data->value,
-                ]);
-                break;
-            default:
-                break;
-        }
+		$data = collect(["id"=>$this->check_id(), "status"=>$this->check_status(), 'guid'=>WEB_ID]);   // Merge three variables into one array
+    $send_data = $data->toJson();
+    $this->web_socket($send_data);
+    Log::create([
+        'type' => $send_data->type,
+        'description' => $send_data->description,
+        'value' => $send_data->value,
+    ]);
         return;
     }
-    function web_socket($msg) {
 
+    function web_socket($msg) {
 // 1. Create Socket
         if (!($web_client = socket_create(AF_INET, SOCK_STREAM, 0))) {
             $errorcode = socket_last_error();

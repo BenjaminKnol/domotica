@@ -64,8 +64,6 @@ int Socket::acceptConnection() {
 string Socket::identifyDevice(int clientSocket) {
     string id;
     char handshake_buffer[MESSAGE_LENGTH];
-    // strcpy(handshake_buffer, "unique_id");
-    // sendMessage(handshake_buffer, clientSocket); // Ask for unique_id
 
     if (readMessage(handshake_buffer, MESSAGE_LENGTH, clientSocket) < 0) { // receive unique_id from client
         cout << "Error reading handshake from: " << clientSocket << endl;
@@ -118,6 +116,8 @@ bool Socket::readFile(string buffer) {
         }
         if (line.find(buffer[0]) == 0) {
             return true;
+        } else {
+            importExportJson.deserializer(receiveMessage);
         }
     }
     return false;

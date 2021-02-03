@@ -31,12 +31,12 @@ public:
     void deserializer(string &message);
 
     // Getter functions
-    int get_unique_id();
-    int get_button();
-    int get_sensor();
+    int getUniqueId();
+    int getId();
+    int getStatus();
 
 private:
-    int unique_id;
-    int button;
-    int sensor;
+    int uniqueId;
+    int id;
+    int status;
 };

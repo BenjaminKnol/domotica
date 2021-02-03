@@ -31,6 +31,7 @@
 
 // Classes
 #include "Components/Base/Component.h"
+#include "Json_conversion.h"
 
 using namespace std;
 
@@ -39,30 +40,28 @@ using namespace std;
 #define NETWORK_QUEUE 8
 #define PORT 9002
 
+Json_conversion importExportJson;
+
 class Socket {
 public:
     Socket(); // Default constructor
 
     // Do-function
     void createSocket();
-
     void listenToClient();
-
     void sendMessage(char *, int);
-
     string identifyDevice(int);
 
     // Ask-function
     int readMessage(char *, int, int);
-
     int acceptConnection();
-
     bool readFile(string);
 
 private:
     int server_socket;
     socklen_t client_address_length;
     struct sockaddr_in server_address, client_address;
+    string receiveMessage;
 };
 
 #endif //SOCKET_1_2_SOCKET_SERVER_H
