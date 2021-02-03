@@ -31,7 +31,7 @@ private:
 public:
     Component();
 
-    ~Component();
+    virtual ~Component();
 
     string getId() const;
 
