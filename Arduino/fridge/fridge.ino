@@ -25,51 +25,33 @@ WiFiClient client; // ---> Create a TCP-connection
 
 void activateCooling();
 void doorAlarm();
+void connectToHotspot();
+void sendMessage();
+String readMessage(double);
 
-String json_data(String furniture, int status) {
-  const char* data = "{\"id\":\"furniture\",\"status\":status_code}"; // Create JSON skeleton   
-  StaticJsonDocument<96> json_object;     // Create JSON object
-  json_object["id"] = furniture;        // Modify value in JSON object based on key name
-  json_object["status"] = status;      // Modify value in JSOB object based on key name
-  char send_data[100];              
-  serializeJson(json_object, send_data); // Convert JSON Object to a character string. 
+//String json_data(String furniture, int status) {
+//  const char* data = "{\"id\":\"furniture\",\"status\":status_code}"; // Create JSON skeleton   
+//  StaticJsonDocument<96> json_object;     // Create JSON object
+//  json_object["id"] = furniture;        // Modify value in JSON object based on key name
+//  json_object["status"] = status;      // Modify value in JSOB object based on key name
+//  char send_data[100];              
+//  serializeJson(json_object, send_data); // Convert JSON Object to a character string. 
+//
+//  return send_data;
+//}
 
-  return send_data;
-}
 void setup(void) {
   Serial.begin(9600);
-  //commented out for testing purpose without needing pi
-  Serial.print("Connecting to: ");
-  Serial.println(SSID_NAME);
-
+  connectToHotspot();
    
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(SSID_NAME, SSID_PSK);
 
 }
 
 void loop() {
 
-  while(WiFi.status() != WL_CONNECTED) {  
-    delay(500);
-  } // When Wemos is not connected, try reconnecting after 500 milliseconds. 
-
-  pinMode(D5, OUTPUT); //to flash the mosfet
   Wire.begin();
-  
   readAnalogSensors();
-  /*
-  Serial.print("Connecting to: ");
-  Serial.print(server_host);
-  Serial.print(":");
-  Serial.println(port_number);*/   // ---> Only for DEBUG purposes 
-  //commented out for testing purpose without needing pi
   
-  if (!client.connect(server_host, port_number)) {
-    Serial.println("Connection has failed");
-    delay(5000);  // ---> Waiting 5 seconds to re-connecting too server.
-    return;
-  }
 
    String line;
    client.setTimeout(200);
@@ -150,7 +132,7 @@ void readAnalogSensors() {            //Read analog 10bit inputs 0 from MAX11647
   Serial.print("Temperature: "); 
   Serial.print(Tc);
   Serial.println(" C");
-
+  
   if(Tc > 4){
     activateCooling();
   }else {
@@ -183,4 +165,54 @@ void doorAlarm(){
     door = 1;
   }
   counter++;
+}
+
+
+void connectToHotspot() {
+  // Start code - connecting to Raspberry Pi hotspot
+  Serial.print("Connecting to: ");
+  Serial.println(SSID_NAME);
+  WiFi.mode(WIFI_STA); /* Set Wemos in station and not Access Point */
+  WiFi.begin(SSID_NAME, SSID_PSK);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+  } /* When Wemos is not connected, try reconnecting after 500 milliseconds.*/
+  Serial.print("Connected with IP address: ");
+  Serial.println(WiFi.localIP());
+
+  // ---------------------------------- One time socket identification with RPi
+  if (!client.connect(server_host, port_number)) {
+    Serial.println("No connection could be established.");
+    client.stop();
+  } else {
+    client.print(String(unique_id));
+    line = readMessage(client);
+    if (line == check_verification) {
+      //      Serial.println(line); // DEBUG-only
+      Serial.print(unique_id);
+      Serial.print(": Is verified with: ");
+      Serial.println(client.remoteIP()); // Printing server IP-address
+    } else {
+      Serial.println("Could not verify Wemos with RPi.");
+    }
+  }
+}
+String readMessage(WiFiClient received_message) { // Read message from server (Pi)
+  return received_message.readStringUntil('\r'); // --> Read line from server
+}
+void sendMessage(String message) {
+  if (client.connect(server_host, port_number)) {
+    client.print(unique_id);
+    line = readMessage(client); // Receive Ack
+//    Serial.println(line); // DEBUG-Only
+
+    while (client.connected()) {
+      line = readMessage(client);
+//      Serial.println(line); // DEBUG-Only
+      if (line == "RTR") { // Check if received line is equal to RTR
+        client.print(message); // Send status update
+        break; // Break out the while loop
+      }
+    }
+  }
 }

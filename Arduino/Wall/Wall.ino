@@ -20,6 +20,7 @@
 #define I2C_SDL    D1
 #define I2C_SDA    D2
 
+/* Global Objects */
 WiFiClient client; // Create TCP connection object
 
 /* Global variables */
@@ -29,19 +30,16 @@ const String unique_id = "wall0";  /* Unique identification for Wemos*/
 const String check_unique_id = "unique_id";       /* Check whether received message matches with variable */
 const String check_verification = "Acknowledge";  /* Check whether received message matches with variable */
 String line;
-
 unsigned int ldr = 0;
 unsigned int potentiometer = 0;
 int lastInputPotmeter = 0;
 int lastInputLDR = 0;
-int currentInputPotmeter = 0;
-int currentInputLDR = 0;
 
 /* Prototypes */
 void initialize();
 void connectToHotspot();
 String readMessage(WiFiClient received_message);
-void sendMessage();
+void sendMessage(String message);
 void readAnalogValues();
 
 void setup(void) {
@@ -53,7 +51,12 @@ void loop(void) {
   if (!line.isEmpty()) {
     while (client.connected()) {
       readAnalogValues()
-      sendMessage("ldr: " + currentInputLDR + "\n" "potmeter: " + currentInputPotmeter + "\n");
+      String toSend = "ldr: ";
+      toSend += ldr;
+      toSend += "\n";
+      toSend += potentiometer;
+      toSend += "\n";
+      sendMessage(toSend);
     }
   }
 }
@@ -92,6 +95,7 @@ void connectToHotspot() {
   if (!client.connect(server_host, port_number)) {
     Serial.println("No connection could be established.");
     client.stop();
+    connectToHotspot();
   } else {
     client.print(String(unique_id));
     line = readMessage(client);
@@ -126,24 +130,23 @@ void sendMessage(String message) {
 }
 void readAnalogValues() {
   Wire.requestFrom(0x36, 4);
-  currrentInputLDR = Wire.read() & 0x03;
-  currrentInputLDR = currrentInputLDR << 8;
-  currrentInputLDR = currrentInputLDR | Wire.read();
+  ldr = Wire.read() & 0x03;
+  ldr = currrentInputLDR << 8;
+  ldr = ldr | Wire.read();
   //  Serial.print("analog in 0: ");
   //  Serial.println(LDR);
-  currentInputPotmeter = Wire.read() & 0x03;
-  currentInputPotmeter = currentInputPotmeter << 8;
-  currentInputPotmeter = currentInputPotmeter | Wire.read();
+  potentiometer = Wire.read() & 0x03;
+  potentiometer = potentiometer << 8;
+  potentiometer = potentiometer | Wire.read();
   //  Serial.print("analog in 1: ");
   //  Serial.println(potentiometer);
 
-  if (potentiometer != lastInputPotmeter && ldr != lastInputLDR) {
+  if (potentiometer != lastInputPotmeter || ldr != lastInputLDR) {
     Serial.print("Potentiometer status: ");
     Serial.println(currentInputPotmeter);
     Serial.print("LDR status: ");
-    Serial.println(currrentInputLDR);
-
-  lastInputPotmeter = currentInputPotmeter;
-  lastInputLDR = currrentInputLDR;
+    Serial.println(ldr);
   }
+  lastInputPotmeter = currentInputPotmeter;
+  lastInputLDR = ldr;
 }
