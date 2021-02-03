@@ -12,7 +12,7 @@
 class Door : public Component, public WithLed {
 
 private:
-    int toggleDoor();
+    void toggleDoor();
 
 public:
     Door(const string &name, const string &description) {
@@ -20,9 +20,7 @@ public:
         Door::setName(name);
         Door::setDescription(description);
     }
-
     virtual ~Door(){};
-
     void handle(string);
 };
 

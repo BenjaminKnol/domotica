@@ -14,6 +14,7 @@ unsigned int outputs = 0;
 uint16_t counter = 0;
 unsigned int control = 1;
 int tempInputs = 0;
+int lastState= 0;
 
 
 /* Global variables */
@@ -54,19 +55,19 @@ void setup(void) {
 }
 
 void loop() {
-  int toPi=0;
+  int toPi = 0;
   int inputs = readPCAInput();
-  if (tempInputs != inputs) {
+  int tempInputs = inputs;
+  delay(50);
+  inputs = readPCAInput();
+  if (tempInputs == inputs && inputs != 0) { // if true then button has been pressed
     Serial.print("Temp Inputs:");
     Serial.println(tempInputs);
     Serial.print("Inputs:");
     Serial.println(inputs);
-    tempInputs = inputs;
-    delay(50);
-    inputs = readPCAInput();
-    Serial.println("second read");
-    if (tempInputs == inputs) {
-      if (inputs) {
+    if (lastState != inputs) { // if true then different state than earlier
+      lastState = inputs;
+      if (inputs) {   // since the state has changed a new message must be sent to the pi
         toPi = 1;
       } else {
         toPi = 0;
@@ -83,7 +84,6 @@ void loop() {
         outputs = 0x00;
         servo.write(84);
       }
-      Serial.println("after control");
     }
   }
 }

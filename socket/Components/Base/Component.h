@@ -29,36 +29,21 @@ private:
     time_t timeOfDay = time(0);
 
 public:
-    Component(){};
-
+    Component();
     virtual ~Component(){};
-
     string getId() const;
-
     void setId(string);
-
     const string &getName() const;
-
     void setName(const string &name);
-
     const string &getDescription() const;
-
     int getStatus() const;
-
     time_t getTimeOfDay();
-
     char *getTimeOfDayUTC(time_t timeOfDay);
-
     void setDescription(const string &description);
-
     void setStatus(int status);
-
     void setSocketId(int);
-
     int getSocketId();
-
     void cacheStatus();
-
     virtual void handle(string) = 0; // Handles incoming messages
 
 };
