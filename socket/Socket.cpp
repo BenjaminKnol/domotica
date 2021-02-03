@@ -111,7 +111,7 @@ bool Socket::readFile(string buffer) {
       if (line[0] == '#') { // 4.1 Skip every line that starts with '#'
           continue;
       }
-      if (line.find(buffer[0]) >= 0) {
+      if (line.find(buffer[0]) == 0) {
           return true;
       }
     }

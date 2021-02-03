@@ -1,18 +1,18 @@
 # WEMOS and webserver ID's
 # --------------------------------
 # Bed:
-bed0
+b
 # Chair:
-chair0
+c
 # Fridge:
-fridge0
+f
 # Wall:
-wall0
+w
 # Table lamp:
-tableLamp0
+t
 # Door:
-door0
+d
 # Column (dutch = zuil):
-column0
+c
 # Web(p)age:
-web
+p
