@@ -64,6 +64,7 @@ void loop() {
     tempInputs = inputs;
     delay(50);
     inputs = readPCAInput();
+    Serial.println("second read");
     if (tempInputs == inputs) {
       if (inputs) {
         toPi = 1;
@@ -71,9 +72,10 @@ void loop() {
         toPi = 0;
       }
       sendMessage(toPi);
+      Serial.println("after send");
       line = readMessage(client);
+      Serial.println("after read");
       control = line.toInt();
-
       if (control) {
         outputs = 0x03;
         servo.write(165);
@@ -81,9 +83,9 @@ void loop() {
         outputs = 0x00;
         servo.write(84);
       }
+      Serial.println("after control");
     }
   }
-
 }
 
 void initialize() {
