@@ -12,11 +12,8 @@
 Servo servo;
 unsigned int outputs = 0;
 uint16_t counter = 0;
-unsigned int lastButtonState = 0;
-unsigned int inputs, control, buttonState, toPi;
-unsigned long lastDebounceTime = 0;
-unsigned long debounceDelay = 50;
-
+unsigned int control = 1, toPi;
+int tempInputs = 0;
 
 
 /* Global variables */
@@ -33,6 +30,7 @@ WiFiClient client; // Create TCP connection object
 void connectToHotspot();
 String readMessage(WiFiClient received_message);
 int readPCAInput();
+void writePCAOutput();
 
 
 //String json_data(String furniture, int status) {
@@ -56,36 +54,35 @@ void setup(void) {
 }
 
 void loop() {
-  inputs = readPCAInput();
-  if (inputs != lastButtonState) {
-    lastDebounceTime = millis();
-  }
-  if ((millis() - lastDebounceTime) > debounceDelay) {
-    if (inputs != buttonState) {
-      buttonState = inputs;
+  int inputs = readPCAInput();
+  if (tempInputs != inputs) {
+    Serial.print("Temp Inputs:");
+    Serial.println(tempInputs);
+    Serial.print("Inputs:");
+    Serial.println(inputs);
+    tempInputs = inputs;
+    delay(50);
+    inputs = readPCAInput();
+    if (tempInputs == inputs) {
+      if (inputs) {
+        toPi = 1;
+      } else {
+        toPi = 0;
+      }
+      sendMessage(toPi);
+      line = readMessage(client);
+      control = line.toInt();
 
-      if (buttonState == 1) {
-        toPi = !toPi;
+      if (control) {
+        outputs = 0x03;
+        servo.write(165);
+      } else {
+        outputs = 0x00;
+        servo.write(84);
       }
     }
   }
-  if (buttonState != lastButtonState) {
-    sendMessage(toPi);
-    line = readMessage(client);
-    control = line.toInt();
 
-    if (control) {
-      outputs = 0x03;
-      servo.write(165);
-      lastButtonState = control;
-      //counter++;
-    } else {
-      outputs = 0x00;
-      servo.write(84);
-      //counter = 0;
-      lastButtonState = control;
-    }
-  }
 }
 
 void initialize() {
@@ -114,7 +111,7 @@ int readPCAInput() {
   Wire.write(byte(0x00));
   Wire.endTransmission();
   Wire.requestFrom(0x38, 1);
-  inputs = Wire.read();
+  int inputs = Wire.read();
   //  Serial.print("Digital in: ");
   inputs = inputs & 0x03;
   //  Serial.println(inputs);
@@ -123,6 +120,7 @@ int readPCAInput() {
 
 void connectToHotspot() {
   // Start code - connecting to Raspberry Pi hotspot
+  //  client.setTimeout(200);
   Serial.print("Connecting to: ");
   Serial.println(SSID_NAME);
   WiFi.mode(WIFI_STA); /* Set Wemos in station and not Access Point */
@@ -137,6 +135,7 @@ void connectToHotspot() {
   if (!client.connect(server_host, port_number)) {
     Serial.println("No connection could be established.");
     client.stop();
+    connectToHotspot();
   } else {
     client.print(String(unique_id));
     line = readMessage(client);
