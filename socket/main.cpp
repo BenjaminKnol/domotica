@@ -49,6 +49,7 @@ int main() {
                 transform(componentId.begin(), componentId.end(), componentId.begin(),
                           [](unsigned char c){ return tolower(c); });
                 if (uniqueId.find(componentId) >= 0 && components[i].getId() != ""){
+                    cout << uniqueId << endl;
                     components[i]->setId(uniqueId);
                     counter++;
                     if (counter >= components.size()) {
@@ -60,6 +61,7 @@ int main() {
             continue;
         }
     }
+    cout << "end of loop 1" << endl;
     while (true) {
         string receiveMessage, sendMessage;
         int childSocket = socket.acceptConnection(); // 4. Accept Socket Connection
