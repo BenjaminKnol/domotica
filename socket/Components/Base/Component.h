@@ -29,6 +29,8 @@ private:
     time_t timeOfDay = time(0);
 
 public:
+    Component();
+    ~Component();
     string getId() const;
     void setId(string);
     const string &getName() const;

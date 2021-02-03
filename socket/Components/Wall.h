@@ -21,6 +21,8 @@ public:
         Wall::setName(name);
         Wall::setDescription(description);
     }
+    virtual ~Wall();
+    void handle(string);
 };
 
 
