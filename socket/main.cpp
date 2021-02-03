@@ -48,7 +48,7 @@ int main() {
                 string componentId = components[i]->getName();
                 transform(componentId.begin(), componentId.end(), componentId.begin(),
                           [](unsigned char c){ return tolower(c); });
-                if (uniqueId.find(componentId) >= 0){
+                if (uniqueId.find(componentId) >= 0 && components[i].getId() != ""){
                     components[i]->setId(uniqueId);
                     counter++;
                     if (counter >= components.size()) {
