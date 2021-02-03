@@ -48,7 +48,7 @@ int main() {
                 string componentId = components[i]->getName();
                 transform(componentId.begin(), componentId.end(), componentId.begin(),
                           [](unsigned char c) { return tolower(c); });
-                cout << "currentId:" << components[i]->getId() == "" << endl;
+                cout << "currentId:" << (int) (components[i]->getId() == "") << endl;
                 if (uniqueId.find(componentId) >= 0 && components[i]->getId() == "") {
                     cout << uniqueId << endl;
                     components[i]->setId(uniqueId);
