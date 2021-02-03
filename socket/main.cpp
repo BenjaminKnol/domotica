@@ -36,20 +36,20 @@ int main() {
     auto *door = new Door("Door", "KaSLAMo");
     // auto *column = new Column("Column", "it's getting dark in here");
     // End Component objects
-    vector<Component*> components {wall, door};
+    vector < Component * > components{wall, door};
     // vector<Component*> components {bed, chair, column, fridge, wall, tableLamp, door};
 
     int counter, allDevicesSet = 0;
     while (!allDevicesSet) {
         int childSocket = socket.acceptConnection(); // 4. Accept Socket Connection
-        if(childSocket > 0){
+        if (childSocket > 0) {
             string uniqueId = socket.identifyDevice(childSocket);
             for (int i = 0; i < components.size(); i++) {
                 string componentId = components[i]->getName();
                 transform(componentId.begin(), componentId.end(), componentId.begin(),
-                          [](unsigned char c){ return tolower(c); });
-		cout << "currentId:" << componentId  << endl;
-                if (uniqueId.find(componentId) >= 0 && components[i]->getId() != ""){
+                          [](unsigned char c) { return tolower(c); });
+                cout << "currentId:" << components[i]->getId() == "" << endl;
+                if (uniqueId.find(componentId) >= 0 && components[i]->getId() == "") {
                     cout << uniqueId << endl;
                     components[i]->setId(uniqueId);
                     counter++;
@@ -67,16 +67,16 @@ int main() {
         string receiveMessage, sendMessage;
         int childSocket = socket.acceptConnection(); // 4. Accept Socket Connection
         if (childSocket > 0) {
-          string tempId = socket.identifyDevice(childSocket);
-          for (int i = 0; i < components.size(); i++) {
-              if (tempId.compare(components[i]->getId()) >= 0) {
-                  components[i]->setSocketId(childSocket);
-                  components[i]->cacheStatus();
-              }
-          }
-          if (!(receiveMessage.empty())) {
-            importExportJson.deserializer(receiveMessage); // Get data from JSON-object.
-          }
+            string tempId = socket.identifyDevice(childSocket);
+            for (int i = 0; i < components.size(); i++) {
+                if (tempId.compare(components[i]->getId()) >= 0) {
+                    components[i]->setSocketId(childSocket);
+                    components[i]->cacheStatus();
+                }
+            }
+            if (!(receiveMessage.empty())) {
+                importExportJson.deserializer(receiveMessage); // Get data from JSON-object.
+            }
         } else {
             continue;
         }
