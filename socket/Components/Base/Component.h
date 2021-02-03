@@ -59,7 +59,7 @@ public:
 
     void cacheStatus();
 
-    virtual void handle(string); // Handles incoming messages
+    virtual void handle(string) = 0; // Handles incoming messages
 
 };
 
