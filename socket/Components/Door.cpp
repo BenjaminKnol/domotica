@@ -8,5 +8,5 @@
 
 void Door::handle(string buffer) {
     int len = (int)strlen(buffer.c_str);
-    send(getSocketId(), buffer.c_str, len, 0));
+    send(getSocketId(), buffer.c_str, len, 0);
 }
