@@ -62,6 +62,7 @@ int Socket::acceptConnection() {
 * Example: 1. Syn, 2. Syn + Ack, 3. Achknowledge
 */
 string Socket::identifyDevice(int clientSocket) {
+    Json_conversion jsonObject;
     string id;
     char handshake_buffer[MESSAGE_LENGTH];
 
@@ -69,6 +70,10 @@ string Socket::identifyDevice(int clientSocket) {
         cout << "Error reading handshake from: " << clientSocket << endl;
     }
     // cout << "ID: " << handshake_buffer << endl; // Only for DEBUG-purposes
+    if(handshake_buffer[0] == '{'){
+        jsonObject.deserializer(handshake_buffer);
+        handshake_buffer = jsonObject.getUniqueId();
+    }
     if (readFile(handshake_buffer)) {
         id = (string) handshake_buffer;
         strcpy(handshake_buffer, "Acknowledge\r");
