@@ -8,12 +8,17 @@
 #define SSID_NAME "PJSDV_Grp5_IIHS"
 #define SSID_PSK  "Welkom#1"
 
-const char* server_host = "172.16.0.1";
-const uint16_t port_number = 9002;
 int Vo;
 float R1 = 10000;
 float logR2, R2, T, Tc;
 float c1 = 1.009249522e-03, c2 = 2.378405444e-04, c3 = 2.019202697e-07;
+
+const char* server_host = "172.16.0.1";
+const uint16_t port_number = 9002;
+const String unique_id = "door0";  /* Unique identification for Wemos*/
+const String check_unique_id = "unique_id";       /* Check whether received message matches with variable */
+const String check_verification = "Acknowledge";  /* Check whether received message matches with variable */
+String line;
 
 unsigned int outputs=0;
 unsigned int state=0;
@@ -51,13 +56,11 @@ void setup(void) {
 }
 
 void loop() {
-  readAnalogSensors();
-  
-
-   String line;
-   client.setTimeout(200);
-   line = client.readStringUntil('\r'); // --> Read line from server
-   Serial.println(line);
+  //readAnalogSensors();
+  int inputs = readPCAInput();
+  int tempInputs = inputs;
+  delay(50);
+  inputs = readPCAInput();
 
 
 
