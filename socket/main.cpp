@@ -54,7 +54,6 @@ int main() {
                     cout << "uniqueId: " << uniqueId << endl;
                     components[i]->setId(uniqueId);
                     counter++;
-                    cout << "counter: " << counter << endl;
                     close(childSocket);
                     childSocket = 0;
                     if (counter >= components.size()) {

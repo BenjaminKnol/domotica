@@ -60,6 +60,7 @@ void loop() {
   int tempInputs = inputs;
   delay(50);
   inputs = readPCAInput();
+  tempInputs = inputs = 1;
   if (tempInputs == inputs && inputs != 0) { // if true then button has been pressed
     Serial.print("Temp Inputs:");
     Serial.println(tempInputs);

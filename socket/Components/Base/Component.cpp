@@ -64,9 +64,9 @@ void Component::cacheStatus() {
 
 }
 
-// void Component::handle(string buffer) {
-//     cout << buffer << endl;
-// }
+void Component::handle(string buffer) {
+    cout << buffer << endl;
+}
 
 void Component::setSocketId(int socket) {
     socketId = socket;
