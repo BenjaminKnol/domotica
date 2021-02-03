@@ -29,7 +29,7 @@ private:
     time_t timeOfDay = time(0);
 
 public:
-    Component();
+    Component(){};
 
     virtual ~Component(){};
 
