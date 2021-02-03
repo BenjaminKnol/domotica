@@ -54,7 +54,7 @@ class LoggingController extends Controller
         $dates = [];
         $values = [];
         for ($i = 0; $i < count($allLogsWithType); $i++){
-            $dates[$i] = $allLogsWithType[$i]->created_at->format("j F Y G:i");
+            $dates[$i] = $allLogsWithType[$i]->created_at->format("F j Y G:i");
             $values[$i] = $allLogsWithType[$i]->value;
         }
         $dates = json_encode($dates);

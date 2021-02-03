@@ -36,20 +36,20 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <table class="p-6 bg-white border-b border-gray-200" s style="width: 100%">
                         <tr>
-                            <th>ID</th>
+                            <th>Log Entry</th>
                             <th>Type</th>
                             <th>Description</th>
                             <th>Value</th>
-                            <th>Gemeld op</th>
+                            <th>reported on:</th>
                             <th></th>
                         </tr>
                         @foreach($logs as $log)
                             <tr class="text-center">
                                 <td>{{$log->id}}</td>
-                                <td>{{$log->type_id}}</td>
+                                <td>{{$log->type->type_name}}</td>
                                 <td>{{$log->description}}</td>
                                 <td>{{$log->value}}</td>
-                                <td>{{$log->created_at->format("j F Y, G:i:s")}}</td>
+                                <td>{{$log->created_at->format("F j Y, G:i:s")}}</td>
                                 <td>
                                     <div class="buttons mr-auto flex">
                                         <a class="button bg-blue-500 inline-flex rounded-l p-2 text-white" href="{{route('show log', $log->id)}}">
