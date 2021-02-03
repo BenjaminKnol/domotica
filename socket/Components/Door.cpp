@@ -10,10 +10,10 @@ void Door::handle(string buffer) {
     toggleDoor();
 }
 
-int Door::toggleDoor() {
+void Door::toggleDoor() {
     if(getStatus()){
         send(getSocketId(), "0\n", 2, 0);
     }else {
-        send(getSocketId(), "1\n", 2, 0)
+        send(getSocketId(), "1\n", 2, 0);
     }
 }
