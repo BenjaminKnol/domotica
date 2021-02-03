@@ -21,19 +21,19 @@ void Json_conversion::deserializer(string &message) {
     Json::Value deserializer_json;                                                // Create JSON document class and store everything in this object.
     Json::Reader reader;
     reader.parse(message, deserializer_json);
-    unique_id = deserializer_json.get("guid", Json::nullValue).asString();
-    button = deserializer_json.get("id", Json::nullValue).asString();
-    sensor = deserializer_json.get("status", Json::nullValue).asInt();
+    uniqueId = deserializer_json.get("guid", Json::nullValue).asString();
+    id = deserializer_json.get("id", Json::nullValue).asString();
+    status = deserializer_json.get("status", Json::nullValue).asInt();
 }
 
 /*
 * Getter functions
 */
-int Json_conversion::getUniqueId() {
+string Json_conversion::getUniqueId() {
     return uniqueId;
 }
 
-int Json_conversion::getId() {
+string Json_conversion::getId() {
     return id;
 }
 

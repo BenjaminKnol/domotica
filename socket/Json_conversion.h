@@ -31,12 +31,12 @@ public:
     void deserializer(string &message);
 
     // Getter functions
-    int getUniqueId();
-    int getId();
+    string getUniqueId();
+    string getId();
     int getStatus();
 
 private:
-    int uniqueId;
-    int id;
+    string uniqueId;
+    string id;
     int status;
 };

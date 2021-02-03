@@ -31,7 +31,6 @@
 
 // Classes
 #include "Components/Base/Component.h"
-#include "Json_conversion.h"
 
 using namespace std;
 
@@ -39,8 +38,6 @@ using namespace std;
 #define MESSAGE_LENGTH 256
 #define NETWORK_QUEUE 8
 #define PORT 9002
-
-Json_conversion importExportJson;
 
 class Socket {
 public:

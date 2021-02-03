@@ -103,6 +103,7 @@ void Socket::sendMessage(char *msg, int clientSocket) {
 
 // Read characters from id.txt file
 bool Socket::readFile(string buffer) {
+    cout << "Buffer: "<< buffer << endl;
     fstream file; // 1. Create ifstream object
     string line;
 
@@ -116,8 +117,6 @@ bool Socket::readFile(string buffer) {
         }
         if (line.find(buffer[0]) == 0) {
             return true;
-        } else {
-            importExportJson.deserializer(receiveMessage);
         }
     }
     return false;
