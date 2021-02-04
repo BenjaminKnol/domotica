@@ -70,15 +70,22 @@ int main() {
         string receiveMessage, sendMessage;
         int childSocket = socket.acceptConnection(); // 4. Accept Socket Connection
         if (childSocket > 0) {
-            string tempId = socket.identifyDevice(childSocket);
-            if (tempId.find("p0") < 255) {
-                receiveMessage = socket.readMessageFromWeb(childSocket);
-                cout << "ReceiveMessage "<< receiveMessage << endl;
+            // string tempId = socket.identifyDevice(childSocket);
+            char message[MESSAGE_LENGTH];
+            socket.readMessage(message, MESSAGE_LENGTH, childSocket);
+            receiveMessage = (string) message;
+            if (message[0] == '{') {
                 importExportJson.deserializer(receiveMessage);
-                cout << "getId(): "<<importExportJson.getId() << endl;
             } else {
+              if (socket.readFile(message)) {
+                  strcpy(message, "Acknowledge\r");
+                  socket.sendMessage(message, childSocket); // Send Acknowledgement
+              } else {
+                  cout << "Wrong ID on socket: " << childSocket << endl;
+                  close(childSocket);
+              }
                 for (int i = 0; i < components.size(); i++) {
-                    if (tempId.find(components[i]->getId()) < 255) {
+                    if (receiveMessage.find(components[i]->getId()) < 255) {
                         components[i]->setSocketId(childSocket);
                         components[i]->cacheStatus();
                         continue;
