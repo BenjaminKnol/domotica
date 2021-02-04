@@ -52,7 +52,7 @@ class webSocketController extends Controller
     return;
     }
 
-    function readFrom() {
+    static function readFrom() {
         // 1. Create a socket
         if (!($web_client = socket_create(AF_INET, SOCK_STREAM, 0))) {
             $errorcode = socket_last_error();
