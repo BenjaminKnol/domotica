@@ -15,18 +15,18 @@ float c1 = 1.009249522e-03, c2 = 2.378405444e-04, c3 = 2.019202697e-07;
 
 const char* server_host = "172.16.0.1";
 const uint16_t port_number = 9002;
-const String unique_id = "door0";  /* Unique identification for Wemos*/
+const String unique_id = "fridge0";  /* Unique identification for Wemos*/
 const String check_unique_id = "unique_id";       /* Check whether received message matches with variable */
 const String check_verification = "Acknowledge";  /* Check whether received message matches with variable */
 String line;
 
-unsigned int outputs=0;
-unsigned int state=0;
+unsigned int outputs = 0;
+unsigned int state = 0;
 unsigned int counter = 0;
-unsigned int last_input=0;
+unsigned int last_input = 0;
 unsigned int door;
 
-WiFiClient client; // ---> Create a TCP-connection 
+WiFiClient client; // ---> Create a TCP-connection
 
 void activateCooling();
 void doorAlarm();
@@ -35,17 +35,6 @@ void sendMessage(String message);
 String readMessage(WiFiClient received_message);
 void writePCAOutput();
 int readPCAInput();
-
-//String json_data(String furniture, int status) {
-//  const char* data = "{\"id\":\"furniture\",\"status\":status_code}"; // Create JSON skeleton   
-//  StaticJsonDocument<96> json_object;     // Create JSON object
-//  json_object["id"] = furniture;        // Modify value in JSON object based on key name
-//  json_object["status"] = status;      // Modify value in JSOB object based on key name
-//  char send_data[100];              
-//  serializeJson(json_object, send_data); // Convert JSON Object to a character string. 
-//
-//  return send_data;
-//}
 
 void setup(void) {
   Serial.begin(9600);
@@ -56,124 +45,106 @@ void setup(void) {
 }
 
 void loop() {
-  //readAnalogSensors();
   int inputs = readPCAInput();
-  int tempInputs = inputs;
-  delay(50);
-  inputs = readPCAInput();
 
-
-
-  if (inputs == 2 ){
+  if (inputs == 2 ) { //means button is pressed
     doorAlarm();
-  }else if (door == 1) {
+  } else if (door == 1) { //door has been closed since last opening
     door = 0;
-    client.println(json_data("2", 0));
+    sendMessage("door closed"); //door has been closed and since door was set to 1 counter reached 30 secs
+    counter = 0;  //if counter reaches 30 a notification needs to be send to RPi
+  } else {
     counter = 0;
-  }else {
-    counter = 0;  
   }
-/*
- * 
- * through the MAX11647 for that make it open during the state == 1. 
- */
- /*commented out for testing without pi
-  if(state){
-    outputs = 0x03;
-    
-  }else{
-    outputs = 0x00;
-    
-  }
-  */
-  
 
+  sendMessage(String(readAnalogSensors())); //in order to update latest numbers for the RPi Fridge
+
+  int control = readMessage(client).toInt(); //should only send back either 0 or 1 to turn on or off the cooling
+
+  if (control) {
+    outputs = 0x01; //turn on fan
+    activateCooling(); //turn on peltier
+  } else {
+    outputs = 0x00;
+    digitalWrite(D5, LOW); //turn off peltier
+  }
+  writePCAOutput(); //write outputs to PCA
   delay(1000);
-  Serial.println(counter);
-/* commented out for testing purposes
-  Serial.println("TCP connection will be closed now!");
-  client.stop();
-*/
 }
 
-void initialize(){
+void initialize() {
   //Config PCA9554
-  //Inside loop for debugging purpose (hot plugging wemos module into i/o board). 
+  //Inside loop for debugging purpose (hot plugging wemos module into i/o board).
   //IO0-IO3 as input, IO4-IO7 as output.
   Wire.beginTransmission(0x38);
-  Wire.write(byte(0x03));          
-  Wire.write(byte(0x0F));         
+  Wire.write(byte(0x03));
+  Wire.write(byte(0x0F));
   Wire.endTransmission();
 }
 
-void writePCAOutput(){
+void writePCAOutput() {
   //Set PCA9554 outputs (IO44-IO7)
-  Wire.beginTransmission(0x38); 
-  Wire.write(byte(0x01));            
-  Wire.write(byte(outputs << 4));            
-  Wire.endTransmission(); 
+  Wire.beginTransmission(0x38);
+  Wire.write(byte(0x01));
+  Wire.write(byte(outputs << 4));
+  Wire.endTransmission();
   //Serial.print("Digital out: ");
   //Serial.println(outputs&0x0F);
 }
 
-int readPCAInput(){
-    //Read PCA9554 outputs (IO40-IO3)
-  Wire.beginTransmission(0x38); 
-  Wire.write(byte(0x00));      
+int readPCAInput() {
+  //Read PCA9554 outputs (IO40-IO3)
+  Wire.beginTransmission(0x38);
+  Wire.write(byte(0x00));
   Wire.endTransmission();
-  Wire.requestFrom(0x38, 1);   
-  unsigned int inputs = Wire.read();  
+  Wire.requestFrom(0x38, 1);
+  unsigned int inputs = Wire.read();
   //Serial.print("Digital in: ");
   inputs = inputs & 0x03;
   //Serial.println(inputs);
 
-  return inputs
+  return inputs;
 }
 
-void readAnalogSensors() {            //Read analog 10bit inputs 0 from MAX11647
-  Wire.requestFrom(0x36, 4);              // 4 needed since two 10 bit ints need to be read in byte size.  
-  unsigned int ai0 = Wire.read()&0x03;    //analog input 0, wire.read reads only 8 bits
-  ai0=ai0<<8;                             //bitshift with 8 because the analog input is 10 bits
-  ai0 = ai0|Wire.read();  
-  unsigned int ai1 = Wire.read()&0x03;
-  ai1=ai1<<8;                             //bitshift with 8 because the analog input is 10 bits
-  ai1 = ai1|Wire.read();
+float readAnalogSensors() {            //Read analog 10bit inputs 0 from MAX11647
+  Wire.requestFrom(0x36, 4);              // 4 needed since two 10 bit ints need to be read in byte size.
+  unsigned int ai0 = Wire.read() & 0x03;  //analog input 0, wire.read reads only 8 bits
+  ai0 = ai0 << 8;                         //bitshift with 8 because the analog input is 10 bits
+  ai0 = ai0 | Wire.read();
+  unsigned int ai1 = Wire.read() & 0x03;
+  ai1 = ai1 << 8;                         //bitshift with 8 because the analog input is 10 bits
+  ai1 = ai1 | Wire.read();
   /*
-  Serial.print("analog0 is: ");
-  Serial.println(ai0); 
-  Serial.println("");
-  Serial.print("analog1 is: ");
-  Serial.println(ai1); 
-  Serial.println("");
+    Serial.print("analog0 is: ");
+    Serial.println(ai0);
+    Serial.println("");
+    Serial.print("analog1 is: ");
+    Serial.println(ai1);
+    Serial.println("");
   */
   Vo = (ai0 + ai1) / 2;            //reads voltage of the analog pin (test if there's actually 2)
   R2 = R1 * (1023.0 / (float)Vo - 1.0);                 //resistance = known resistor value * (1023.0 / voltage -1)
   logR2 = log(R2);
-  T = (1.0 / (c1 + c2*logR2 + c3*logR2*logR2*logR2));   //calculates temperature in Kelvin
+  T = (1.0 / (c1 + c2 * logR2 + c3 * logR2 * logR2 * logR2)); //calculates temperature in Kelvin
   Tc = T - 273.15;                                      //converts temp to celcius
-  Serial.print("Temperature: "); 
+  Serial.print("Temperature: ");
   Serial.print(Tc);
   Serial.println(" C");
-  
-  if(Tc > 4){
-    activateCooling();
-  }else {
-    //Serial.print("cooling inactive");
-    digitalWrite(D5,LOW);      //peltier off
-  }
+  return Tc;
 }
 
-void activateCooling(){
+void activateCooling() {
   outputs = 0x01;             //0x1 is de fan
-  digitalWrite(D5,HIGH);      //peltier on
+  digitalWrite(D5, HIGH);     //peltier on
   //Serial.println("cooling active");
-  //Serial.print(""); 
+  //Serial.print("");
 }
 
-void doorAlarm(){
+void doorAlarm() {
   if (counter > 30) {
     if (door == 0) {
-      //Serial.println("YOU FORGOT CLOSE THE FRIDGE DOOR!"); 
+      Serial.println("YOU FORGOT CLOSE THE FRIDGE DOOR!");
+      sendMessage("forgot to close door");
     }
     door = 1;
   }
@@ -197,7 +168,7 @@ void connectToHotspot() {
   if (!client.connect(server_host, port_number)) {
     Serial.println("No connection could be established.");
     client.stop();
-    connectToHotspot()
+    connectToHotspot();
   } else {
     client.print(String(unique_id));
     line = readMessage(client);
@@ -211,18 +182,20 @@ void connectToHotspot() {
     }
   }
 }
+
 String readMessage(WiFiClient received_message) { // Read message from server (Pi)
   return received_message.readStringUntil('\r'); // --> Read line from server
 }
+
 void sendMessage(String message) {
   if (client.connect(server_host, port_number)) {
     client.print(unique_id);
     line = readMessage(client); // Receive Ack
-//    Serial.println(line); // DEBUG-Only
+    //    Serial.println(line); // DEBUG-Only
 
     while (client.connected()) {
       line = readMessage(client);
-//      Serial.println(line); // DEBUG-Only
+      //      Serial.println(line); // DEBUG-Only
       if (line == "RTR") { // Check if received line is equal to RTR
         client.print(message); // Send status update
         break; // Break out the while loop
