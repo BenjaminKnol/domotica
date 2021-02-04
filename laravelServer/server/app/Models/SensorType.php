@@ -17,6 +17,6 @@ class SensorType extends Model
     ];
 
     public function log() {
-        return $this->HasOne(Log::class);
+        return $this->HasMany(Log::class, 'type_id', 'id');
     }
 }

@@ -47,7 +47,7 @@
                             <tr class="text-center">
                                 <td>{{$log->id}}</td>
                                 <td>{{$log->type->type_name}}</td>
-                                <td>{{$log->description}}</td>
+                                <td>{{$log->type->value_description}}</td>
                                 <td>{{$log->value}}</td>
                                 <td>{{$log->created_at->format("F j Y, G:i:s")}}</td>
                                 <td>
