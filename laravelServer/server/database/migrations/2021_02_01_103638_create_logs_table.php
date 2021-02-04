@@ -16,7 +16,6 @@ class CreateLogsTable extends Migration
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('type_id');
-            $table->text('description');
             $table->integer('value');
             $table->timestamps();
 
