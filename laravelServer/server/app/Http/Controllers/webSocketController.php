@@ -41,17 +41,17 @@ class webSocketController extends Controller
     function receive_data() {
 		$data = collect(["id"=>$this->check_id(), "status"=>$this->check_status(), 'guid'=>WEB_ID]);   // Merge three variables into one array
     $send_data = $data->toJson();
-    $this->web_socket($send_data);
+    $this->writeToCpp($send_data);
     Log::create([
         'type_id' => $this->check_id(),
         'value' => $this->check_status(),
     ]);
     $send_data = $data->toJson();
-    $this->web_socket($send_data);
+    $this->writeToCpp($send_data);
     return;
     }
 
-    function web_socket($msg) {
+    function writeToCpp($msg) {
 // 1. Create Socket
         if (!($web_client = socket_create(AF_INET, SOCK_STREAM, 0))) {
             $errorcode = socket_last_error();
@@ -71,12 +71,13 @@ class webSocketController extends Controller
         }
 
 // 3. Send data to C++
-        if (!socket_send($web_client, $msg, strlen($msg), 0)) {
+        if (!(socket_write($web_client, $msg, strlen($msg)))) {
             $errorcode = socket_last_error();
             $errormsg = socket_strerror($errorcode);
 
             die("Could not send data: [$errorcode] $errormsg \n");
         }
+        socket_close($web_client);
 
     }
 // Call function
