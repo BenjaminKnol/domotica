@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('monthly-delete')->monthly();
-        $schedule->command('read')->everyMinute();
+        // $schedule->command('read')->everyMinute();
     }
 
     /**

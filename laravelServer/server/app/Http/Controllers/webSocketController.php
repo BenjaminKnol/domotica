@@ -49,10 +49,11 @@ class webSocketController extends Controller
     ]);
     // $send_data = $data->toJson();
     // $this->writeToCpp($send_data);
+    readFrom();
     return;
     }
 
-    static function readFrom() {
+    function readFrom() {
         // 1. Create a socket
         if (!($web_client = socket_create(AF_INET, SOCK_STREAM, 0))) {
             $errorcode = socket_last_error();
@@ -137,8 +138,6 @@ class webSocketController extends Controller
             die("Could not send data: [$errorcode] $errormsg \n");
         }
         socket_close($web_client);
-
+        readFrom();
     }
-// Call function
-//receive_data();
 }
