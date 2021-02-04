@@ -47,12 +47,13 @@ public:
     void createSocket();
     void listenToClient();
     void sendMessage(char *, int);
-    string identifyDevice(int);
 
     // Ask-function
     int readMessage(char *, int, int);
     int acceptConnection();
     bool readFile(string);
+    string readMessageFromWeb(int);
+    string identifyDevice(int);
 
 private:
     int server_socket;

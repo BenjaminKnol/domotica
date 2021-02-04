@@ -71,17 +71,18 @@ int main() {
         int childSocket = socket.acceptConnection(); // 4. Accept Socket Connection
         if (childSocket > 0) {
             string tempId = socket.identifyDevice(childSocket);
-            for (int i = 0; i < components.size(); i++) {
-                if (tempId.find("p") >= 0) {
-                    socket.readMessage(receiveMessage, 256, childSocket);
-                    importExportJson.deserializer(receiveMessage);
-                    cout << importExportJson.getId() << endl;
-                    continue;
-                }
-                if (tempId.find(components[i]->getId()) >= 0) {
-                    components[i]->setSocketId(childSocket);
-                    components[i]->cacheStatus();
-                    continue;
+            if (tempId.find("p0") < 255) {
+                receiveMessage = socket.readMessageFromWeb(childSocket);
+                cout << "ReceiveMessage "<< receiveMessage << endl;
+                importExportJson.deserializer(receiveMessage);
+                cout << "getId(): "<<importExportJson.getId() << endl;
+            } else {
+                for (int i = 0; i < components.size(); i++) {
+                    if (tempId.find(components[i]->getId()) < 255) {
+                        components[i]->setSocketId(childSocket);
+                        components[i]->cacheStatus();
+                        continue;
+                    }
                 }
             }
         } else {
