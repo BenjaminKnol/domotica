@@ -76,6 +76,27 @@ int main() {
             receiveMessage = (string) message;
             if (message[0] == '{') {
                 importExportJson.deserializer(receiveMessage);
+                int type = stoi(importExportJson.getId());
+                switch (type) {
+                  case 4: // Wall
+                      for (int i = 0; i < components.size(); i++) {
+                          string wall = "Wall";
+                          if (wall.find(components[i]->getName()) < 255) {
+                              components[i]->sendMessage(to_string(importExportJson.getStatus()));
+                          }
+                      }
+                      break;
+                  case 6: // Door
+                      for (int i = 0; i < components.size(); i++) {
+                          string door = "Door";
+                          if (door.find(components[i]->getName()) < 255) {
+                              components[i]->sendMessage(to_string(importExportJson.getStatus()));
+                          }
+                      }
+                      break;
+                  default:
+                      break;
+                }
             } else {
                 if (socket.readFile(message)) {
                     strcpy(message, "Acknowledge\r");

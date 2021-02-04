@@ -44,7 +44,9 @@ public:
     void setSocketId(int);
     int getSocketId();
     void cacheStatus();
+    void sendMessage(string);
     virtual void handle(string) = 0; // Handles incoming messages
+
 
 };
 

@@ -63,7 +63,9 @@ void Component::cacheStatus() {
     handle(string(buffer));
 
 }
-
+void Component::sendMessage(string message) {
+    handle(message);
+}
 void Component::handle(string buffer) {
     cout << buffer << endl;
 }
