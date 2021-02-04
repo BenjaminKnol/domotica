@@ -14,10 +14,12 @@ void Door::handle(string buffer) {
 void Door::toggleDoor() {
     if(getStatus()){
         setStatus(0);
+        strcpy(toPHP, "Close door");
         send(getSocketId(), "0\n", 2, 0);
         cout << "Close door" << endl;
     }else {
         setStatus(1);
+        strcpy(toPHP, "Door has opened");
         send(getSocketId(), "1\n", 2, 0);
         cout << "Door has opened" << endl;
     }

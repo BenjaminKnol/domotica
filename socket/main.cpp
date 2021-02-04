@@ -97,7 +97,10 @@ int main() {
                     default:
                         break;
                 }
-                socket.sendMessage(fridge->toPHP, childSocket);
+                // socket.sendMessage(fridge->toPHP, childSocket); // Send message to webserver about fridge
+                // socket.sendMessage(door->toPHP, childSocket); // Send message to webserver about door
+                // strcpy(fridge->toPHP, ""); // empty fridge
+                // strcpy(door->toPHP, ""); // empty door
             } else {
                 if (socket.readFile(message)) {
                     strcpy(message, "Acknowledge\r");

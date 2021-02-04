@@ -22,6 +22,7 @@ public:
     }
     virtual ~Door(){};
     void handle(string);
+    char toPHP[255];
 };
 
 
