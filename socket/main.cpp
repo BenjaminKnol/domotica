@@ -18,7 +18,7 @@
 // #include "Components/Bed.h"
 // #include "Components/Column.h"
 #include "Components/Door.h"
-// #include "Components/Fridge.h"
+#include "Components/Fridge.h"
 // #include "Components/TableLamp.h"
 #include "Components/Wall.h"
 
@@ -30,13 +30,13 @@ int main() {
     // Start Component objects
     // auto *bed = new Bed("Bed", "pretty soft bed");
     // auto *chair = new Chair("Chair", "nice vibratin chair");
-    // auto *fridge = new Fridge("Fridge", "cool fridge");
-    auto *wall = new Wall("Wall", "rocksollid");
+    auto *fridge = new Fridge("Fridge", "cool fridge");
+//    auto *wall = new Wall("Wall", "rocksollid");
     // auto *tableLamp = new TableLamp("Table Lamp", "Nice and bright");
     auto *door = new Door("Door", "KaSLAMo");
     // auto *column = new Column("Column", "it's getting dark in here");
     // End Component objects
-    vector < Component * > components{wall, door};
+    vector < Component * > components{fridge, door};
     // vector<Component*> components {bed, chair, column, fridge, wall, tableLamp, door};
 
     int counter = 0, allDevicesSet = 0;
@@ -78,25 +78,26 @@ int main() {
                 importExportJson.deserializer(receiveMessage);
                 int type = stoi(importExportJson.getId());
                 switch (type) {
-                  case 4: // Wall
-                      for (int i = 0; i < components.size(); i++) {
-                          string wall = "Wall";
-                          if (wall.find(components[i]->getName()) < 255) {
-                              components[i]->sendMessage(to_string(importExportJson.getStatus()));
-                          }
-                      }
-                      break;
-                  case 6: // Door
-                      for (int i = 0; i < components.size(); i++) {
-                          string door = "Door";
-                          if (door.find(components[i]->getName()) < 255) {
-                              components[i]->sendMessage(to_string(importExportJson.getStatus()));
-                          }
-                      }
-                      break;
-                  default:
-                      break;
+                    case 3: // Fridge php front end will never send a message with current set up however for completeness it is added
+                        for (int i = 0; i < components.size(); i++) {
+                            string fridge = "Fridge";
+                            if (fridge.find(components[i]->getName()) < 255) {
+                                components[i]->sendMessage(to_string(importExportJson.getStatus()));
+                            }
+                        }
+                        break;
+                    case 6: // Door
+                        for (int i = 0; i < components.size(); i++) {
+                            string door = "Door";
+                            if (door.find(components[i]->getName()) < 255) {
+                                components[i]->sendMessage(to_string(importExportJson.getStatus()));
+                            }
+                        }
+                        break;
+                    default:
+                        break;
                 }
+                sendMessage(Fridge.toPHP, childSocket);
             } else {
                 if (socket.readFile(message)) {
                     strcpy(message, "Acknowledge\r");

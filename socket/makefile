@@ -9,4 +9,5 @@ make: main.cpp
 	Components/Wall.cpp Components/Wall.h \
 	Components/Chair.h Components/Chair.cpp \
 	Components/TableLamp.cpp Components/TableLamp.h \
+	Components/Fridge.cpp Components/Fridge.h \
 	Json_conversion.h Json_conversion.cpp -ljsoncpp

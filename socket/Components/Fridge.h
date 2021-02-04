@@ -35,7 +35,7 @@ public:
     void setTemperature(float temperature);
 
 public:
-
+    string toPHP="";
 };
 
 
