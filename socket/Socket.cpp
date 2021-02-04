@@ -99,19 +99,6 @@ int Socket::readMessage(char *buf, int length, int child_socket) {
     return status;
 }
 
-string Socket::readMessageFromWeb(int childSocket) {
-    char buffer[MESSAGE_LENGTH];
-
-    if (readMessage(buffer, MESSAGE_LENGTH, childSocket) < 0) {
-        cout << "Error reading message from web." << endl;
-    } else {
-        string message = (string) buffer;
-        cout << message << endl;
-        return message;
-    }
-    return "Not a valid string";
-}
-
 // Send data
 void Socket::sendMessage(char *msg, int clientSocket) {
     int len = (int) strlen(msg);

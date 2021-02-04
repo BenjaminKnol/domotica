@@ -57,8 +57,6 @@ public:
 
     bool readFile(string);
 
-    string readMessageFromWeb(int);
-
     string identifyDevice(int);
 
 private:
