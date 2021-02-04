@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Log;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Status;
 
 define("HOST", '127.0.0.1');
 define("PORT", '9002');
@@ -49,6 +50,64 @@ class webSocketController extends Controller
     // $send_data = $data->toJson();
     // $this->writeToCpp($send_data);
     return;
+    }
+
+    function readFrom() {
+        // 1. Create a socket
+        if (!($web_client = socket_create(AF_INET, SOCK_STREAM, 0))) {
+            $errorcode = socket_last_error();
+            $errormsg = socket_Strerror($errorcode);
+
+            die("400 Bad Request: [$errorcode] $errormsg] \n");
+        }
+        // 2. Connect to the server
+        if (!(socket_connect($web_client, HOST, PORT))) {
+            $errorcode = socket_last_error();
+            $errormsg = socket_Strerror($errorcode);
+
+            //don't know is this works would like someone to test this maybe
+
+            die("503 Service Unavailable: [$errorcode] $errormsg] \n");
+        }
+        // 3. Read from the server
+        $result = socket_read ($web_client, 1024) or die("Could not read server response\n");
+        // 4. Close socket
+        socket_close($web_client);
+
+        if ($result.contains("forgot to close door")) {
+          Log::create([
+              'type_id' => 3,
+              'value' => 1,
+          ]);
+          $statuses = Status::all();
+
+          $status = new Status(3);
+          $status->on = 1;
+
+          $currentStatus = $statuses->where('type', $status->type);
+          if($currentStatus){
+              foreach ($currentStatus as $stat)
+              $stat->delete();
+          }
+          $status->save();
+        }
+        if ($result.contains("door closed")) {
+          Log::create([
+              'type_id' => 3,
+              'value' => 0,
+          ]);
+          $statuses = Status::all();
+
+          $status = new Status(3);
+          $status->on = 0;
+
+          $currentStatus = $statuses->where('type', $status->type);
+          if($currentStatus){
+              foreach ($currentStatus as $stat)
+              $stat->delete();
+          }
+          $status->save();
+        }
     }
 
     function writeToCpp($msg) {
