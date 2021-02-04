@@ -138,6 +138,5 @@ class webSocketController extends Controller
             die("Could not send data: [$errorcode] $errormsg \n");
         }
         socket_close($web_client);
-        $this->readFrom();
     }
 }
