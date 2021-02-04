@@ -48,10 +48,7 @@ int main() {
                 string componentId = components[i]->getName();
                 transform(componentId.begin(), componentId.end(), componentId.begin(),
                           [](unsigned char c) { return tolower(c); });
-//                cout << "currentId:" << (int) (components[i]->getId() == "") << endl;
-//                cout << "uniqueId.find(componentId):" << uniqueId.find(componentId) << endl;
                 if (uniqueId.find(componentId) < 255 && components[i]->getId() == "") {
-                    cout << "uniqueId: " << uniqueId << endl;
                     components[i]->setId(uniqueId);
                     counter++;
                     close(childSocket);
@@ -65,12 +62,10 @@ int main() {
             continue;
         }
     }
-    cout << "end of loop 1" << endl;
     while (true) {
         string receiveMessage, sendMessage;
         int childSocket = socket.acceptConnection(); // 4. Accept Socket Connection
         if (childSocket > 0) {
-            // string tempId = socket.identifyDevice(childSocket);
             char message[MESSAGE_LENGTH];
             socket.readMessage(message, MESSAGE_LENGTH, childSocket);
             receiveMessage = (string) message;
@@ -131,5 +126,4 @@ int main() {
 // cout << "MAIN 2: " << json_conv.get_status() << endl;
 // socket.send_message("Hello from RPi");
 // cout << "MAIN: " << socket.get_id() << endl;
-
 // string id = socket.identify_device(client_socket);
