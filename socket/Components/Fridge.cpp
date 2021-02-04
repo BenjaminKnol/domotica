@@ -7,19 +7,19 @@
 void Fridge::handle(string buffer) {
     if (buffer.find("door closed") < 255) {
         setStatus(0);
-        toPHP = "door closed";
+        strcpy(toPHP, "door closed");
     } else if (buffer.find("forgot to close door")) {
         setStatus(1);
-        toPHP = "forgot to close door";
+        strcpy(toPHP, "forgot to close door");
     } else {
         float currentTemp = stof(buffer);
         setTemperature(currentTemp);
         if (currentTemp > 4.0) {
             send(getSocketId(), "1\n", 2, 0);
-            CoolElement::setStatus(1);
+            coolElement.setStatus(1);
         } else {
             send(getSocketId(), "0\n", 2, 0);
-            CoolElement::setStatus(0);
+            coolElement.setStatus(0);
         }
     }
 }

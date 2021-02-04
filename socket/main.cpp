@@ -97,7 +97,7 @@ int main() {
                     default:
                         break;
                 }
-                sendMessage(Fridge.toPHP, childSocket);
+                socket.sendMessage(fridge->toPHP, childSocket);
             } else {
                 if (socket.readFile(message)) {
                     strcpy(message, "Acknowledge\r");

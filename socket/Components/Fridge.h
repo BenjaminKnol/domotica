@@ -20,7 +20,8 @@ class Fridge : public Component {
     };
 
 private:
-    float temperature{};
+    float temperature;
+    CoolElement coolElement; // Object
 public:
     Fridge(const string &name, const string &description) {
         new Fridge::CoolElement();
@@ -35,7 +36,7 @@ public:
     void setTemperature(float temperature);
 
 public:
-    string toPHP="";
+    char toPHP[255];
 };
 
 
