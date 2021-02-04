@@ -72,9 +72,16 @@ int main() {
         if (childSocket > 0) {
             string tempId = socket.identifyDevice(childSocket);
             for (int i = 0; i < components.size(); i++) {
-                if (tempId.compare(components[i]->getId()) >= 0) {
+                if (tempId.find("p") >= 0) {
+                    socket.readMessage(receiveMessage, 256, childSocket);
+                    importExportJson.deserializer(receiveMessage);
+                    cout << importExportJson.getId() << endl;
+                    continue;
+                }
+                if (tempId.find(components[i]->getId()) >= 0) {
                     components[i]->setSocketId(childSocket);
                     components[i]->cacheStatus();
+                    continue;
                 }
             }
         } else {

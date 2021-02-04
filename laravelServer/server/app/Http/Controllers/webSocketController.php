@@ -46,7 +46,8 @@ class webSocketController extends Controller
         'type' => $this->check_id(),
         'value' => $this->check_status(),
     ]);
-        return;
+    $this->web_socket($send_data);
+    return;
     }
 
     function web_socket($msg) {
