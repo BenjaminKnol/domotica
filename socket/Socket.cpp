@@ -72,6 +72,7 @@ string Socket::identifyDevice(int clientSocket) {
     }
     // cout << "ID: " << handshake_buffer << endl; // Only for DEBUG-purposes
     if(handshake_buffer[0] == '{'){
+        cout << handshake_buffer << endl;
         string handshake_buffer_str = string(handshake_buffer);
         jsonObject.deserializer(handshake_buffer_str);
         strcpy(handshake_buffer, jsonObject.getUniqueId().c_str());

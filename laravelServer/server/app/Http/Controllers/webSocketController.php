@@ -46,8 +46,8 @@ class webSocketController extends Controller
         'type_id' => $this->check_id(),
         'value' => $this->check_status(),
     ]);
-    $send_data = $data->toJson();
-    $this->writeToCpp($send_data);
+    // $send_data = $data->toJson();
+    // $this->writeToCpp($send_data);
     return;
     }
 
