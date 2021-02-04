@@ -43,9 +43,8 @@ class webSocketController extends Controller
     $send_data = $data->toJson();
     $this->web_socket($send_data);
     Log::create([
-        'type' => $send_data->type,
-        'description' => $send_data->description,
-        'value' => $send_data->value,
+        'type' => $this->check_id(),
+        'value' => $this->check_status(),
     ]);
         return;
     }

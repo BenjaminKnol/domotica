@@ -77,9 +77,6 @@ int main() {
                     components[i]->cacheStatus();
                 }
             }
-            if (!(receiveMessage.empty())) {
-                importExportJson.deserializer(receiveMessage); // Get data from JSON-object.
-            }
         } else {
             continue;
         }
