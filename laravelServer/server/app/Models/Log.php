@@ -15,7 +15,7 @@ class Log extends Model
         'value',
     ];
 
-    public function type() {
+    public function sensor_type() {
         return $this->belongsTo(SensorType::class, 'id', 'type_id');
     }
 }
