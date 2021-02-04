@@ -17,6 +17,7 @@
 
 Json_conversion::Json_conversion() {
 }
+
 void Json_conversion::deserializer(string &message) {
     Json::Value deserializer_json;                                                // Create JSON document class and store everything in this object.
     Json::Reader reader;

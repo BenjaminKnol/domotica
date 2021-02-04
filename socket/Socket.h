@@ -45,14 +45,20 @@ public:
 
     // Do-function
     void createSocket();
+
     void listenToClient();
+
     void sendMessage(char *, int);
 
     // Ask-function
     int readMessage(char *, int, int);
+
     int acceptConnection();
+
     bool readFile(string);
+
     string readMessageFromWeb(int);
+
     string identifyDevice(int);
 
 private:
