@@ -10,12 +10,12 @@ class Log extends Model
     use HasFactory;
 
     protected $fillable = [
-        'type',
+        'type_id',
         'description',
         'value',
     ];
 
-    public function sensor_type() {
+    public function type() {
         return $this->belongsTo(SensorType::class, 'id', 'type_id');
     }
 }
