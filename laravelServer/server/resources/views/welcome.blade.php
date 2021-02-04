@@ -81,7 +81,7 @@
                                 <form method="post" action="{{ route('options') }}">
                                     <div class="onoffswitch">
                                         {{ csrf_field() }}
-                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder3" tabindex="0" onchange="this.form.submit()" {{ $statuses->where('type', 3)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
+                                        <input type="checkbox" name="status" class="onoffswitch-checkbox" id="placeholder3" tabindex="0" disabled onchange="this.form.submit()" {{ $statuses->where('type', 3)->where('on', true)->isNotEmpty() ? 'checked' : '' }}>
                                         <label class="onoffswitch-label" for="placeholder3"></label>
                                         <input type="hidden" name="type" value="3">
                                     </div>
