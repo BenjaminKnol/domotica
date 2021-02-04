@@ -49,7 +49,7 @@ class webSocketController extends Controller
     ]);
     // $send_data = $data->toJson();
     // $this->writeToCpp($send_data);
-    $this->readFrom();
+    // $this->readFrom();
     return;
     }
 
