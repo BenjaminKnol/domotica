@@ -1,6 +1,5 @@
 #include <Wire.h>
 #include <ESP8266WiFi.h>
-#include <ArduinoJson.h>  // --> JSON library
 
 #define I2C_SDL    D1
 #define I2C_SDA    D2
@@ -26,7 +25,7 @@ unsigned int counter = 0;
 unsigned int last_input = 0;
 unsigned int door;
 
-WiFiClient client; // ---> Create a TCP-connection
+WiFiClient client; // ---> Create a TCP-connection object
 
 void activateCooling();
 void doorAlarm();
