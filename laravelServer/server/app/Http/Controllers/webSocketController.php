@@ -49,7 +49,7 @@ class webSocketController extends Controller
     ]);
     // $send_data = $data->toJson();
     // $this->writeToCpp($send_data);
-    readFrom();
+    $this->readFrom();
     return;
     }
 
@@ -138,6 +138,6 @@ class webSocketController extends Controller
             die("Could not send data: [$errorcode] $errormsg \n");
         }
         socket_close($web_client);
-        readFrom();
+        $this->readFrom();
     }
 }
